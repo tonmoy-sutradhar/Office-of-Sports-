@@ -22,20 +22,47 @@ import { SlotsModule } from './Slots/slots.module';
 import { SportsController } from './sports/sports.controller';
 import { SportsModule } from './sports/sports.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { HistoryController } from './history/history.controller';
+import { HistoryModule } from './history/history.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot({
-    type:'postgres',
-    host:'localhost',
-    port:5432,
-    username:'postgres',
-    password:'emamul',
-    database:'office_of_sports_online',
-    entities: [__dirname + '/**/*.entity{.ts,.js}'],
-    synchronize: true,
-  }),
-    AdminModule, AuthModule, BookingsModule, FeedbacksModule, NotificationsModule, PaymentModule, ProfileModule, SearchModule, SlotsModule, SportsModule],
-  controllers: [AppController, AdminController, AuthController, BookingsController, FeedbacksController, NotificationsController, PaymentController, ProfileController, SearchController, SlotsController, SportsController],
+  imports: [
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: 'postgres',
+      password: 'mahin.afif2000',
+      database: 'office_of_sports_online',
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      synchronize: true,
+    }),
+    AdminModule,
+    AuthModule,
+    BookingsModule,
+    FeedbacksModule,
+    NotificationsModule,
+    PaymentModule,
+    ProfileModule,
+    SearchModule,
+    SlotsModule,
+    SportsModule,
+    HistoryModule,
+  ],
+  controllers: [
+    AppController,
+    AdminController,
+    AuthController,
+    BookingsController,
+    FeedbacksController,
+    NotificationsController,
+    PaymentController,
+    ProfileController,
+    SearchController,
+    SlotsController,
+    SportsController,
+    HistoryController,
+  ],
   providers: [AppService],
 })
 export class AppModule {}
