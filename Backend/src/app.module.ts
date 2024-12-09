@@ -22,20 +22,49 @@ import { SlotsModule } from './Slots/slots.module';
 import { SportsController } from './sports/sports.controller';
 import { SportsModule } from './sports/sports.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
-  imports: [TypeOrmModule.forRoot({
-    type:'postgres',
-    host:'localhost',
-    port:5432,
-    username:'postgres',
-    password:'emamul',
-    database:'office_of_sports_online',
-    entities: [__dirname + '/**/*.entity{.ts,.js}'],
-    synchronize: true,
-  }),
-    AdminModule, AuthModule, BookingsModule, FeedbacksModule, NotificationsModule, PaymentModule, ProfileModule, SearchModule, SlotsModule, SportsModule],
-  controllers: [AppController, AdminController, AuthController, BookingsController, FeedbacksController, NotificationsController, PaymentController, ProfileController, SearchController, SlotsController, SportsController],
+  imports: [
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: 'postgres',
+      password: 'tiger',
+      database: 'office_of_sports_online',
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      synchronize: true,
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'uploads'),
+      exclude: ['/admin*'],
+    }),
+    AdminModule,
+    AuthModule,
+    BookingsModule,
+    FeedbacksModule,
+    NotificationsModule,
+    PaymentModule,
+    ProfileModule,
+    SearchModule,
+    SlotsModule,
+    SportsModule,
+  ],
+  controllers: [
+    AppController,
+    AdminController,
+    AuthController,
+    BookingsController,
+    FeedbacksController,
+    NotificationsController,
+    PaymentController,
+    ProfileController,
+    SearchController,
+    SlotsController,
+    SportsController,
+  ],
   providers: [AppService],
 })
 export class AppModule {}

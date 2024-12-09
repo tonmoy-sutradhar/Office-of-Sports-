@@ -1,5 +1,5 @@
+// import { Feedback } from 'src/feedbacks/Feedback_Entity/feedback.entity';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { Feedback } from 'src/feedbacks/Feedback_Entity/feedback.entity';
 import { Slot } from 'src/Slots/Slot_Entity/slot.entity';
 
 @Entity('sports')
@@ -16,9 +16,11 @@ export class Sport {
   @Column({ type: 'boolean', default: false })
   is_paid: boolean;
 
-  @OneToMany(() => Feedback, (feedback) => feedback.sport, { lazy: true })
-  feedbacks: Promise<Feedback[]>;
+  //   @OneToMany(() => Feedback, (feedback) => feedback.sport, { lazy: true })
+  //   feedbacks: Promise<Feedback[]>;
 
-  @OneToMany(() => Slot, (slots) => slots.sport, { lazy: true })
-  slots: Promise<Slot[]>;
+  @OneToMany(() => Slot, (slot) => slot.sport, {
+    cascade: true, //This is automatically deletes associated slots
+  })
+  slots: Slot[];
 }
