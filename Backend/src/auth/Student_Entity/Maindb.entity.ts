@@ -1,7 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne , JoinColumn} from 'typeorm';
-import { Student_Regi } from './student.entity';
+import { Entity, Column, PrimaryGeneratedColumn} from 'typeorm';
 
-@Entity()
+@Entity('UniStudentDB')
 export class Main_StudentDB {
   @PrimaryGeneratedColumn()
   id: number;

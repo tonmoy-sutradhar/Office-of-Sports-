@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
 import { Sport } from 'src/sports/Sports_Entity/sports.entity';
 
-@Entity('slots')
+@Entity('Slot')
 export class Slot {
   @PrimaryGeneratedColumn()
   id: number;
