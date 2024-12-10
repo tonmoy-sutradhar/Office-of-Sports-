@@ -1,5 +1,5 @@
 import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
-import { Student_Regi } from 'src/auth/Student_Entity/student.entity';
+import { Student_Regi } from 'src/User/Student_Entity/student.entity';
 import { Slot } from 'src/Slots/Slot_Entity/slot.entity';
 
   @Entity('Booking')

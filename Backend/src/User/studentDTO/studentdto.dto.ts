@@ -10,6 +10,10 @@ export class CreateStudentDTO {
 
     @IsNotEmpty({message: 'Password is required'})
     @IsString({message: 'Password must be a string' })
+    /*@Matches(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/, {
+        message:
+        'Passwords must be at least 8 characters, should include atleast one uppercase and one lowercase letter and a special character and a digit'
+    })*/
     password: string;
 }
 
@@ -21,5 +25,9 @@ export class ValidateDTO{
 
     @IsNotEmpty({message: 'Password is required'})
     @IsString({message: 'Password must be a string' })
+   /* @Matches(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/, {
+        message:
+        'Passwords must be at least 8 characters, should include atleast one uppercase and one lowercase letter and a special character and a digit'
+    })*/
     password: string;
 }
