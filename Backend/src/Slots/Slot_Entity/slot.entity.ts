@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 import { Sport } from 'src/sports/Sports_Entity/sports.entity';
 
 @Entity('Slot')
@@ -6,7 +12,16 @@ export class Slot {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToMany(() => Sport, (sports) => sports.id, { onDelete: 'CASCADE' })
+  // @ManyToOne(() => Sport, (sport) => sport.slots, {
+  //   onDelete: 'CASCADE',
+  //   nullable: false,
+  // })
+  // @JoinColumn({ name: 'sport_id' })
+  // sport: Sport;
+  @ManyToOne(() => Sport, (sport) => sport.slots, {
+    onDelete: 'CASCADE',
+    nullable: true, // Allow sport to be null
+  })
   @JoinColumn({ name: 'sport_id' })
   sport: Sport;
 
@@ -21,6 +36,4 @@ export class Slot {
 
   @Column({ type: 'boolean', default: false })
   is_booked: boolean;
-
-
 }
