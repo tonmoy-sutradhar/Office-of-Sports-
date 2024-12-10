@@ -2,7 +2,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { Slot } from 'src/Slots/Slot_Entity/slot.entity';
 
-@Entity('sports')
+@Entity('Sport')
 export class Sport {
   @PrimaryGeneratedColumn()
   id: number;
