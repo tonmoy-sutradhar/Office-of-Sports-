@@ -6,7 +6,8 @@ import { Slot } from 'src/Slots/Slot_Entity/slot.entity';
 import { Feedback } from 'src/feedbacks/Feedback_Entity/feedback.entity';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([Sport,Slot,Feedback])],
-  providers: [SportsService]
+  imports: [TypeOrmModule.forFeature([Sport, Slot, Feedback])],
+  providers: [SportsService],
+  exports: [SportsService], // Export this file for used in other modules
 })
 export class SportsModule {}

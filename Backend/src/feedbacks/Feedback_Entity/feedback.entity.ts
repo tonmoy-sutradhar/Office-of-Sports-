@@ -1,3 +1,4 @@
+
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { Student_Regi } from 'src/User/Student_Entity/student.entity';
 import { Sport } from 'src/sports/Sports_Entity/sports.entity';
