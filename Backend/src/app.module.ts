@@ -12,11 +12,19 @@ import { SearchModule } from './search/search.module';
 import { SlotsModule } from './Slots/slots.module';
 import { SportsModule } from './sports/sports.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { AdminController } from './admin/admin.controller';
+import { AuthController } from './auth/auth.controller';
+import { BookingsController } from './bookings/bookings.controller';
+import { FeedbacksController } from './feedbacks/feedbacks.controller';
+import { NotificationsController } from './Notifications/notifications.controller';
+import { PaymentController } from './Payment/payment.controller';
+import { ProfileController } from './Profile/profile.controller';
+import { SearchController } from './Search/search.controller';
+import { SlotsController } from './Slots/slots.controller';
+import { SportsController } from './sports/sports.controller';
 
 @Module({
-<<<<<<< HEAD
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -28,10 +36,7 @@ import { join } from 'path';
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'uploads'),
-      exclude: ['/admin*'],
-    }),
+
     AdminModule,
     AuthModule,
     BookingsModule,
@@ -56,20 +61,6 @@ import { join } from 'path';
     SlotsController,
     SportsController,
   ],
-=======
-  imports: [TypeOrmModule.forRoot({
-    type:'postgres',
-    host:'localhost',
-    port:5432,
-    username:'postgres',
-    password:'emamul',
-    database:'office_of_sports_online',
-    entities: [__dirname + '/**/*.entity{.ts,.js}'],
-    synchronize: true,
-  }),
-    AdminModule, AuthModule, BookingsModule, FeedbacksModule, NotificationsModule, PaymentModule, ProfileModule, SearchModule, SlotsModule, SportsModule],
-  controllers: [AppController],
->>>>>>> bbc26cf4b96485774976d3386956fc3da21fd980
   providers: [AppService],
 })
 export class AppModule {}
