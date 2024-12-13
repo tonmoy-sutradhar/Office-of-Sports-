@@ -12,8 +12,8 @@ import { SearchModule } from './search/search.module';
 import { SlotsModule } from './Slots/slots.module';
 import { SportsModule } from './sports/sports.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { HistoryModule } from './history/history.module';
 import { UserModule } from './User/user.module';
+import { HistoryModule } from './history/history.module';
 
 // Remove the incorrect import of `Student_RegiRepository`
 @Module({
@@ -23,7 +23,7 @@ import { UserModule } from './User/user.module';
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      password: 'mahin.afif2000',
+      password: 'emamul',
       database: 'office_of_sports_online',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
