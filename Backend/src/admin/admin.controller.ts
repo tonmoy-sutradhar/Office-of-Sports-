@@ -6,12 +6,8 @@ import {
   Body,
   HttpCode,
   HttpStatus,
-  UploadedFile,
-  UseInterceptors,
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
 import { AdminService } from './admin.service';
-import { diskStorage } from 'multer';
 import { UpdateAdminDto } from './update-admin.dto';
 
 @Controller('admin')
