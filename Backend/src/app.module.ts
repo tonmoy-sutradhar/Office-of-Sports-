@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AdminModule } from './admin/admin.module';
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './User/auth/auth.module';
 import { BookingsModule } from './bookings/bookings.module';
 import { FeedbacksModule } from './feedbacks/feedbacks.module';
 import { NotificationsModule } from './notifications/notifications.module';
@@ -13,6 +13,7 @@ import { SlotsModule } from './Slots/slots.module';
 import { SportsModule } from './sports/sports.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { HistoryModule } from './history/history.module';
+import { UserModule } from './User/user.module';
 
 // Remove the incorrect import of `Student_RegiRepository`
 @Module({
@@ -37,6 +38,7 @@ import { HistoryModule } from './history/history.module';
     SearchModule,
     SlotsModule,
     SportsModule,
+    UserModule,
     HistoryModule,
   ],
   controllers: [AppController],

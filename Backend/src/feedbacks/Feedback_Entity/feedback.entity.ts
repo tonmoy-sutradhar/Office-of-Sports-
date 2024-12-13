@@ -5,9 +5,10 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { Sport } from 'src/sports/Sports_Entity/sports.entity'; // Ensure the import is correct
+import { Student_Regi } from 'src/User/Student_Entity/student.entity';
+import { Sport } from 'src/sports/Sports_Entity/sports.entity';
 
-@Entity('feedbacks')
+@Entity('Feedback')
 export class Feedback {
   @PrimaryGeneratedColumn()
   id: number;

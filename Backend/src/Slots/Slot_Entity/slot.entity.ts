@@ -6,9 +6,10 @@ import {
   ManyToOne,
 } from 'typeorm';
 import { Booking } from 'src/bookings/Booking_Entity/booking.entity'; // Import the Booking entity
+
 import { Sport } from 'src/sports/Sports_Entity/sports.entity';
 
-@Entity('slots')
+@Entity('Slot')
 export class Slot {
   @PrimaryGeneratedColumn()
   id: number;

@@ -5,7 +5,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { Student_Regi } from 'src/auth/Student_Entity/student.entity';
+import { Student_Regi } from 'src/User/Student_Entity/student.entity';
 import { Slot } from 'src/Slots/Slot_Entity/slot.entity';
 import { Sport } from 'src/sports/Sports_Entity/sports.entity'; // Ensure the import is correct
 

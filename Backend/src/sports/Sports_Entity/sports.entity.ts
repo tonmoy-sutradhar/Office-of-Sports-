@@ -1,9 +1,10 @@
+// import { Feedback } from 'src/feedbacks/Feedback_Entity/feedback.entity';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { Feedback } from 'src/feedbacks/Feedback_Entity/feedback.entity'; // Import the Feedback entity
 import { Booking } from 'src/bookings/Booking_Entity/booking.entity';
 import { Slot } from 'src/Slots/Slot_Entity/slot.entity'; // Corrected to import the Slot entity
 
-@Entity('sports')
+@Entity('Sport')
 export class Sport {
   @PrimaryGeneratedColumn()
   id: number;
