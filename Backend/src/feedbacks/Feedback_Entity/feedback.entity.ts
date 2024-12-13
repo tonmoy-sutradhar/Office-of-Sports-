@@ -1,23 +1,25 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
-import { Student_Regi } from 'src/auth/Student_Entity/student.entity';
-import { Sport } from 'src/sports/Sports_Entity/sports.entity';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { Sport } from 'src/sports/Sports_Entity/sports.entity'; // Ensure the import is correct
 
 @Entity('feedbacks')
 export class Feedback {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Student_Regi)
-  @JoinColumn({ name: 'student_id' })
-  student: Student_Regi;
+  @Column({ type: 'text' })
+  comment: string;
 
-  @ManyToOne(() => Sport)
+  @Column({ type: 'int', default: 0 })
+  rating: number;
+
+  // ManyToOne relationship to Sport
+  @ManyToOne(() => Sport, (sport) => sport.feedbacks, { eager: true }) // Link back to Sport
   @JoinColumn({ name: 'sport_id' })
-  sport: Sport;
-
-  @Column('text')
-  feedback_text: string;
-
-  @Column('int')
-  rating: number; // rating between 1 and 5
+  sport: Sport; // This refers to the Sport associated with the feedback
 }

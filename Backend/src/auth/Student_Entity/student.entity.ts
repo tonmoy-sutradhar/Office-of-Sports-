@@ -15,6 +15,9 @@ export class Student_Regi {
   @Column()
   password: string;
 
+  @Column({ default: 0 })
+  balance: number;
+
   @OneToMany(() => Booking, (booking) => booking.student, { lazy: true })
   bookings: Promise<Booking[]>;
 }

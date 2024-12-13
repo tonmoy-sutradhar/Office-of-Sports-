@@ -5,7 +5,7 @@ import { Sport } from 'src/sports/Sports_Entity/sports.entity';
 import { Slot } from './Slot_Entity/slot.entity';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([Slot,Sport])],
-  providers: [SlotsService]
+  imports: [TypeOrmModule.forFeature([Slot, Sport])],
+  providers: [SlotsService],
 })
 export class SlotsModule {}
