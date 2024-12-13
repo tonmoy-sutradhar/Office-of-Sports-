@@ -12,18 +12,8 @@ import { SearchModule } from './search/search.module';
 import { SlotsModule } from './Slots/slots.module';
 import { SportsModule } from './sports/sports.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-// import { UserModule } from './user/user.module';
-import { join } from 'path';
-import { AdminController } from './admin/admin.controller';
-import { BookingsController } from './bookings/bookings.controller';
-import { FeedbacksController } from './feedbacks/feedbacks.controller';
-import { NotificationsController } from './Notifications/notifications.controller';
-import { PaymentController } from './Payment/payment.controller';
-import { ProfileController } from './Profile/profile.controller';
-import { SearchController } from './Search/search.controller';
-import { SlotsController } from './Slots/slots.controller';
-import { SportsController } from './sports/sports.controller';
-import { AuthController } from './User/auth/auth.controller';
+import { UserModule } from './User/user.module';
+
 
 @Module({
   imports: [
