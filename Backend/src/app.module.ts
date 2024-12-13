@@ -24,7 +24,7 @@ import { join } from 'path';
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      password: 'tiger',
+      password: 'emamul',
       database: 'office_of_sports_online',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
@@ -43,19 +43,10 @@ import { join } from 'path';
     SearchModule,
     SlotsModule,
     SportsModule,
+    UserModule
   ],
   controllers: [
-    AppController,
-    AdminController,
-    AuthController,
-    BookingsController,
-    FeedbacksController,
-    NotificationsController,
-    PaymentController,
-    ProfileController,
-    SearchController,
-    SlotsController,
-    SportsController,
+    AppController
   ],
   providers: [AppService],
 })
