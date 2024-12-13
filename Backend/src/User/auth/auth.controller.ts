@@ -1,4 +1,4 @@
-import { Controller,Res,Post, Body, Patch } from '@nestjs/common';
+import { Controller,Res,Post, Body } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateStudentDTO } from '../studentDTO/studentdto.dto';
 import { ValidateDTO } from '../studentDTO/studentdto.dto';

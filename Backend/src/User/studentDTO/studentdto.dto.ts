@@ -31,3 +31,14 @@ export class ValidateDTO{
     })*/
     password: string;
 }
+
+export class sendEmailDto{
+
+    @IsEmail()
+    email:string
+}
+
+export class verifyOtp{
+    @IsString()
+    otp:string;
+}

@@ -32,7 +32,7 @@ import { AuthController } from './User/auth/auth.controller';
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      password: 'tiger',
+      password: 'emamul',
       database: 'office_of_sports_online',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
@@ -48,19 +48,10 @@ import { AuthController } from './User/auth/auth.controller';
     SearchModule,
     SlotsModule,
     SportsModule,
+    UserModule
   ],
   controllers: [
-    AppController,
-    AdminController,
-    AuthController,
-    BookingsController,
-    FeedbacksController,
-    NotificationsController,
-    PaymentController,
-    ProfileController,
-    SearchController,
-    SlotsController,
-    SportsController,
+    AppController
   ],
   providers: [AppService],
 })

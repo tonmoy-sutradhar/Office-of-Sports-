@@ -1,4 +1,4 @@
-import { Injectable, Res, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserService } from '../user.service';
 import { CreateStudentDTO, ValidateDTO } from '../studentDTO/studentdto.dto';
 import { JwtService } from '@nestjs/jwt';
@@ -26,11 +26,11 @@ export class AuthService {
     async login(loginData:ValidateDTO,response) : Promise<{message: string}>{
         const user = await this.userService.userLogin(loginData);
         if(!user){
-            throw new UnauthorizedException();
+            throw new UnauthorizedException("User not Found");
         }
         const passMatch = await bcrypt.compare(loginData.password, user.password);
         if(!passMatch){
-            throw new UnauthorizedException();
+            throw new UnauthorizedException("Invalid Password");
         }
         const payload = await this.jwtService.signAsync(loginData);
         response.cookie('Token',payload,{httpOnly:true});
@@ -38,6 +38,8 @@ export class AuthService {
             message: "Login Sucessfull",
         };
     }
+
+
 
 
 }
