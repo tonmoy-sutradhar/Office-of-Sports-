@@ -13,8 +13,9 @@ import { SlotsModule } from './Slots/slots.module';
 import { SportsModule } from './sports/sports.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './User/user.module';
+import { HistoryModule } from './history/history.module';
 
-
+// Remove the incorrect import of `Student_RegiRepository`
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -27,10 +28,9 @@ import { UserModule } from './User/user.module';
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
-
     AdminModule,
     AuthModule,
-    BookingsModule,
+    BookingsModule, // Make sure BookingsModule is correctly imported
     FeedbacksModule,
     NotificationsModule,
     PaymentModule,
@@ -38,11 +38,10 @@ import { UserModule } from './User/user.module';
     SearchModule,
     SlotsModule,
     SportsModule,
-    UserModule
+    UserModule,
+    HistoryModule,
   ],
-  controllers: [
-    AppController
-  ],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
