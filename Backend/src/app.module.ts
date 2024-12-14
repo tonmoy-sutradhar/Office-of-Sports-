@@ -23,7 +23,7 @@ import { HistoryModule } from './history/history.module';
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      password: 'emamul',
+      password: 'tiger',
       database: 'office_of_sports_online',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,

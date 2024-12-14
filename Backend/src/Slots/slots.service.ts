@@ -36,6 +36,7 @@ export class SlotsService {
   }
 
   // Get single slot by ID
+  // solve
   async getSlotById(id: number): Promise<Slot> {
     return await this.slotRepository.findOne({
       where: { id },

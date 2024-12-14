@@ -8,8 +8,8 @@ import { Repository } from 'typeorm';
 import { Slot } from 'src/Slots/Slot_Entity/slot.entity';
 import { Booking } from './Booking_Entity/booking.entity';
 import { Sport } from 'src/sports/Sports_Entity/sports.entity'; // Import the Sport entity
-import { Student_Regi } from 'src/User/Student_Entity/student.entity'; // Import the Student entity
 import { CreateBookingDto } from './dto/booking.dto';
+import { Student_Regi } from 'src/User/Student_Entity/student.entity';
 
 @Injectable()
 export class BookingsService {
