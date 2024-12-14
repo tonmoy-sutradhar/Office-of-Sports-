@@ -1,6 +1,6 @@
-import { Controller,Res,Post, Body, Req } from '@nestjs/common';
+import { Controller,Res,Post, Body, Req, Patch } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { CreateStudentDTO } from '../studentDTO/studentdto.dto';
+import { CreateStudentDTO, resetPassDTO } from '../studentDTO/studentdto.dto';
 import { ValidateDTO } from '../studentDTO/studentdto.dto';
 import { Response } from 'express';
 import { sendEmailDto,verifyOtp } from '../studentDTO/studentdto.dto';
@@ -27,6 +27,11 @@ export class AuthController {
     @Post('verify-otp')
     verifyOTP(@Body() otp: verifyOtp, @Req()req:any):Promise<any> {
     return this.AuthService.verifyOTP(otp, req);
+    }
+
+    @Patch('reset-password')
+     resetPass(@Body()userdata:resetPassDTO,@Req()rq:any){
+        return this.AuthService.resetPass(userdata,rq); 
     }
 
 }

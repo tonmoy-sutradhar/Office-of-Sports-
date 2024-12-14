@@ -1,10 +1,9 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { UserService } from '../user.service';
-import { CreateStudentDTO, ValidateDTO,sendEmailDto,verifyOtp } from '../studentDTO/studentdto.dto';
+import { CreateStudentDTO, ValidateDTO,resetPassDTO,sendEmailDto,verifyOtp } from '../studentDTO/studentdto.dto';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import * as nodemailer from 'nodemailer'; 
-import { promises } from 'dns';
 
 
 
@@ -25,7 +24,7 @@ export class AuthService {
         return await this.userService.registerUser(createdto);
     }
 
-    async login(loginData:ValidateDTO,response) : Promise<{message: string}>{
+    async login(loginData:ValidateDTO,response) : Promise<{message: string, Token:string}>{
         const user = await this.userService.userLogin(loginData);
         if(!user){
             throw new UnauthorizedException("User not Found");
@@ -34,10 +33,9 @@ export class AuthService {
         if(!passMatch){
             throw new UnauthorizedException("Invalid Password");
         }
-        const payload = await this.jwtService.signAsync(loginData);
-        response.cookie('Token',payload,{httpOnly:true});
+        const Token = await this.jwtService.signAsync(loginData);
         return{
-            message: "Login Sucessfull",
+            message: "Login Sucessfull",Token
         };
     }
     
@@ -63,14 +61,14 @@ export class AuthService {
         async forgetPassword(data:sendEmailDto,req):Promise<any>{
         
             const sotredMail = await this.userService.forgetPass(data);
-    
+
             if(!sotredMail){
                 throw new UnauthorizedException("Invalid Email");
             }
-    
+            req.session.email = sotredMail.email;
             const { email } = data;
             const otp = this.generateOTP();
-            const otpExpiry = Date.now() + 2 * 60 * 1000;
+            const otpExpiry = Date.now() + 5 * 60 * 1000;
         
            const transporter = this.emailtransport();
            const options: nodemailer.SendMailOptions = {
@@ -123,7 +121,7 @@ export class AuthService {
                     <p>Dear User,</p>
                     <p>Your OTP code is:</p>
                     <div class="otp">${otp}</div>
-                    <p>Please use this code to complete your verification.<br>The code is valid for 2 minutes.</p>
+                    <p>Please use this code to complete your verification.<br>The code is valid for 5 minutes.</p>
                     <div class="footer">
                         <p>Copyright @2024</p>
                     </div>
@@ -133,7 +131,7 @@ export class AuthService {
             </html>
             `,
           };
-        
+
             try{
               await transporter.sendMail(options);
               req.session.otp = { otp, expiresAt: otpExpiry };
@@ -141,10 +139,10 @@ export class AuthService {
             catch(error){
                 throw new UnauthorizedException(error);
             }
-        }
+    }
 
-        async verifyOTP(userOtp:verifyOtp, req):Promise<any> {
-            const otpSession = req.session.otp;
+    async verifyOTP(userOtp:verifyOtp, req):Promise<any> {
+        const otpSession = req.session.otp;
           
             if (!otpSession) {
               return { success: false, message: 'OTP not sent or expired' };
@@ -156,11 +154,36 @@ export class AuthService {
             }
           
             if (otpSession.otp === userOtp.otp) {
-              req.session.otp = null; 
-              return { success: true, message: 'OTP verified successfully' };
+              req.session.otp = null;
+              const access_token= await this.jwtService.signAsync(userOtp, { expiresIn: '5m' }); 
+              return { success: true, message: 'OTP verified successfully. You have 5 minutes to reset your password',access_token};
             }
           
             return { success: false, message: 'Invalid OTP' };
-        }
+    }
 
+    async resetPass(userdata:resetPassDTO,rq)
+    {
+        const findUser = await this.userService.resetPassword(rq);
+        if(!findUser)
+        {
+            return new NotFoundException("User not found");
+        }
+        else{
+         if (userdata.newPass !== userdata.confirmPass){
+            return new BadRequestException("Password and Confirm Password not matched");
+         }
+         else if(!userdata.newPass || !userdata.confirmPass)
+         {
+            return new BadRequestException("Password or Confirm Password can  not be empty ");
+         }
+
+         const hashedPassword = await bcrypt.hash(userdata.newPass, 8);
+
+            userdata.newPass = hashedPassword;
+
+            await this.userService.saveResestPassword(rq.session.email,userdata.newPass);
+            return {message:"Password reset Successfully"};
+        }
+    }
 }
