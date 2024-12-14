@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { Admin } from './Admin_Entity/admin.entity';
 import { UpdateAdminDto } from './update-admin.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class AdminService {
@@ -18,6 +18,11 @@ export class AdminService {
       throw new NotFoundException('Admin not found');
     }
     return admin;
+  }
+
+  // Get all admins
+  async findAll(): Promise<Admin[]> {
+    return this.adminRepository.find();
   }
 
   // Update admin details
