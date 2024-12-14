@@ -4,6 +4,7 @@ import {
   Column,
   OneToMany,
   ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 import { Booking } from 'src/bookings/Booking_Entity/booking.entity'; // Import the Booking entity
 
@@ -32,6 +33,7 @@ export class Slot {
   @OneToMany(() => Booking, (booking) => booking.slot) // Define the inverse relationship to Booking
   bookings: Booking[]; // This represents all bookings for this slot
 
-  @ManyToOne(() => Sport, (sport) => sport.slots) // Define the relationship to Sport
-  sport: Sport; // This is the foreign key relation to the Sport entity
+  @ManyToOne(() => Sport, (sport) => sport.slots, { nullable: false })
+  @JoinColumn({ name: 'sport_id' })
+  sport: Sport;
 }

@@ -23,7 +23,7 @@ import { UserModule } from './User/user.module';
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      password: 'mahin.afif2000',
+      password: 'tiger',
       database: 'office_of_sports_online',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,

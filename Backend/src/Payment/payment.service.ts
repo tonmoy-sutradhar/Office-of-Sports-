@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Booking } from 'src/bookings/Booking_Entity/booking.entity';
-import { Student_Regi } from 'src/auth/Student_Entity/student.entity';
+import { Student_Regi } from 'src/User/Student_Entity/student.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
