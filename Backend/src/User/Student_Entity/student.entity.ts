@@ -15,6 +15,9 @@ export class Student_Regi {
   @Column()
   password: string;
 
+  @Column({ default: false }) // New column to track ban status
+  isBanned: boolean;
+
   @Column({ default: 0 })
   balance: number;
 
