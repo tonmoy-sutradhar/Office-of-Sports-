@@ -1,9 +1,8 @@
-import { Injectable,UnauthorizedException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Student_Regi } from './Student_Entity/student.entity';
-import { CreateStudentDTO, ValidateDTO,sendEmailDto,verifyOtp } from './studentDTO/studentdto.dto';
+import { CreateStudentDTO, ValidateDTO,resetPassDTO,sendEmailDto } from './studentDTO/studentdto.dto';
 import { Repository } from 'typeorm';
-import * as nodemailer from 'nodemailer'; 
 
 @Injectable()
 export class UserService {
@@ -20,7 +19,17 @@ export class UserService {
 
    
     async forgetPass(data:sendEmailDto){
-        return await this.userRepo.findOneBy({email:data.email})
+        return await this.userRepo.findOneBy({email:data.email});
+    }
+
+    async resetPassword(req)
+    {
+        return await this.userRepo.findOneBy({email:req.session.email});    
+    }
+
+    async saveResestPassword(userMail:string ,updatedPassword:string)
+    {
+        await this.userRepo.update({email:userMail} , { password: updatedPassword });
     }
 
 

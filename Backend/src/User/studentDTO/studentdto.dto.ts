@@ -42,3 +42,14 @@ export class verifyOtp{
     @IsString()
     otp:string;
 }
+
+export class resetPassDTO{
+    @IsNotEmpty()
+    @IsString()
+    newPass: string;
+
+    @IsNotEmpty()
+    @IsString()
+    confirmPass: string;
+
+}
