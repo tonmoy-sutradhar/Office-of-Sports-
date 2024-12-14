@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PaymentService } from './payment.service';
 import { PaymentController } from './payment.controller';
 import { Booking } from 'src/bookings/Booking_Entity/booking.entity';
-import { Student_Regi } from 'src/auth/Student_Entity/student.entity'; // import the Student_Regi entity
+import { Student_Regi } from 'src/User/Student_Entity/student.entity'; // import the Student_Regi entity
 import { Slot } from 'src/Slots/Slot_Entity/slot.entity'; // import the Slot entity
 
 @Module({
