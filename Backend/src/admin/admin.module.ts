@@ -11,3 +11,4 @@ import { Admin } from './Admin_Entity/admin.entity';
   exports: [AdminService, TypeOrmModule], // Export AdminService for use in other modules
 })
 export class AdminModule {}
+// Database e admin hbe Admin na
