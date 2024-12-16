@@ -4,38 +4,42 @@ export class CreateStudentDTO {
     @IsString({message: 'University ID must be a string'})
     university_id: string;
 
-    @IsNotEmpty({message: 'Email is required'})
-    @IsEmail({}, {message: 'Email must be valid'})
-    email: string;
+   @IsString()
+   @IsNotEmpty()
+   @Matches(/^\d{2}-\d{5}-\d{1}@student\.aiub\.edu$/, {
+    message: 'Invalid email format. The email must be AIUB-provided email."',
+   })
+   email: string;
 
     @IsNotEmpty({message: 'Password is required'})
     @IsString({message: 'Password must be a string' })
-    /*@Matches(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/, {
-        message:
-        'Passwords must be at least 8 characters, should include atleast one uppercase and one lowercase letter and a special character and a digit'
-    })*/
+    @Matches(/^.{6,}$/, {
+        message: 'Password must be at least 6 characters long.',
+      })
     password: string;
 }
 
 export class ValidateDTO{
 
-    @IsNotEmpty({message: 'Email is required'})
-    @IsEmail({}, {message: 'Email must be valid'})
-    email: string;
+  @IsString()
+  @IsNotEmpty()
+  email: string;
 
     @IsNotEmpty({message: 'Password is required'})
     @IsString({message: 'Password must be a string' })
-   /* @Matches(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/, {
-        message:
-        'Passwords must be at least 8 characters, should include atleast one uppercase and one lowercase letter and a special character and a digit'
-    })*/
+    @Matches(/^.{6,}$/, {
+        message: 'Password must be at least 6 characters long.',
+      })
     password: string;
 }
 
 export class sendEmailDto{
 
-    @IsEmail()
-    email:string
+  @IsString()
+  @Matches(/^\d{2}-\d{5}-\d{1}@student\.aiub\.edu$/, {
+    message: 'Invalid email format. The email must be AIUB-provided email."',
+  })
+  email: string;
 }
 
 export class verifyOtp{
@@ -52,4 +56,32 @@ export class resetPassDTO{
     @IsString()
     confirmPass: string;
 
+}
+
+export class changePassDTO{
+    @IsNotEmpty()
+    @IsString()
+    @Matches(/^.{6,}$/, {
+        message: 'Password must be at least 6 characters long.',
+      })
+    oldPass: string;
+
+    @IsNotEmpty()
+    @IsString()
+    @Matches(/^.{6,}$/, {
+        message: 'Password must be at least 6 characters long.',
+      })
+    newPass: string;
+
+    @IsNotEmpty()
+    @IsString()
+    @Matches(/^.{6,}$/, {
+        message: 'Password must be at least 6 characters long.',
+      })
+    confirmPass: string;
+}
+
+export class SearchSlotDto {
+  @IsString()
+  time: string;
 }
