@@ -7,6 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Booking } from 'src/bookings/Booking_Entity/booking.entity';
 import { Student_Regi } from 'src/User/Student_Entity/student.entity';
 import { Repository } from 'typeorm';
+import { Coupon } from './Coupon_Entity/Coupon.entity'; // Import Coupon entity
 
 @Injectable()
 export class PaymentService {
@@ -15,7 +16,10 @@ export class PaymentService {
     private bookingRepository: Repository<Booking>,
 
     @InjectRepository(Student_Regi)
-    private studentRepository: Repository<Student_Regi>, // Repository for Student_Regi entity
+    private studentRepository: Repository<Student_Regi>,
+
+    @InjectRepository(Coupon)
+    private couponRepository: Repository<Coupon>, // Inject Coupon repository
   ) {}
 
   /**
@@ -32,27 +36,33 @@ export class PaymentService {
       throw new NotFoundException('Student not found');
     }
 
-    let addedBalance = 0;
+    // Fetch coupon details from the database
+    const coupon = await this.couponRepository.findOne({
+      where: { code: couponCode },
+    });
 
-    // Validate coupon codes and assign corresponding balance
-    if (couponCode === 'COUPON100') {
-      addedBalance = 100;
-    } else if (couponCode === 'COUPON200') {
-      addedBalance = 200;
-    } else if (couponCode === 'COUPON500') {
-      addedBalance = 500;
-    } else {
+    if (!coupon) {
       throw new BadRequestException('Invalid coupon code');
     }
 
-    // Update student balance
+    if (coupon.isUsed) {
+      throw new BadRequestException('Coupon has already been used');
+    }
 
+    // Add coupon value to the student's balance
+    const addedBalance = coupon.value;
     student.balance = (student.balance || 0) + addedBalance;
+
+    // Mark coupon as used
+    coupon.isUsed = true;
+
+    // Save changes to the database
     await this.studentRepository.save(student);
+    await this.couponRepository.save(coupon);
 
     return {
       balance: student.balance,
-      message: `Balance updated successfully. Added ${addedBalance} Taka.`,
+      message: `Balance updated successfully. Added ${addedBalance} Taka using coupon ${couponCode}.`,
     };
   }
 

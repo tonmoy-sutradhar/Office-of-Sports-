@@ -3,12 +3,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PaymentService } from './payment.service';
 import { PaymentController } from './payment.controller';
 import { Booking } from 'src/bookings/Booking_Entity/booking.entity';
-import { Slot } from 'src/Slots/Slot_Entity/slot.entity'; // import the Slot entity
+import { Slot } from 'src/Slots/Slot_Entity/slot.entity'; // Import the Slot entity
 import { Student_Regi } from 'src/User/Student_Entity/student.entity';
+import { Coupon } from './Coupon_Entity/Coupon.entity'; // Import the Coupon entity
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Booking, Student_Regi, Slot]), // Make sure Student_Regi repository is available here
+    TypeOrmModule.forFeature([Booking, Student_Regi, Slot, Coupon]), // Added Coupon entity
   ],
   providers: [PaymentService],
   controllers: [PaymentController],
