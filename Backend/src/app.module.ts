@@ -14,8 +14,6 @@ import { SportsModule } from './sports/sports.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './User/user.module';
 import { HistoryModule } from './history/history.module';
-
-// Remove the incorrect import of `Student_RegiRepository`
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -23,7 +21,7 @@ import { HistoryModule } from './history/history.module';
       host: 'localhost',
       port: 5432,
       username: 'postgres',
-      password: 'tiger',
+      password: 'emamul',
       database: 'office_of_sports_online',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,

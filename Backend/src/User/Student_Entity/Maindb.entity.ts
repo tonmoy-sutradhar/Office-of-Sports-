@@ -15,10 +15,7 @@ export class Main_StudentDB {
   phone_number: string;
 
   @Column()
-  location: string; 
-
-  @Column({ nullable: true })
-  picture: string; 
+  location: string;  
 
   @Column({ unique: true })
   nid_number: string; 
