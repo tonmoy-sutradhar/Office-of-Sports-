@@ -14,6 +14,7 @@ import { SportsModule } from './sports/sports.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './User/user.module';
 import { HistoryModule } from './history/history.module';
+
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -21,14 +22,16 @@ import { HistoryModule } from './history/history.module';
       host: 'localhost',
       port: 5432,
       username: 'postgres',
+
       password: 'emamul',
+
       database: 'office_of_sports_online',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
     AdminModule,
     AuthModule,
-    BookingsModule, // Make sure BookingsModule is correctly imported
+    BookingsModule,
     FeedbacksModule,
     NotificationsModule,
     PaymentModule,

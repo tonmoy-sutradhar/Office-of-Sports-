@@ -24,7 +24,12 @@ export class PaymentController {
     if (!studentId || !couponCode) {
       throw new BadRequestException('Student ID and Coupon Code are required.');
     }
-    return this.paymentService.addBalance(studentId, couponCode);
+
+    try {
+      return await this.paymentService.addBalance(studentId, couponCode);
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
   }
 
   /**
@@ -44,7 +49,19 @@ export class PaymentController {
         'Invalid student ID, booking ID, or amount.',
       );
     }
-    return this.paymentService.deductBalance(studentId, bookingId, amount);
+
+    try {
+      return await this.paymentService.deductBalance(
+        studentId,
+        bookingId,
+        amount,
+      );
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw new NotFoundException(error.message);
+      }
+      throw new BadRequestException(error.message);
+    }
   }
 
   /**
@@ -56,7 +73,12 @@ export class PaymentController {
     if (!studentId) {
       throw new BadRequestException('Student ID is required.');
     }
-    return this.paymentService.getBalance(studentId);
+
+    try {
+      return await this.paymentService.getBalance(studentId);
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
   }
 
   /**
@@ -68,6 +90,14 @@ export class PaymentController {
     if (!bookingId) {
       throw new BadRequestException('Booking ID is required.');
     }
-    return this.paymentService.getBookingStatus(bookingId);
+
+    try {
+      return await this.paymentService.getBookingStatus(bookingId);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw new NotFoundException(error.message);
+      }
+      throw new BadRequestException(error.message);
+    }
   }
 }
