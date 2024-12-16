@@ -1,11 +1,3 @@
-// import { Module } from '@nestjs/common';
-// import { FeedbacksService } from './feedbacks.service';
-
-// @Module({
-//   providers: [FeedbacksService],
-// })
-// export class FeedbacksModule {}
-
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { FeedbacksService } from './feedbacks.service';
@@ -21,7 +13,7 @@ import { Feedback } from './Feedback_Entity/feedback.entity';
 })
 export class FeedbacksModule {}
 
-// http://localhost:3000/feedbacks --> for run the file
+// http://localhost:3000/feedbacks --> (POST Method)for run the file
 
 // Data --->
 // {
@@ -31,5 +23,7 @@ export class FeedbacksModule {}
 //   "student": 2
 // }
 
-// http://localhost:3000/feedbacks/sport-popularity ---> for run the postman
-// Done
+// http://localhost:3000/feedbacks/sport-popularity ---> for don't run the postman
+// Get method
+// localhost:3000/feedbacks
+// localhost:3000/feedbacks/sport/1
