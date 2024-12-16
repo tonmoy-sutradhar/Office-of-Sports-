@@ -18,6 +18,10 @@ export class Sport {
   @Column({ type: 'boolean', default: false })
   is_paid: boolean;
 
+  //  the feedbackCount field
+  @Column({ type: 'int', default: 0 })
+  feedbackCount: number;
+
   // OneToMany relationship with Feedback
   @OneToMany(() => Feedback, (feedback) => feedback.sport)
   feedbacks: Feedback[]; // This represents the feedbacks associated with this sport

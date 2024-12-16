@@ -1,16 +1,31 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Student_Regi } from './Student_Entity/student.entity';
-import { CreateStudentDTO, ValidateDTO,resetPassDTO,sendEmailDto } from './studentDTO/studentdto.dto';
+import { CreateStudentDTO, SearchSlotDto, ValidateDTO,changePassDTO,resetPassDTO,sendEmailDto } from './studentDTO/studentdto.dto';
 import { Repository } from 'typeorm';
+import { Main_StudentDB } from './Student_Entity/Maindb.entity';
+import * as bcrypt from 'bcrypt';
+import { Sport } from 'src/sports/Sports_Entity/sports.entity';
+import { Booking } from 'src/bookings/Booking_Entity/booking.entity';
+import { Slot } from 'src/Slots/Slot_Entity/slot.entity';
 
 @Injectable()
 export class UserService {
-    constructor(@InjectRepository(Student_Regi) private userRepo : Repository<Student_Regi>){}
+    constructor(@InjectRepository(Student_Regi) private userRepo : Repository<Student_Regi>,
+                @InjectRepository(Main_StudentDB) private mainSRepo: Repository<Main_StudentDB>,
+                @InjectRepository(Sport) private sportRepo: Repository<Sport> , 
+                @InjectRepository(Booking) private bookRepo: Repository<Booking>,
+                @InjectRepository(Slot) private slotRepo: Repository<Slot>, 
+){}
 
     async registerUser(createdto:CreateStudentDTO): Promise<any>{
+        const IsPresent = await this.userRepo.findOneBy({email:createdto.email})
+        if(!IsPresent){
         const {password, ...response} = await this.userRepo.save(createdto);
-        return response;
+        return response;}
+        else{
+            return new BadRequestException("You already have an account....!!");
+        }
     }
 
     async userLogin(logindata:ValidateDTO): Promise<any>{
@@ -32,6 +47,104 @@ export class UserService {
         await this.userRepo.update({email:userMail} , { password: updatedPassword });
     }
 
+    async userProfile(universityId:string){
+        const IsExists = await this.mainSRepo.findOneBy({university_id: universityId})
+        if(!IsExists){
+            return new BadRequestException("Invalid User")
+        }
+        const {password, ...userData} = IsExists;
+        return userData;
+    }
 
+    async changePass(data:changePassDTO,userid:number)
+    {
+        const IsExists = await this.userRepo.findOneBy({id:userid});
+        if(!IsExists)
+        {
+            return new BadRequestException("User not found!!")
+        }
+        const matchPass = await bcrypt.compare(data.oldPass, IsExists.password);
+        if(!matchPass)
+        {
+            return new BadRequestException("Password can not be changed!!");
+        }
+
+        else if (data.newPass !== data.confirmPass)
+        {
+            return new BadRequestException("New password and confirm password not mathced");
+        }
+        const hashedPassword = await bcrypt.hash(data.newPass, 8);
+        data.newPass = hashedPassword;
+        await this.userRepo.update({id:userid},{password:data.newPass});
+        return {message:"Password changed Successfully"};
+    }
+
+    async getOutdooSports(){
+        const isExists = await this.sportRepo.find({where: {type:'outdoor'}});
+        if(!isExists)
+        {
+            throw new BadRequestException("There are no outdoor games");
+        }
+        return isExists;
+    }
+
+    async getIndoor(){
+        const isExists = await this.sportRepo.find({where: {type:'indoor'}});
+        if(!isExists)
+        {
+            throw new BadRequestException("There are no indoor games");
+        }
+        return isExists;
+    }
+
+    async getBooking(id:number){
+        console.log(id);
+        const isExists = await this.bookRepo.query(
+            `SELECT 
+            s.start_time,
+            s.end_time,
+            b.payment_status,
+            b.status,
+            s.member,
+            sp.name AS game_name
+            FROM 
+            "Booking" b
+            JOIN 
+            "Slot" s ON s.id = b.slot_id
+            JOIN 
+            "Sport" sp ON sp.id = b.sport_id
+            WHERE 
+            b.student_id = $1`,[id]);
+
+        if(!isExists){
+            throw new BadRequestException("Not Found");
+        }
+        else if(isExists.length ===0){
+            throw new BadRequestException("No bookings")
+        }
+
+        return isExists;
+    }
+
+    async searchSlotByTime(inputTime:string) {
+        console.log(inputTime);
+        const slots = await this.slotRepo.query(
+          `SELECT 
+            sp.name,
+            s.start_time,
+            s.end_time,
+            TO_CHAR(s.date, 'YYYY-MM-DD') AS date,
+            s.member,
+            s.is_booked
+          FROM 
+            "Slot" s
+        JOIN 
+            "Sport" sp ON sp.id = s.sport_id
+          WHERE 
+            s.start_time = $1`,
+          [inputTime],
+        );
     
+        return slots;
+      }
 }
