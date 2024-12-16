@@ -12,6 +12,3 @@ import { Slot } from './Slot_Entity/slot.entity';
   exports: [SlotsService], // Export SlotsService for using another module
 })
 export class SlotsModule {}
-
-// Add a sports done. --> done
-// Slots add, delete, edit --> done
