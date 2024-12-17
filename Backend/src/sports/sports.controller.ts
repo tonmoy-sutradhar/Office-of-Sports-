@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param } from '@nestjs/common';
 import { SportsService } from './sports.service';
 import { CreateSportDto } from './create-sport.dto';
 
@@ -9,5 +9,17 @@ export class SportsController {
   @Post()
   async addSport(@Body() createSportDto: CreateSportDto) {
     return this.sportsService.addSport(createSportDto);
+  }
+
+  // Get all sports
+  @Get()
+  async getAllSports() {
+    return this.sportsService.getAllSports();
+  }
+
+  // Get a specific sport by ID
+  @Get(':id')
+  async getSportById(@Param('id') id: number) {
+    return this.sportsService.getSportById(id);
   }
 }

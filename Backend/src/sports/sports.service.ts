@@ -26,4 +26,16 @@ export class SportsService {
       throw new Error('Error creating sport. Please try again later.');
     }
   }
+
+  // Fetch all sports
+  async getAllSports(): Promise<Sport[]> {
+    return this.sportRepository.find();
+  }
+
+  // Fetch a specific sport by ID
+  async getSportById(id: number): Promise<Sport> {
+    const sport = await this.sportRepository.findOne({ where: { id } });
+    if (!sport) throw new Error('Sport not found.');
+    return sport;
+  }
 }
