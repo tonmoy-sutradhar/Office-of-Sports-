@@ -12,18 +12,3 @@ import { Feedback } from './Feedback_Entity/feedback.entity';
   controllers: [FeedbacksController],
 })
 export class FeedbacksModule {}
-
-// http://localhost:3000/feedbacks --> (POST Method)for run the file
-
-// Data --->
-// {
-//   "comment": "Great sport! Highly recommended.",
-//   "rating": 8,
-//   "sport": 1,
-//   "student": 2
-// }
-
-// http://localhost:3000/feedbacks/sport-popularity ---> for don't run the postman
-// Get method
-// localhost:3000/feedbacks
-// localhost:3000/feedbacks/sport/1
