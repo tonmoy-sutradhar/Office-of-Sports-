@@ -56,6 +56,15 @@ export class UserService {
         return userData;
     }
 
+    async getBalance(studentId:number){
+        const IsExists = await this.userRepo.findOneBy({id: studentId})
+        if(!IsExists){
+            return new BadRequestException("Invalid User")
+        }
+        const {password,email,university_id,isBanned,id, ...userData} = IsExists;
+        return userData;
+    }
+
     async changePass(data:changePassDTO,userid:number)
     {
         const IsExists = await this.userRepo.findOneBy({id:userid});
@@ -98,9 +107,10 @@ export class UserService {
     }
 
     async getBooking(id:number){
-        console.log(id);
         const isExists = await this.bookRepo.query(
             `SELECT 
+            b.id AS Booking_ID,
+            s.id AS Slot_ID,
             s.start_time,
             s.end_time,
             b.payment_status,
@@ -126,8 +136,7 @@ export class UserService {
         return isExists;
     }
 
-    async searchSlotByTime(inputTime:string) {
-        console.log(inputTime);
+    async searchSlotByTime(sportsName:string,inputTime:string) {
         const slots = await this.slotRepo.query(
           `SELECT 
             sp.name,
@@ -141,9 +150,18 @@ export class UserService {
         JOIN 
             "Sport" sp ON sp.id = s.sport_id
           WHERE 
-            s.start_time = $1`,
-          [inputTime],
+            s.start_time = $1 AND sp.name =$2`,
+          [inputTime,sportsName],
         );
+
+        if(!slots)
+        {
+            throw new BadRequestException("No slots Found")
+        }
+        else if(slots.length==0)
+            {
+                throw new BadRequestException("Empty Search")
+            }
     
         return slots;
       }

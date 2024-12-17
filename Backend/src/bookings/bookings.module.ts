@@ -6,10 +6,11 @@ import { BookingsController } from './bookings.controller'; // Import the Bookin
 import { Slot } from 'src/Slots/Slot_Entity/slot.entity';
 import { Sport } from 'src/sports/Sports_Entity/sports.entity';
 import { Student_Regi } from 'src/User/Student_Entity/student.entity';
+import { NotificationService } from 'src/notifications/notifications.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Booking, Slot, Sport, Student_Regi])],
-  providers: [BookingsService], // Ensure BookingsService is available in the module
+  providers: [BookingsService,NotificationService], // Ensure BookingsService is available in the module
   controllers: [BookingsController], // Ensure BookingsController is included in the module
 })
 export class BookingsModule {}
