@@ -8,28 +8,38 @@ import {
   HttpStatus,
   Post,
   ParseIntPipe,
+  Res,
+  UseGuards
 } from '@nestjs/common';
 import { AdminService } from './admin.service';
-import { UpdateAdminDto } from './update-admin.dto';
+import { UpdateAdminDto, ValidAdminDTO } from './update-admin.dto';
 import { CouponDTO } from 'src/Payment/Coupon_DTO/Coupon.dto';
+import { adminAuthGuard } from './adminGuard.guard';
 
 @Controller('admin')
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
 
+  @Post('login')
+  async login(@Body()data:ValidAdminDTO,@Res({passthrough:true})res:Response) {
+    return await this.adminService.login(data,res);
+  }
   // Get all admins
   @Get()
+  @UseGuards(adminAuthGuard)
   async getAllAdmins() {
     return this.adminService.findAll();
   }
 
   @Get(':id')
+  @UseGuards(adminAuthGuard)
   async getAdminById(@Param('id', ParseIntPipe) id: number) {
     return this.adminService.findById(id);
   }
 
   // Update admin profile
   @Patch(':id')
+  @UseGuards(adminAuthGuard)
   @HttpCode(HttpStatus.OK)
   async updateAdmin(
     @Param('id') id: number,
@@ -40,6 +50,7 @@ export class AdminController {
 
   // Change admin password
   @Patch(':id/change-password')
+  @UseGuards(adminAuthGuard)
   @HttpCode(HttpStatus.OK)
   async changePassword(
     @Param('id') id: number,
@@ -50,12 +61,14 @@ export class AdminController {
 
   // Post a new coupon
   @Post('coupon')
+  @UseGuards(adminAuthGuard)
   async postCoupon(@Body() couponDto: CouponDTO) {
     return this.adminService.createCoupon(couponDto);
   }
 
   // Get a coupon by code
   @Get('coupon/:code')
+  @UseGuards(adminAuthGuard)
   async getCoupon(@Param('code') code: string) {
     return this.adminService.getCouponByCode(code);
   }

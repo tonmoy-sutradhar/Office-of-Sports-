@@ -30,19 +30,19 @@ export class FeedbacksController {
   }
 
   @Get('average-rating/:sportId')
-  @UseGuards(userAuthGuard)
+  //@UseGuards(userAuthGuard)
   async getAverageRating(@Param('sportId') sportId: number) {
     return this.feedbacksService.getAverageRating(sportId);
   }
 
   @Get('sport/:sportId')
-  @UseGuards(userAuthGuard)
+  //@UseGuards(userAuthGuard)
   async getFeedbacksForSport(@Param('sportId') sportId: number) {
     return this.feedbacksService.getFeedbacksForSport(sportId);
   }
 
   @Get()
-  @UseGuards(userAuthGuard)
+  //@UseGuards(userAuthGuard)
   async getAllFeedback() {
     return this.feedbacksService.getAllFeedback();
   }

@@ -7,9 +7,7 @@ export class NotificationService {
   // General function to send notifications for any event
   sendNotification(title: string, message: string, sound: boolean = true): void {
     // Resolve the logo path relative to your application's root
-    const logoPath = path.join(__dirname, '..', 'logo', 'OOS.ico'); // Assuming logo is in src/logo
-
-    console.log('Logo path:', logoPath);  // Log to check if the path is correct
+    const logoPath = path.join('src/logo/OOS.ico'); // Assuming logo is in src/logo
 
     notifier.notify({
       title: title, // Title of the notification (e.g., "Payment Done")

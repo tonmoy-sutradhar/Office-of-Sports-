@@ -2,13 +2,15 @@ import {
   Injectable,
   NotFoundException,
   BadRequestException,
+  UnauthorizedException
 } from '@nestjs/common';
 import { Admin } from './Admin_Entity/admin.entity';
-import { UpdateAdminDto } from './update-admin.dto';
+import { UpdateAdminDto, ValidAdminDTO } from './update-admin.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Coupon } from 'src/payment/Coupon_Entity/Coupon.entity';
 import { CouponDTO } from 'src/Payment/Coupon_DTO/Coupon.dto';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AdminService {
@@ -18,7 +20,27 @@ export class AdminService {
 
     @InjectRepository(Coupon)
     private readonly couponRepository: Repository<Coupon>,
+    private readonly jwtService:JwtService,
   ) {}
+
+  async login(loginData:ValidAdminDTO,res) : Promise<{message: string,}>{
+      console.log(loginData.email,loginData.password);
+          const user = await this.adminRepository.findOneBy({email:loginData.email});
+          if(!user){
+              throw new UnauthorizedException("User not Found");
+          }
+          if(user.password != loginData.password){
+              throw new UnauthorizedException("Invalid Password");
+          }
+          const payload = {
+              AdminId: user.id,            // Assuming the user model has an `id` property
+          };
+          const Token = await this.jwtService.signAsync(payload);
+          res.cookie('Admin_token',Token,{httpOnly:true});
+          return{
+              message: "Login Sucessfull for Admin"
+          };
+      }
 
   // Find admin by ID
   async findById(id: number): Promise<Admin> {
