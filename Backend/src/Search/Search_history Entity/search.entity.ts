@@ -16,9 +16,9 @@ export class Search {
   query: string;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  timestamp: Date; // Automatically records the search timestamp
+  timestamp: Date;
 
-  @ManyToOne(() => Admin, { nullable: true }) // Relation to Admin entity
-  @JoinColumn({ name: 'admin_id' }) // Foreign key column name in the database
-  admin: Admin; // admin j search korbe
+  @ManyToOne(() => Admin, { nullable: true })
+  @JoinColumn({ name: 'admin_id' })
+  admin: Admin;
 }

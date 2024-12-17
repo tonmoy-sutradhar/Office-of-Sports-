@@ -11,7 +11,7 @@ export class SportsService {
     private readonly sportRepository: Repository<Sport>,
   ) {}
 
-  // Add a new sport with error handling
+  // Add a new sport
   async addSport(createSportDto: CreateSportDto): Promise<Sport> {
     const sport = this.sportRepository.create({
       ...createSportDto,
@@ -21,7 +21,6 @@ export class SportsService {
     try {
       return await this.sportRepository.save(sport);
     } catch (error) {
-      // Log error and throw a user-friendly message
       console.error('Error saving sport:', error);
       throw new Error('Error creating sport. Please try again later.');
     }

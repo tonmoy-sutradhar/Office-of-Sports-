@@ -1,8 +1,7 @@
-// import { Feedback } from 'src/feedbacks/Feedback_Entity/feedback.entity';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { Feedback } from 'src/feedbacks/Feedback_Entity/feedback.entity'; // Import the Feedback entity
+import { Feedback } from 'src/feedbacks/Feedback_Entity/feedback.entity';
 import { Booking } from 'src/bookings/Booking_Entity/booking.entity';
-import { Slot } from 'src/Slots/Slot_Entity/slot.entity'; // Corrected to import the Slot entity
+import { Slot } from 'src/Slots/Slot_Entity/slot.entity';
 
 @Entity('Sport')
 export class Sport {
@@ -18,17 +17,15 @@ export class Sport {
   @Column({ type: 'boolean', default: false })
   is_paid: boolean;
 
-  //  the feedbackCount field
   @Column({ type: 'int', default: 0 })
   feedbackCount: number;
 
-  // OneToMany relationship with Feedback
   @OneToMany(() => Feedback, (feedback) => feedback.sport)
-  feedbacks: Feedback[]; // This represents the feedbacks associated with this sport
+  feedbacks: Feedback[];
 
   @OneToMany(() => Booking, (booking) => booking.sport)
-  bookings: Booking[]; // This represents the bookings associated with this sport
+  bookings: Booking[];
 
   @OneToMany(() => Slot, (slot) => slot.sport)
-  slots: Slot[]; // Corrected to use Slot[] with capital S
+  slots: Slot[];
 }

@@ -12,7 +12,6 @@ export class SlotsService {
 
   async addSlot(slotData: Partial<Slot>): Promise<Slot> {
     if (!slotData.sport || !slotData.sport.id) {
-      // It is user for included the sport file
       throw new Error('Sport ID is required to associate with the slot.');
     }
     const newSlot = this.slotRepository.create(slotData);
@@ -36,7 +35,6 @@ export class SlotsService {
   }
 
   // Get single slot by ID
-  // solve
   async getSlotById(id: number): Promise<Slot> {
     return await this.slotRepository.findOne({
       where: { id },
