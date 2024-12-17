@@ -9,10 +9,6 @@ import {
 export class CreateBookingDto {
   @IsNumber()
   @IsNotEmpty()
-  studentId: number; // Refers to the `Student_Regi` ID
-
-  @IsNumber()
-  @IsNotEmpty()
   slotId: number; // Refers to the `Slot` ID
 
   @IsNumber()

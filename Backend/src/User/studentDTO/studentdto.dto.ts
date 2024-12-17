@@ -83,5 +83,8 @@ export class changePassDTO{
 
 export class SearchSlotDto {
   @IsString()
+  sportsName:string;
+
+  @IsString()
   time: string;
 }

@@ -10,6 +10,7 @@ import { Booking } from './Booking_Entity/booking.entity';
 import { Sport } from 'src/sports/Sports_Entity/sports.entity'; // Import the Sport entity
 import { CreateBookingDto } from './dto/booking.dto';
 import { Student_Regi } from 'src/User/Student_Entity/student.entity';
+import { NotificationService } from 'src/notifications/notifications.service';
 
 @Injectable()
 export class BookingsService {
@@ -17,23 +18,25 @@ export class BookingsService {
     @InjectRepository(Booking) private bookingRepository: Repository<Booking>,
     @InjectRepository(Slot) private slotRepository: Repository<Slot>, // Inject Slot repository
     @InjectRepository(Sport) private sportRepository: Repository<Sport>, // Inject Sport repository
-    @InjectRepository(Student_Regi)
-    private studentRepository: Repository<Student_Regi>, // Inject Student repository
+    @InjectRepository(Student_Regi) private studentRepository: Repository<Student_Regi>, // Inject Student repository
+    private readonly notificationService:NotificationService,
   ) {}
 
   /**
    * Creates a booking for a specific student, sport, and slot.
    * @param CreateBookingDto - Contains the studentId, sportId, slotId, status, and payment_status.
    */
-  async createBooking(createBookingDto: CreateBookingDto): Promise<Booking> {
-    // Check if the student exists
-    const student = await this.studentRepository.findOne({
-      where: { id: createBookingDto.studentId },
+  async createBooking(createBookingDto: CreateBookingDto, studentId: number): Promise<Booking> {
+    // Check if the student exists (only verifies existence without exposing data)
+    const studentExists = await this.studentRepository.findOne({
+      where: { id: studentId },
+      select: ['id'], // Only fetch the `id` to avoid exposing other details
     });
-    if (!student) {
+  
+    if (!studentExists) {
       throw new NotFoundException('Student not found.');
     }
-
+  
     // Check if the sport exists
     const sport = await this.sportRepository.findOne({
       where: { id: createBookingDto.sportId },
@@ -41,69 +44,74 @@ export class BookingsService {
     if (!sport) {
       throw new NotFoundException('Sport not found.');
     }
-
-    // Check if the slot exists and is available
+  
+    // Check if the slot exists
     const slot = await this.slotRepository.findOne({
       where: { id: createBookingDto.slotId },
     });
     if (!slot) {
       throw new NotFoundException('Slot not found.');
     }
-
+  
     // Check if the student has already booked a slot on the same day for the same sport
     const existingBooking = await this.bookingRepository.findOne({
       where: {
-        student: { id: createBookingDto.studentId },
+        student: { id: studentId },
         sport: { id: createBookingDto.sportId },
-        slot: { date: createBookingDto.date }, // Same date for this sport
+        slot: { date: createBookingDto.date },
       },
     });
-
+  
     if (existingBooking) {
       throw new BadRequestException(
         'You can only book one slot per day for each sport.',
       );
     }
-
-    // Check the booking limits for each sport
+  
+    // Check the booking limits for the sport
     const bookingLimit = this.getSportBookingLimit(createBookingDto.sportId);
     const currentBookings = await this.bookingRepository.count({
       where: {
         sport: { id: createBookingDto.sportId },
-        slot: { date: slot.date }, // Same date for this sport
+        slot: { date: slot.date },
       },
     });
-
-    // Check if the limit has been reached for the sport
+  
     if (currentBookings >= bookingLimit) {
       throw new BadRequestException(
         `Booking limit reached for this sport on ${slot.date}.`,
       );
     }
-
+  
     // Check if the slot is already booked
     if (slot.is_booked && createBookingDto.status === 'booked') {
       throw new BadRequestException('Slot is already booked.');
     }
-
-    // Create a new booking
+  
+    // Create a new booking (linking by `studentId` instead of the full student entity)
     const booking = this.bookingRepository.create({
-      student,
+      student: { id: studentId }, // Reference the student by ID only
       sport,
       slot,
       status: createBookingDto.status,
       payment_status: createBookingDto.payment_status,
     });
-
+  
     // If the booking status is 'booked', mark the slot as booked
     if (createBookingDto.status === 'booked') {
       slot.is_booked = true;
       await this.slotRepository.save(slot);
     }
-
+    this.notificationService.sendNotification(
+      'Booking Complete', // Title
+      'Your booking has been confirmed. Details: [Booking Details]', // Message
+      true // Sound (optional, defaults to true)
+    );
+  
     // Save the booking
     return this.bookingRepository.save(booking);
   }
+  
 
   // Helper function to get the booking limit based on sportId
   private getSportBookingLimit(sportId: number): number {

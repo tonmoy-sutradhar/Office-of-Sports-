@@ -19,6 +19,15 @@ export class UserController {
         const decodedPayload = await this.jwtService.verifyAsync(token);
         return await this.userService.userProfile(decodedPayload.university_id);
     }
+    
+    @Get('balance')
+   @UseGuards(userAuthGuard)
+    async balance(@Req()res):Promise<any>{
+        const token = res.cookies['access_token']; // Or extract it from the Authorization header
+        const decodedPayload = await this.jwtService.verifyAsync(token);
+        return await this.userService.getBalance(decodedPayload.userId);
+    }
+
 
     @Patch('changePass')
     @UseGuards(userAuthGuard)
@@ -51,7 +60,7 @@ export class UserController {
     @Post('search-by-time')
     @UseGuards(userAuthGuard)
     async searchSlot(@Query() query: SearchSlotDto) {
-      return this.userService.searchSlotByTime(query.time);
+      return this.userService.searchSlotByTime(query.sportsName,query.time);
     }
 
 

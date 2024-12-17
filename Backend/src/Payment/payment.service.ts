@@ -8,6 +8,8 @@ import { Booking } from 'src/bookings/Booking_Entity/booking.entity';
 import { Student_Regi } from 'src/User/Student_Entity/student.entity';
 import { Repository } from 'typeorm';
 import { Coupon } from './Coupon_Entity/Coupon.entity'; // Import Coupon entity
+import { Slot } from 'src/Slots/Slot_Entity/slot.entity';
+import { NotificationService } from 'src/notifications/notifications.service';
 
 @Injectable()
 export class PaymentService {
@@ -20,6 +22,10 @@ export class PaymentService {
 
     @InjectRepository(Coupon)
     private couponRepository: Repository<Coupon>, // Inject Coupon repository
+
+    @InjectRepository(Slot)
+    private slotRepo: Repository<Slot>,
+    private readonly notificationService:NotificationService,
   ) {}
 
   /**
@@ -75,6 +81,7 @@ export class PaymentService {
   async deductBalance(
     university_id: number,
     bookingId: number,
+    slotID:number,
     amount: number,
   ) {
     const student = await this.studentRepository.findOne({
@@ -105,6 +112,8 @@ export class PaymentService {
       throw new BadRequestException('Booking does not belong to the student');
     }
 
+    const slot = await this.slotRepo.findOneBy({id:slotID});
+
     // Deduct the balance from the student
     student.balance -= amount;
     await this.studentRepository.save(student);
@@ -113,6 +122,17 @@ export class PaymentService {
     booking.payment_status = 'paid';
     await this.bookingRepository.save(booking);
 
+    slot.member+=1;
+    await this.slotRepo.save(slot);
+
+
+    this.notificationService.sendNotification(
+      'Payment Done', // Title
+      'Your payment was successfully processed.', // Message
+      true // Sound (optional, defaults to true)
+    );
+
+    
     return {
       balance: student.balance,
       message: `Payment successful for booking ${bookingId}. Deducted ${amount} Taka.`,
@@ -131,6 +151,7 @@ export class PaymentService {
     if (!student) {
       throw new NotFoundException('Student not found');
     }
+
 
     return {
       balance: student.balance || 0,

@@ -4,12 +4,18 @@ import {
   Body,
   BadRequestException,
   NotFoundException,
+  Req,
+  UseGuards
 } from '@nestjs/common';
 import { PaymentService } from './payment.service';
+import { JwtService } from '@nestjs/jwt';
+import { userAuthGuard } from 'src/User/auth/userAuth.guard';
 
 @Controller('payment')
 export class PaymentController {
-  constructor(private readonly paymentService: PaymentService) {}
+  constructor(private readonly paymentService: PaymentService,
+    private readonly jwtService:JwtService,
+  ) {}
 
   /**
    * Endpoint to add balance to a student's account using a coupon code.
@@ -17,16 +23,19 @@ export class PaymentController {
    * @param couponCode - Mock coupon code for adding balance.
    */
   @Post('add-balance')
+  @UseGuards(userAuthGuard)
   async addBalance(
-    @Body('studentId') studentId: number,
+    @Req()req,
     @Body('couponCode') couponCode: string,
   ) {
-    if (!studentId || !couponCode) {
+        const token = req.cookies['access_token']; // Or extract it from the Authorization header
+        const decodedPayload = await this.jwtService.verifyAsync(token);
+    if (!decodedPayload.userId || !couponCode) {
       throw new BadRequestException('Student ID and Coupon Code are required.');
     }
 
     try {
-      return await this.paymentService.addBalance(studentId, couponCode);
+      return await this.paymentService.addBalance(decodedPayload.userId, couponCode);
     } catch (error) {
       throw new BadRequestException(error.message);
     }
@@ -39,21 +48,26 @@ export class PaymentController {
    * @param amount - Amount to deduct.
    */
   @Post('deduct-balance')
+  @UseGuards(userAuthGuard)
   async deductBalance(
-    @Body('studentId') studentId: number,
+    @Req()req,
     @Body('bookingId') bookingId: number,
+    @Body('slotID') slotID:number,
     @Body('amount') amount: number,
   ) {
-    if (!studentId || !bookingId || amount <= 0) {
+         const token = req.cookies['access_token']; // Or extract it from the Authorization header
+        const decodedPayload = await this.jwtService.verifyAsync(token);
+    if (!decodedPayload.userId || !bookingId || amount <= 0 || !slotID) {
       throw new BadRequestException(
-        'Invalid student ID, booking ID, or amount.',
+        'Invalid student ID, booking ID, Slot ID or amount.',
       );
     }
 
     try {
       return await this.paymentService.deductBalance(
-        studentId,
+        decodedPayload.userId,
         bookingId,
+        slotID,
         amount,
       );
     } catch (error) {
@@ -69,7 +83,11 @@ export class PaymentController {
    * @param studentId - ID of the student.
    */
   @Post('get-balance')
-  async getBalance(@Body('studentId') studentId: number) {
+  @UseGuards(userAuthGuard)
+  async getBalance(@Req()req) {
+    const token = req.cookies['access_token']; // Or extract it from the Authorization header
+    const decodedPayload = await this.jwtService.verifyAsync(token);
+    const studentId = decodedPayload.userId;
     if (!studentId) {
       throw new BadRequestException('Student ID is required.');
     }
@@ -86,6 +104,7 @@ export class PaymentController {
    * @param bookingId - ID of the booking.
    */
   @Post('get-booking-status')
+  @UseGuards(userAuthGuard)
   async getBookingStatus(@Body('bookingId') bookingId: number) {
     if (!bookingId) {
       throw new BadRequestException('Booking ID is required.');
