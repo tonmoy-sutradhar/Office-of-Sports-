@@ -1,81 +1,37 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Query } from '@nestjs/common';
 import { FeedbacksService } from './feedbacks.service';
-import { CreateFeedbackDto } from './create-feedback.dto';
 
 @Controller('feedbacks')
 export class FeedbacksController {
   constructor(private readonly feedbacksService: FeedbacksService) {}
 
-  // Add new feedback
-  @Post()
-  async addFeedback(@Body() createFeedbackDto: CreateFeedbackDto) {
-    return await this.feedbacksService.addFeedback(createFeedbackDto);
+  @Post('addFeedback')
+  async addFeedback(
+    @Body('studentId') studentId: number,
+    @Body('sportId') sportId: number,
+    @Body('comment') comment: string,
+    @Body('rating') rating: number,
+  ) {
+    return this.feedbacksService.addFeedback(
+      studentId,
+      sportId,
+      comment,
+      rating,
+    );
   }
 
-  // Get sport popularity analytics
-  @Get('analytics')
-  async getSportPopularity() {
-    return await this.feedbacksService.getSportPopularity();
+  @Get('average-rating/:sportId')
+  async getAverageRating(@Param('sportId') sportId: number) {
+    return this.feedbacksService.getAverageRating(sportId);
   }
 
-  // Get all feedbacks
-  @Get()
-  async getAllFeedbacks() {
-    return await this.feedbacksService.getAllFeedbacks();
-  }
-
-  // Get feedbacks by sport id
   @Get('sport/:sportId')
-  async getFeedbacksBySport(@Param('sportId') sportId: number) {
-    return await this.feedbacksService.getFeedbacksBySport(sportId);
+  async getFeedbacksForSport(@Param('sportId') sportId: number) {
+    return this.feedbacksService.getFeedbacksForSport(sportId);
   }
 
-  // Get the most popular sport
-  @Get('most-popular')
-  async getMostPopularSport() {
-    return await this.feedbacksService.getMostPopularSport();
+  @Get()
+  async getAllFeedback() {
+    return this.feedbacksService.getAllFeedback();
   }
 }
-
-// import { Controller } from '@nestjs/common';
-
-// @Controller('feedbacks')
-// export class FeedbacksController {}
-// import { Controller, Get, Post, Body, Query, Param } from '@nestjs/common';
-// import { FeedbacksService } from './feedbacks.service';
-// import { CreateFeedbackDto } from './create-feedback.dto';
-
-// @Controller('feedbacks')
-// export class FeedbacksController {
-//   constructor(private readonly feedbacksService: FeedbacksService) {}
-
-//   // Add new feedback
-//   @Post()
-//   async addFeedback(@Body() createFeedbackDto: CreateFeedbackDto) {
-//     return await this.feedbacksService.addFeedback(createFeedbackDto);
-//   }
-
-//   // Get sport popularity analytics
-//   @Get('analytics')
-//   async getSportPopularity() {
-//     return await this.feedbacksService.getSportPopularity();
-//   }
-
-//   // Get all feedbacks
-//   @Get()
-//   async getAllFeedbacks() {
-//     return await this.feedbacksService.getAllFeedbacks();
-//   }
-
-//   // feedbacks.controller.ts
-//   @Get('sport/:sportId')
-//   async getFeedbacksBySport(@Param('sportId') sportId: number) {
-//     return await this.feedbacksService.getFeedbacksBySport(sportId);
-//   }
-
-//   @Get('most-popular')
-//   async getMostPopularSport() {
-//     const popularSport = await this.feedbacksService.getMostPopularSport();
-//     return popularSport;
-//   }
-// }

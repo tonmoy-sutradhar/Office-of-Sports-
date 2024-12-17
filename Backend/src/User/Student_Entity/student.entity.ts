@@ -24,8 +24,8 @@ export class Student_Regi {
 
   @OneToMany(() => Booking, (booking) => booking.student, { lazy: true })
   bookings: Promise<Booking[]>;
-  // feedbacks: any;
 
-  @OneToMany(() => Feedback, (feedback) => feedback.student)
-  feedbacks: Feedback[];
+  // One-to-Many relationship with Feedback
+  @OneToMany(() => Feedback, (feedback) => feedback.student, { lazy: true })
+  feedbacks: Promise<Feedback[]>; // This allows accessing all feedbacks by the student
 }
