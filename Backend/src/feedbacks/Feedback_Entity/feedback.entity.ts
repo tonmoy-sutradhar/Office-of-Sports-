@@ -4,6 +4,8 @@ import {
   Column,
   ManyToOne,
   JoinColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Student_Regi } from 'src/User/Student_Entity/student.entity';
 import { Sport } from 'src/sports/Sports_Entity/sports.entity';
@@ -19,8 +21,8 @@ export class Feedback {
   @Column({ type: 'int', default: 0 })
   rating: number;
 
-  // ManyToOne relationship to Sport
-  @ManyToOne(() => Sport, (sport) => sport.feedbacks, { eager: true }) // Link back to Sport
+  // Many-to-One relationship with Sport
+  @ManyToOne(() => Sport, (sport) => sport.feedbacks, { eager: true })
   @JoinColumn({ name: 'sport_id' })
   sport: Sport; // This refers to the Sport associated with the feedback
 

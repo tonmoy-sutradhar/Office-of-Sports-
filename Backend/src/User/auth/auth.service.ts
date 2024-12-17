@@ -1,9 +1,10 @@
-import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, HttpCode, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { UserService } from '../user.service';
 import { CreateStudentDTO, ValidateDTO,resetPassDTO,sendEmailDto,verifyOtp } from '../studentDTO/studentdto.dto';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import * as nodemailer from 'nodemailer'; 
+import * as nodemailer from 'nodemailer';
+
 
 
 
@@ -24,18 +25,23 @@ export class AuthService {
         return await this.userService.registerUser(createdto);
     }
 
-    async login(loginData:ValidateDTO,response) : Promise<{message: string, Token:string}>{
+    async login(loginData:ValidateDTO,res) : Promise<{message: string,}>{
         const user = await this.userService.userLogin(loginData);
-        if(!user){
+        if(!user || user.isBanned == true){
             throw new UnauthorizedException("User not Found");
         }
         const passMatch = await bcrypt.compare(loginData.password, user.password);
         if(!passMatch){
             throw new UnauthorizedException("Invalid Password");
         }
-        const Token = await this.jwtService.signAsync(loginData);
+        const payload = {
+            userId: user.id,            // Assuming the user model has an `id` property
+            university_id: user.university_id, // Assuming university_id is available in the user model
+        };
+        const Token = await this.jwtService.signAsync(payload);
+        res.cookie('access_token',Token,{httpOnly:true});
         return{
-            message: "Login Sucessfull",Token
+            message: "Login Sucessfull"
         };
     }
     
@@ -186,4 +192,6 @@ export class AuthService {
             return {message:"Password reset Successfully"};
         }
     }
+
+    
 }

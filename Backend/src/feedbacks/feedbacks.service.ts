@@ -51,6 +51,7 @@ export class FeedbacksService {
     const feedback = this.feedbackRepository.create({
       comment,
       rating,
+
       sport,
       student,
     });
