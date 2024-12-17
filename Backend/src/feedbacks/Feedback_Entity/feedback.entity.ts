@@ -23,4 +23,11 @@ export class Feedback {
   @ManyToOne(() => Sport, (sport) => sport.feedbacks, { eager: true }) // Link back to Sport
   @JoinColumn({ name: 'sport_id' })
   sport: Sport; // This refers to the Sport associated with the feedback
+
+  // ManyToOne relationship to Student_Regi
+  @ManyToOne(() => Student_Regi, (student) => student.feedbacks, {
+    eager: true,
+  }) // Link back to Student
+  @JoinColumn({ name: 'student_id' })
+  student: Student_Regi; // This refers to the Student who provided the feedback
 }
