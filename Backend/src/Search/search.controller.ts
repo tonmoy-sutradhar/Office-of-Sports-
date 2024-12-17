@@ -7,8 +7,10 @@ import {
   Body,
   HttpCode,
   HttpStatus,
+  UseGuards
 } from '@nestjs/common';
 import { SearchService } from './search.service';
+import { adminAuthGuard } from 'src/admin/adminGuard.guard';
 
 @Controller('search')
 export class SearchController {
@@ -16,6 +18,7 @@ export class SearchController {
 
   // Search for a student by university ID
   @Get('student')
+  @UseGuards(adminAuthGuard)
   async searchStudent(
     @Query('query') query: string,
     @Query('adminId') adminId?: number,
@@ -24,7 +27,8 @@ export class SearchController {
   }
 
   // Ban or unban a student by university_id
-  @Patch('student/:identifier/ban')
+  @Patch('student/ban/:identifier')
+  @UseGuards(adminAuthGuard)
   @HttpCode(HttpStatus.OK)
   async banUnbanStudent(
     @Param('identifier') identifier: string,
