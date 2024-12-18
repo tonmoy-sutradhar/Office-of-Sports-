@@ -4,7 +4,7 @@ import { CreateStudentDTO, ValidateDTO,resetPassDTO,sendEmailDto,verifyOtp } fro
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import * as nodemailer from 'nodemailer';
-
+import * as Response from 'express';
 
 
 
@@ -44,7 +44,21 @@ export class AuthService {
             message: "Login Sucessfull"
         };
     }
-    
+
+    async logout(req,res){
+         res.clearCookie('access_token');
+            req.session.destroy((err) => {
+            if (err) {
+              console.error('Session destroy error:', err);
+              throw new Error('Error logging out');
+            }
+            });
+        
+            return {
+            message: 'Logout Successful',
+            };
+    }
+
 
      emailtransport(){
             const transport = nodemailer.createTransport(

@@ -19,7 +19,7 @@ export class Student_Regi {
   @Column({ default: false }) // New column to track ban status
   isBanned: boolean;
 
-  @Column({ default: 0 })
+  @Column({default: 0 })
   balance: number;
 
   @OneToMany(() => Booking, (booking) => booking.student, { lazy: true })

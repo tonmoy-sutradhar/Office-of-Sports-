@@ -3,8 +3,8 @@ import { AuthService } from './auth.service';
 import { CreateStudentDTO, resetPassDTO } from '../studentDTO/studentdto.dto';
 import { ValidateDTO } from '../studentDTO/studentdto.dto';
 import { sendEmailDto,verifyOtp } from '../studentDTO/studentdto.dto';
-import { userAuthGuard } from './userAuth.guard';
 import { Response } from 'express';
+import { userAuthGuard } from './userAuth.guard';
 
 
 @Controller('auth')
@@ -22,6 +22,13 @@ export class AuthController {
     login(@Body() validator: ValidateDTO,@Res({passthrough:true})res:Response): Promise<any>{
         return this.AuthService.login(validator,res);
     }
+
+    @Post('logout')
+    //@UseGuards(userAuthGuard)
+    async logout(@Req() request: any, @Res({passthrough:true}) response: any): Promise<{ message: string }> {
+    return await this.AuthService.logout(request,response);
+    }
+
 
     @Post('forget-password')
     async forgetPassword(@Body()data:sendEmailDto,@Req()req:any):Promise<any>{

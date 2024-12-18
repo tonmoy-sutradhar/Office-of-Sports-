@@ -20,6 +20,9 @@ export class Sport {
   @Column({ type: 'int', default: 0 })
   feedbackCount: number;
 
+  @Column({ type: 'float', default: 0 })
+  averageRating: number;
+
   @OneToMany(() => Feedback, (feedback) => feedback.sport)
   feedbacks: Feedback[];
 

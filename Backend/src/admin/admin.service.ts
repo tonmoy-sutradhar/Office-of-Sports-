@@ -24,7 +24,6 @@ export class AdminService {
   ) {}
 
   async login(loginData:ValidAdminDTO,res) : Promise<{message: string,}>{
-      console.log(loginData.email,loginData.password);
           const user = await this.adminRepository.findOneBy({email:loginData.email});
           if(!user){
               throw new UnauthorizedException("User not Found");
@@ -41,6 +40,20 @@ export class AdminService {
               message: "Login Sucessfull for Admin"
           };
       }
+
+      async logout(req,res){
+        res.clearCookie('Admin_token');
+           req.session.destroy((err) => {
+           if (err) {
+             console.error('Session destroy error:', err);
+             throw new Error('Error logging out');
+           }
+           });
+       
+           return {
+           message: 'Logout Successful',
+           };
+         }
 
   // Find admin by ID
   async findById(id: number): Promise<Admin> {
