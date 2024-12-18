@@ -21,8 +21,8 @@ export class UserService {
     async registerUser(createdto:CreateStudentDTO): Promise<any>{
         const IsPresent = await this.userRepo.findOneBy({email:createdto.email})
         if(!IsPresent){
-        const {password, ...response} = await this.userRepo.save(createdto);
-        return response;}
+         await this.userRepo.save(createdto);
+        return {message:"Registratoin Successfull"};}
         else{
             return new BadRequestException("You already have an account....!!");
         }

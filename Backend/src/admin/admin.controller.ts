@@ -9,12 +9,13 @@ import {
   Post,
   ParseIntPipe,
   Res,
-  UseGuards
+  UseGuards, Req
 } from '@nestjs/common';
 import { AdminService } from './admin.service';
 import { UpdateAdminDto, ValidAdminDTO } from './update-admin.dto';
 import { CouponDTO } from 'src/Payment/Coupon_DTO/Coupon.dto';
 import { adminAuthGuard } from './adminGuard.guard';
+
 
 @Controller('admin')
 export class AdminController {
@@ -24,6 +25,12 @@ export class AdminController {
   async login(@Body()data:ValidAdminDTO,@Res({passthrough:true})res:Response) {
     return await this.adminService.login(data,res);
   }
+
+  @Post('logout')
+      async logout(@Req() request: any, @Res({passthrough:true}) response: any): Promise<{ message: string }> {
+      return await this.adminService.logout(request,response);
+      }
+
   // Get all admins
   @Get()
   @UseGuards(adminAuthGuard)
@@ -61,7 +68,7 @@ export class AdminController {
 
   // Post a new coupon
   @Post('coupon')
-  @UseGuards(adminAuthGuard)
+ // @UseGuards(adminAuthGuard)
   async postCoupon(@Body() couponDto: CouponDTO) {
     return this.adminService.createCoupon(couponDto);
   }

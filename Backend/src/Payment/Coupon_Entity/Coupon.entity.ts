@@ -14,7 +14,7 @@ export class Coupon {
   @Column({ unique: true })
   code: string;
 
-  @Column('decimal', { precision: 10, scale: 2 })
+  @Column({nullable:false})
   value: number; // Value of the coupon
 
   @Column({ default: false })

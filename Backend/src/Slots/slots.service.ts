@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { BadGatewayException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Slot } from './Slot_Entity/slot.entity';
+import { slotDTO } from './slotDTO/slotDTO.dto';
 
 @Injectable()
 export class SlotsService {
@@ -19,14 +20,27 @@ export class SlotsService {
   }
 
   // Edit a slot
-  async updateSlot(id: number, slotData: Partial<Slot>): Promise<Slot> {
-    await this.slotRepository.update(id, slotData);
-    return await this.slotRepository.findOne({ where: { id } });
+  async updateSlot(id: number, slotData: slotDTO) {
+    // Use an object for the fields you want to update
+    await this.slotRepository.update(id, {
+      date: slotData.date,
+      start_time: slotData.start_time,
+      end_time: slotData.end_time
+    });
+    const show = await this.slotRepository.findOne({ where: { id } });
+    // Return the updated Slot entity
+    return {message:"Slot time Updated Successfully",show};
   }
 
   // Delete a slot
-  async deleteSlot(id: number): Promise<void> {
+  async deleteSlot(id: number) {
+    const IsPresent = await this.slotRepository.findOneBy({id:id})
+    if(!IsPresent)
+    {
+      throw new BadGatewayException("Slot not exists");
+    }
     await this.slotRepository.delete(id);
+    return {message:"Slot deleted Successfully"}
   }
 
   // Get all slots

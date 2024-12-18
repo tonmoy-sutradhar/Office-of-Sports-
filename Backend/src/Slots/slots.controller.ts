@@ -11,6 +11,7 @@ import {
 import { SlotsService } from './slots.service';
 import { Slot } from './Slot_Entity/slot.entity';
 import { adminAuthGuard } from 'src/admin/adminGuard.guard';
+import { slotDTO } from './slotDTO/slotDTO.dto';
 
 @Controller('slots')
 export class SlotsController {
@@ -24,30 +25,32 @@ export class SlotsController {
   }
 
   // Edit a slot
-  @Put(':id')
+  @Put('/:id')
   @UseGuards(adminAuthGuard)
   async updateSlot(
     @Param('id') id: number,
-    @Body() slotData: Partial<Slot>,
-  ): Promise<Slot> {
-    return this.slotsService.updateSlot(Number(id), slotData);
+    @Body() slotData: slotDTO,
+  ){
+    return this.slotsService.updateSlot(id, slotData);
   }
 
   // Delete a slot
-  @Delete(':id')
+  @Delete('/:id')
   @UseGuards(adminAuthGuard)
-  async deleteSlot(@Param('id') id: number): Promise<void> {
-    return this.slotsService.deleteSlot(Number(id));
+  async deleteSlot(@Param('id') id: number) {
+    return this.slotsService.deleteSlot(id);
   }
 
   // Get all slots
   @Get()
+  @UseGuards(adminAuthGuard)
   async getAllSlots(): Promise<Slot[]> {
     return this.slotsService.getAllSlots();
   }
 
   // Get a slot by ID
   @Get(':id')
+  @UseGuards(adminAuthGuard)
   async getSlotById(@Param('id') id: number): Promise<Slot> {
     return this.slotsService.getSlotById(Number(id));
   }

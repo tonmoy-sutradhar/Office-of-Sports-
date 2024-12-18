@@ -31,33 +31,49 @@ export class FeedbacksService {
     rating: number,
   ): Promise<Feedback> {
     // Validate student existence
-    const student = await this.studentRepository.findOneBy({ id: studentId });
+    const student = await this.studentRepository.findOne({
+      where: { id: studentId },
+      select: ['id'], // Only fetch the `id`
+    });
     if (!student) {
       throw new NotFoundException(`Student with ID ${studentId} not found.`);
     }
-
+  
     // Validate sport existence
     const sport = await this.sportRepository.findOneBy({ id: sportId });
     if (!sport) {
       throw new NotFoundException(`Sport with ID ${sportId} not found.`);
     }
-
+  
     // Validate rating
     if (rating < 1 || rating > 5) {
       throw new BadRequestException('Rating must be between 1 and 5.');
     }
-
+  
     // Create and save feedback
     const feedback = this.feedbackRepository.create({
       comment,
       rating,
-
       sport,
       student,
     });
-
-    return this.feedbackRepository.save(feedback);
+    await this.feedbackRepository.save(feedback);
+  
+    // Update feedback count and average rating
+    const previousCount = sport.feedbackCount || 0; // Default to 0 if undefined
+    const previousAverage = sport.averageRating || 0; // Default to 0 if undefined
+  
+    const newCount = previousCount + 1;
+    const newAverage = (previousAverage * previousCount + rating) / newCount;
+  
+    sport.feedbackCount = newCount;
+    sport.averageRating = parseFloat(newAverage.toFixed(2)); // Round to 2 decimal places
+  
+    await this.sportRepository.save(sport);
+  
+    return feedback;
   }
+  
 
   /**
    * Get the average rating for a sport.
@@ -99,18 +115,31 @@ export class FeedbacksService {
     }
 
     // Fetch and return feedbacks for the sport
-    return this.feedbackRepository.find({
+    const check = await this.feedbackRepository.find({
       where: { sport: { id: sportId } },
       relations: ['sport', 'student'], // Include sport and student relations
     });
+
+    if (check.length ===0 || !check){
+      throw new NotFoundException(`Feedback not found for sport_ID ${sportId}`);
+    }
+
+
+    return check
   }
 
   /**
    * Get all feedbacks, including details about the associated student and sport.
    */
-  async getAllFeedback(): Promise<Feedback[]> {
-    return this.feedbackRepository.find({
+  async getAllFeedback() {
+    const check = await this.feedbackRepository.find({
       relations: ['sport', 'student'], // Include sport and student relations
     });
+
+    if(!check || check.length===0){
+      throw new BadRequestException("No Feedback found yet!!")
+    }
+
+    return check;
   }
 }

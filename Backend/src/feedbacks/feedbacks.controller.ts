@@ -3,6 +3,7 @@ import { FeedbacksService } from './feedbacks.service';
 import { JwtService } from '@nestjs/jwt';
 import { UseGuards } from '@nestjs/common';
 import { userAuthGuard } from 'src/User/auth/userAuth.guard';
+import { adminAuthGuard } from 'src/admin/adminGuard.guard';
 
 @Controller('feedbacks')
 export class FeedbacksController {
@@ -30,19 +31,19 @@ export class FeedbacksController {
   }
 
   @Get('average-rating/:sportId')
-  //@UseGuards(userAuthGuard)
+  @UseGuards(adminAuthGuard)
   async getAverageRating(@Param('sportId') sportId: number) {
     return this.feedbacksService.getAverageRating(sportId);
   }
 
   @Get('sport/:sportId')
-  //@UseGuards(userAuthGuard)
+  @UseGuards(adminAuthGuard)
   async getFeedbacksForSport(@Param('sportId') sportId: number) {
     return this.feedbacksService.getFeedbacksForSport(sportId);
   }
 
   @Get()
-  //@UseGuards(userAuthGuard)
+  @UseGuards(adminAuthGuard)
   async getAllFeedback() {
     return this.feedbacksService.getAllFeedback();
   }

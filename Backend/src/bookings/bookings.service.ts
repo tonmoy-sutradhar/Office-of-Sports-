@@ -104,7 +104,7 @@ export class BookingsService {
     }
     this.notificationService.sendNotification(
       'Booking Complete', // Title
-      'Your booking has been confirmed. Details: [Booking Details]', // Message
+      `Your booking has been confirmed. Details: [Sports Name: ${sport.name} and Slot Date: ${slot.date}]`, // Message
       true // Sound (optional, defaults to true)
     );
   

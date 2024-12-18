@@ -25,6 +25,7 @@ export class SearchService {
   ): Promise<Student_Regi[]> {
     const students = await this.studentRepository.find({
       where: [{ email: query }, { university_id: query }],
+      select: ['id', 'university_id', 'email', 'isBanned', 'balance'],
     });
 
     if (students.length === 0) {
@@ -56,9 +57,7 @@ export class SearchService {
     identifier: string, // This can be either email or university_id
     banStatus: boolean,
   ): Promise<Student_Regi> {
-    const student = await this.studentRepository.findOne({
-      where: [{ email: identifier }, { university_id: identifier }],
-    });
+    const student = await this.studentRepository.findOneBy({ university_id : identifier});
 
     if (!student) {
       throw new NotFoundException('Student not found');
