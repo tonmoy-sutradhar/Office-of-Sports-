@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadGatewayException, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Sport } from './Sports_Entity/sports.entity';
@@ -18,12 +18,10 @@ export class SportsService {
       type: createSportDto.type.toLowerCase() as 'outdoor' | 'indoor',
     });
 
-    try {
-      return await this.sportRepository.save(sport);
-    } catch (error) {
-      console.error('Error saving sport:', error);
-      throw new Error('Error creating sport. Please try again later.');
+    if (sport.name === createSportDto.name) {
+      throw new BadGatewayException('Sport already exists.');
     }
+      return await this.sportRepository.save(sport);
   }
 
   // Fetch all sports

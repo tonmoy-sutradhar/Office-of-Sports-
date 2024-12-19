@@ -18,6 +18,11 @@ export class UserService {
                 @InjectRepository(Slot) private slotRepo: Repository<Slot>, 
 ){}
 
+    async findById(id: number) {
+        return this.userRepo.findOne({ where: { id} });
+    }
+
+
     async registerUser(createdto:CreateStudentDTO): Promise<any>{
         const IsPresent = await this.userRepo.findOneBy({email:createdto.email})
         if(!IsPresent){
@@ -32,6 +37,18 @@ export class UserService {
         return await this.userRepo.findOneBy({email: logindata.email});
     }
 
+    async updateUserToken(userId: number, token: string): Promise<void> {
+        await this.userRepo.update(userId, { token });
+    }
+
+     // Invalidate a user's token (logout scenario)
+     async invalidateUserToken(userId: number) {
+        const result = await this.userRepo.update(userId, { token: null });
+      
+        if (!result.affected) {
+          throw new Error('Failed to invalidate token');
+        }
+      }
    
     async forgetPass(data:sendEmailDto){
         return await this.userRepo.findOneBy({email:data.email});
