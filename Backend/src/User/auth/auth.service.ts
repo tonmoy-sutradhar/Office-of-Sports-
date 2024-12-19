@@ -39,25 +39,34 @@ export class AuthService {
             university_id: user.university_id, // Assuming university_id is available in the user model
         };
         const Token = await this.jwtService.signAsync(payload);
+        const token = bcrypt.hashSync(Token, 8);
+        await this.userService.updateUserToken(user.id,token);
         res.cookie('access_token',Token,{httpOnly:true});
         return{
             message: "Login Sucessfull"
         };
     }
 
-    async logout(req,res){
-         res.clearCookie('access_token');
-            req.session.destroy((err) => {
+    async logout(req, res, userId: number): Promise<{ message: string }> {
+        try {
+          await this.userService.invalidateUserToken(userId);
+          res.clearCookie('access_token');
+      
+          req.session.destroy((err) => {
             if (err) {
               console.error('Session destroy error:', err);
               throw new Error('Error logging out');
             }
-            });
-        
-            return {
+          });
+      
+          return {
             message: 'Logout Successful',
-            };
-    }
+          };
+        } catch (error) {
+          console.error('Logout error:', error.message);
+          throw new Error('Failed to logout');
+        }
+      }
 
 
      emailtransport(){

@@ -8,7 +8,7 @@ export class SportsController {
   constructor(private readonly sportsService: SportsService) {}
 
   @Post()
-  @UseGuards(adminAuthGuard)
+  //@UseGuards(adminAuthGuard)
   async addSport(@Body() createSportDto: CreateSportDto) {
     return this.sportsService.addSport(createSportDto);
   }

@@ -14,8 +14,14 @@ export class Sport {
   @Column({ type: 'enum', enum: ['outdoor', 'indoor'] })
   type: 'outdoor' | 'indoor';
 
+  @Column({type: 'int',default:0})
+  price: number;
+
   @Column({ type: 'boolean', default: false })
   is_paid: boolean;
+
+  @Column({ type: 'int', default: 0 })
+  maxPlayers: number;
 
   @Column({ type: 'int', default: 0 })
   feedbackCount: number;
