@@ -7,10 +7,11 @@ import { Slot } from 'src/Slots/Slot_Entity/slot.entity'; // Import the Slot ent
 import { Student_Regi } from 'src/User/Student_Entity/student.entity';
 import { Coupon } from './Coupon_Entity/Coupon.entity'; // Import the Coupon entity
 import { NotificationService } from 'src/notifications/notifications.service';
+import { Sport } from 'src/sports/Sports_Entity/sports.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Booking, Student_Regi, Slot, Coupon]), // Added Coupon entity
+    TypeOrmModule.forFeature([Sport,Booking, Student_Regi, Slot, Coupon]), // Added Coupon entity
   ],
   providers: [PaymentService,NotificationService],
   controllers: [PaymentController],

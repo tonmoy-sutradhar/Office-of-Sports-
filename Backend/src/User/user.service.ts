@@ -36,19 +36,6 @@ export class UserService {
     async userLogin(logindata:ValidateDTO): Promise<any>{
         return await this.userRepo.findOneBy({email: logindata.email});
     }
-
-    async updateUserToken(userId: number, token: string): Promise<void> {
-        await this.userRepo.update(userId, { token });
-    }
-
-     // Invalidate a user's token (logout scenario)
-     async invalidateUserToken(userId: number) {
-        const result = await this.userRepo.update(userId, { token: null });
-      
-        if (!result.affected) {
-          throw new Error('Failed to invalidate token');
-        }
-      }
    
     async forgetPass(data:sendEmailDto){
         return await this.userRepo.findOneBy({email:data.email});

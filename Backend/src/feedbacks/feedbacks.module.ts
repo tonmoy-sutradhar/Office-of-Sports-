@@ -5,9 +5,11 @@ import { FeedbacksService } from './feedbacks.service';
 import { FeedbacksController } from './feedbacks.controller';
 import { Student_Regi } from 'src/User/Student_Entity/student.entity';
 import { Sport } from 'src/sports/Sports_Entity/sports.entity';
+import { Slot } from 'src/Slots/Slot_Entity/slot.entity';
+import { Booking } from 'src/bookings/Booking_Entity/booking.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Feedback, Sport, Student_Regi])],
+  imports: [TypeOrmModule.forFeature([Booking,Slot,Feedback, Sport, Student_Regi])],
   controllers: [FeedbacksController],
   providers: [FeedbacksService],
 })
