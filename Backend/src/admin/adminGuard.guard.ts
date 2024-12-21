@@ -10,8 +10,9 @@ export class adminAuthGuard implements CanActivate {
     async canActivate(context: ExecutionContext): Promise<boolean> {
         const request = context.switchToHttp().getRequest();
         const token = this.extractTokenFromHeader(request);
-        if (!token) {
-            throw new UnauthorizedException();
+        const cookieToken = request.cookies['Admin_token'];
+        if (!token || !cookieToken) {
+            throw new UnauthorizedException("Unauthorized Access");
         }
         try {
              await this.jwtService.verifyAsync(
@@ -21,7 +22,7 @@ export class adminAuthGuard implements CanActivate {
                 }
             );
         } catch {
-            throw new UnauthorizedException("Unauthorized");
+            throw new UnauthorizedException("Unauthorized Access");
         }
         return true;
     }

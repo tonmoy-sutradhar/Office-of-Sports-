@@ -13,8 +13,8 @@ export class BookingsController {
   @Post('create')
   @UseGuards(userAuthGuard)
   async createBooking(@Body() createBookingDto: CreateBookingDto,@Req()req) {
-        const token = req.cookies['access_token']; // Or extract it from the Authorization header
-        const decodedPayload = await this.jwtService.verifyAsync(token);
+    const token = req.cookies['access_token']; // Or extract it from the Authorization header
+    const decodedPayload = await this.jwtService.verifyAsync(token);
     return this.bookingsService.createBooking(createBookingDto,decodedPayload.userId);
   }
 

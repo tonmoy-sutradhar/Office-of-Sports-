@@ -23,7 +23,7 @@ export class PaymentController {
    * @param couponCode - Mock coupon code for adding balance.
    */
   @Post('add-balance')
-  @UseGuards(userAuthGuard)
+  //@UseGuards(userAuthGuard)
   async addBalance(
     @Req()req,
     @Body('couponCode') couponCode: string,
@@ -48,7 +48,7 @@ export class PaymentController {
    * @param amount - Amount to deduct.
    */
   @Post('deduct-balance')
-  @UseGuards(userAuthGuard)
+  //@UseGuards(userAuthGuard)
   async deductBalance(
     @Req()req,
     @Body('bookingId') bookingId: number,

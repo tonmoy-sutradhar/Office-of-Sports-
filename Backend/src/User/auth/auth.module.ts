@@ -8,7 +8,7 @@ import { jwtConstants } from './store';
 @Module({
   imports:[UserModule,JwtModule.register({
     global: true,
-    secret: jwtConstants.secret || 'default-secret',
+    secret: jwtConstants.secret,
     signOptions: { expiresIn: '2h'}
 })],
   controllers:[AuthController],

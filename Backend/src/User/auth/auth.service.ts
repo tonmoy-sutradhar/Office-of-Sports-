@@ -4,10 +4,6 @@ import { CreateStudentDTO, ValidateDTO,resetPassDTO,sendEmailDto,verifyOtp } fro
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import * as nodemailer from 'nodemailer';
-import * as Response from 'express';
-
-
-
 
 @Injectable()
 export class AuthService {
@@ -39,19 +35,15 @@ export class AuthService {
             university_id: user.university_id, // Assuming university_id is available in the user model
         };
         const Token = await this.jwtService.signAsync(payload);
-        const token = bcrypt.hashSync(Token, 8);
-        await this.userService.updateUserToken(user.id,token);
         res.cookie('access_token',Token,{httpOnly:true});
         return{
             message: "Login Sucessfull"
         };
     }
 
-    async logout(req, res, userId: number): Promise<{ message: string }> {
+    async logout(req, res): Promise<{ message: string }> {
         try {
-          await this.userService.invalidateUserToken(userId);
           res.clearCookie('access_token');
-      
           req.session.destroy((err) => {
             if (err) {
               console.error('Session destroy error:', err);

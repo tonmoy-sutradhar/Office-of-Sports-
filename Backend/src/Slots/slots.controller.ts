@@ -41,6 +41,12 @@ export class SlotsController {
     return this.slotsService.deleteSlot(id);
   }
 
+   // Get available slots by sport ID
+   @Get('available/:sport_id')
+   async getAvailableSlots(@Param('sport_id') sportId: number): Promise<Slot[]> {
+     return await this.slotsService.getAvailableSlotsBySport(sportId);
+   }
+
   // Get all slots
   @Get()
   @UseGuards(adminAuthGuard)

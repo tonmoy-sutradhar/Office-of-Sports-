@@ -3,12 +3,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Slot } from './Slot_Entity/slot.entity';
 import { slotDTO } from './slotDTO/slotDTO.dto';
+import { Sport } from 'src/sports/Sports_Entity/sports.entity';
 
 @Injectable()
 export class SlotsService {
   constructor(
     @InjectRepository(Slot)
     private readonly slotRepository: Repository<Slot>,
+    @InjectRepository(Sport) private readonly sportRepository: Repository<Sport>,
   ) {}
 
   async addSlot(slotData: Partial<Slot>): Promise<Slot> {
@@ -31,6 +33,25 @@ export class SlotsService {
     // Return the updated Slot entity
     return {message:"Slot time Updated Successfully",show};
   }
+//sort by available slot
+  async getAvailableSlotsBySport(sportId: number): Promise<Slot[]> {
+    const sport = await this.sportRepository.findOne({ where: { id: sportId } });
+    if (!sport) {
+      throw new Error('Sport not found.');
+    }
+  
+    const maxPlayers = sport.maxPlayers;
+  
+    return await this.slotRepository
+    .createQueryBuilder('slot')
+    .where('slot.sport_id = :sportId', { sportId })
+    .andWhere('slot.member < :maxPlayers', { maxPlayers }) // Use the maxPlayers value
+    .orderBy('slot.date', 'ASC')
+    .addOrderBy('slot.start_time', 'ASC')
+    .getMany();
+  
+  }
+  
 
   // Delete a slot
   async deleteSlot(id: number) {

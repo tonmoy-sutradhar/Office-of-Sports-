@@ -24,7 +24,7 @@ export class Slot {
   date: string;
 
   @Column({ default: 0, nullable: false })
-  member: string;
+  member: number;
 
   @Column({ default: false })
   is_booked: boolean;
