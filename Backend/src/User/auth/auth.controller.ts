@@ -44,7 +44,7 @@ export class AuthController {
     }
 
     @Patch('reset-password')
-    @UseGuards(userAuthGuard)
+    //@UseGuards(userAuthGuard)
      resetPass(@Body()userdata:resetPassDTO,@Req()rq:any){
         return this.AuthService.resetPass(userdata,rq); 
     }

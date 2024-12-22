@@ -21,7 +21,7 @@ export class AuthService {
         return await this.userService.registerUser(createdto);
     }
 
-    async login(loginData:ValidateDTO,res) : Promise<{message: string,}>{
+    async login(loginData:ValidateDTO,res) : Promise<{message: string,Token:string}>{
         const user = await this.userService.userLogin(loginData);
         if(!user || user.isBanned == true){
             throw new UnauthorizedException("User not Found");
@@ -37,7 +37,7 @@ export class AuthService {
         const Token = await this.jwtService.signAsync(payload);
         res.cookie('access_token',Token,{httpOnly:true});
         return{
-            message: "Login Sucessfull"
+            message: "Login Sucessfull",Token
         };
     }
 

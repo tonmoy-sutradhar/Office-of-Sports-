@@ -23,7 +23,7 @@ export class AdminService {
     private readonly jwtService:JwtService,
   ) {}
 
-  async login(loginData:ValidAdminDTO,res) : Promise<{message: string,}>{
+  async login(loginData:ValidAdminDTO,res) : Promise<{message: string,Admin_Token:string}>{
           const user = await this.adminRepository.findOneBy({email:loginData.email});
           if(!user){
               throw new UnauthorizedException("User not Found");
@@ -34,10 +34,10 @@ export class AdminService {
           const payload = {
               AdminId: user.id,            // Assuming the user model has an `id` property
           };
-          const Token = await this.jwtService.signAsync(payload);
-          res.cookie('Admin_token',Token,{httpOnly:true});
+          const Admin_Token = await this.jwtService.signAsync(payload);
+          res.cookie('Admin_token',Admin_Token,{httpOnly:true});
           return{
-              message: "Login Sucessfull for Admin"
+              message: "Login Sucessfull for Admin",Admin_Token
           };
       }
 

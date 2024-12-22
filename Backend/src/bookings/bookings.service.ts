@@ -78,9 +78,6 @@ export class BookingsService {
       payment_status: createBookingDto.payment_status,
     });
 
-    // Increment the member count for the slot
-    slot.member += 1;
-
     // If the booking status is 'booked', mark the slot as booked
     if (status === 'booked' && slot.member === sport.maxPlayers) {
       slot.is_booked = true; // Mark slot as fully booked
