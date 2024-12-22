@@ -12,6 +12,7 @@ import { SlotsService } from './slots.service';
 import { Slot } from './Slot_Entity/slot.entity';
 import { adminAuthGuard } from 'src/admin/adminGuard.guard';
 import { slotDTO } from './slotDTO/slotDTO.dto';
+import { userAuthGuard } from 'src/User/auth/userAuth.guard';
 
 @Controller('slots')
 export class SlotsController {
@@ -43,6 +44,7 @@ export class SlotsController {
 
    // Get available slots by sport ID
    @Get('available/:sport_id')
+   @UseGuards(userAuthGuard)
    async getAvailableSlots(@Param('sport_id') sportId: number): Promise<Slot[]> {
      return await this.slotsService.getAvailableSlotsBySport(sportId);
    }

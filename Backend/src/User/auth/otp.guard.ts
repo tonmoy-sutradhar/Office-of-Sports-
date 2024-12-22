@@ -10,9 +10,8 @@ export class userAuthGuard implements CanActivate {
     async canActivate(context: ExecutionContext): Promise<boolean> {
         const request = context.switchToHttp().getRequest<Request>();
         const bearerToken = this.extractTokenFromHeader(request);
-        const cookieToken = request.cookies['access_token'];
 
-        if (!bearerToken || !cookieToken) {
+        if (!bearerToken) {
             throw new UnauthorizedException('Unauthorized Access');
         }
 
@@ -22,10 +21,6 @@ export class userAuthGuard implements CanActivate {
                 secret: jwtConstants.secret,
             });
 
-            // Ensure the cookie value matches or exists
-            if (bearerToken !== cookieToken) {
-                throw new UnauthorizedException('Invalid Access Token');
-            }
         } catch (error) {
             throw new UnauthorizedException('Unauthorized Access');
         }

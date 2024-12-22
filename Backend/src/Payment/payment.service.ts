@@ -109,8 +109,12 @@ export class PaymentService {
     }
 
     // Ensure the booking belongs to the student
-    if (booking.student.id !== university_id) {
+    else if (booking.student.id !== university_id) {
       throw new BadRequestException('Booking does not belong to the student');
+    }
+
+    else if(booking.payment_status === 'paid'){
+      throw new BadRequestException('Payment already done for this booking');
     }
 
     const slot = await this.slotRepo.findOneBy({id:slotID});
@@ -123,7 +127,7 @@ export class PaymentService {
     booking.payment_status = 'paid';
     await this.bookingRepository.save(booking);
 
-    slot.member+=1;
+    slot.member += 1;
     await this.slotRepo.save(slot);
 
 

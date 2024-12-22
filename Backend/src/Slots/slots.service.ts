@@ -46,8 +46,7 @@ export class SlotsService {
     .createQueryBuilder('slot')
     .where('slot.sport_id = :sportId', { sportId })
     .andWhere('slot.member < :maxPlayers', { maxPlayers }) // Use the maxPlayers value
-    .orderBy('slot.date', 'ASC')
-    .addOrderBy('slot.start_time', 'ASC')
+    .orderBy('slot.member', 'DESC')
     .getMany();
   
   }
