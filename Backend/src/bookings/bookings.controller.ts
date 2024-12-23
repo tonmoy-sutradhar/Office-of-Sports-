@@ -19,6 +19,7 @@ export class BookingsController {
   }
 
   @Get('list')
+  @UseGuards(userAuthGuard)
   async listBookings(@Req()req) {
     const token = req.cookies['access_token']; // Or extract it from the Authorization header
     const decodedPayload = await this.jwtService.verifyAsync(token);
@@ -27,6 +28,7 @@ export class BookingsController {
   }
 
   @Delete('cancel/:bookingId')
+  @UseGuards(userAuthGuard)
   async cancelBooking(@Param('bookingId') bookingId: number) {
     return this.bookingsService.cancelBooking(bookingId);
   }

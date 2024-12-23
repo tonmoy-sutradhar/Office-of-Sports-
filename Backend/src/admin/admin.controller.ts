@@ -68,7 +68,7 @@ export class AdminController {
 
   // Post a new coupon
   @Post('coupon')
- // @UseGuards(adminAuthGuard)
+  @UseGuards(adminAuthGuard)
   async postCoupon(@Body() couponDto: CouponDTO) {
     return this.adminService.createCoupon(couponDto);
   }
