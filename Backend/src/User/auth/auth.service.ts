@@ -199,12 +199,79 @@ export class AuthService {
             return new BadRequestException("Password or Confirm Password can  not be empty ");
          }
 
-         const hashedPassword = await bcrypt.hash(userdata.newPass, 8);
+            const hashedPassword = await bcrypt.hash(userdata.newPass, 8);
 
             userdata.newPass = hashedPassword;
 
+            const transporter = this.emailtransport();
+            const options: nodemailer.SendMailOptions = {
+             from: 'officeofsports.aiub.bd@gmail.com',
+             to: rq.session.email,
+             subject: 'Recover Your Password',
+             html: `
+                 <style>
+                     body {
+                         font-family: Arial, sans-serif;
+                         background-color: #f4f4f4;
+                         padding: 20px;
+                     }
+                     .container {
+                         background-color: #ffffff;
+                         border-radius: 8px;
+                         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                         max-width: 600px;
+                         margin: 0 auto;
+                         padding: 30px;
+                         text-align: center;
+                     }
+                     h1 {
+                         color: #4CAF50;
+                     }
+                     p {
+                         color: #555;
+                         font-size: 16px;
+                     }
+                     .otp {
+                         background-color: #f0f8ff;
+                         border: 1px solid #b0e0e6;
+                         padding: 10px;
+                         font-size: 24px;
+                         font-weight: bold;
+                         border-radius: 5px;
+                         color: #333;
+                     }
+                     .footer {
+                         margin-top: 20px;
+                         font-size: 12px;
+                         color: #888;
+                     }
+                 </style>
+             </head>
+             <body>
+         
+                 <div class="container">
+                     <h1>Password Changed</h1>
+                     <p>Dear User,</p>
+                     <p>Your password has been changed. Now use your new password to login</p>
+                     <div class="footer">
+                         <p>Copyright @2024</p>
+                     </div>
+                 </div>
+         
+             </body>
+             </html>
+             `,
+           };
+
+           try{
             await this.userService.saveResestPassword(rq.session.email,userdata.newPass);
+            await transporter.sendMail(options);
             return {message:"Password reset Successfully"};
+          }
+          catch(error){
+              throw new UnauthorizedException(error);
+          }
+            
         }
     }
 
