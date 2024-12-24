@@ -4,7 +4,7 @@ import { jwtConstants } from './store';
 import { Request } from 'express';
 
 @Injectable()
-export class userAuthGuard implements CanActivate {
+export class OTPAuthGuard implements CanActivate {
     constructor(private jwtService: JwtService) { }
 
     async canActivate(context: ExecutionContext): Promise<boolean> {

@@ -27,6 +27,7 @@ export class AdminController {
   }
 
   @Post('logout')
+  @UseGuards(adminAuthGuard)
       async logout(@Req() request: any, @Res({passthrough:true}) response: any): Promise<{ message: string }> {
       return await this.adminService.logout(request,response);
       }
@@ -35,48 +36,48 @@ export class AdminController {
   @Get()
   @UseGuards(adminAuthGuard)
   async getAllAdmins() {
-    return this.adminService.findAll();
+    return await this.adminService.findAll();
   }
 
-  @Get(':id')
+  @Get('profile')
   @UseGuards(adminAuthGuard)
-  async getAdminById(@Param('id', ParseIntPipe) id: number) {
-    return this.adminService.findById(id);
+  async getAdminById(@Req() req) {
+    return await this.adminService.findById(req.AdminId);
   }
 
   // Update admin profile
-  @Patch(':id')
+  @Patch('update')
   @UseGuards(adminAuthGuard)
   @HttpCode(HttpStatus.OK)
   async updateAdmin(
-    @Param('id') id: number,
+    @Req() req: any,
     @Body() updateAdminDto: UpdateAdminDto,
   ) {
-    return this.adminService.updateAdmin(id, updateAdminDto);
+    return await this.adminService.updateAdmin(req.AdminId, updateAdminDto);
   }
 
   // Change admin password
-  @Patch(':id/change-password')
+  @Patch('change-password')
   @UseGuards(adminAuthGuard)
   @HttpCode(HttpStatus.OK)
   async changePassword(
-    @Param('id') id: number,
+    @Req() req: any,
     @Body('newPassword') newPassword: string,
   ) {
-    return this.adminService.changePassword(id, newPassword);
+    return await this.adminService.changePassword(req.AdminId, newPassword);
   }
 
   // Post a new coupon
   @Post('coupon')
   @UseGuards(adminAuthGuard)
   async postCoupon(@Body() couponDto: CouponDTO) {
-    return this.adminService.createCoupon(couponDto);
+    return await this.adminService.createCoupon(couponDto);
   }
 
   // Get a coupon by code
   @Get('coupon/:code')
   @UseGuards(adminAuthGuard)
   async getCoupon(@Param('code') code: string) {
-    return this.adminService.getCouponByCode(code);
+    return await this.adminService.getCouponByCode(code);
   }
 }

@@ -1,10 +1,11 @@
-import { Controller,Res,Post, Body, Req, Patch, UsePipes, ValidationPipe,UseGuards, UnauthorizedException } from '@nestjs/common';
+import { Controller,Res,Post, Body, Req, Patch, UsePipes, ValidationPipe,UseGuards} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateStudentDTO, resetPassDTO } from '../studentDTO/studentdto.dto';
 import { ValidateDTO } from '../studentDTO/studentdto.dto';
 import { sendEmailDto,verifyOtp } from '../studentDTO/studentdto.dto';
 import { Response } from 'express';
 import { userAuthGuard } from './userAuth.guard';
+import { OTPAuthGuard } from './otp.guard';
 
 
 @Controller('auth')
@@ -44,7 +45,7 @@ export class AuthController {
     }
 
     @Patch('reset-password')
-    //@UseGuards(userAuthGuard)
+    @UseGuards(OTPAuthGuard)
      resetPass(@Body()userdata:resetPassDTO,@Req()rq:any){
         return this.AuthService.resetPass(userdata,rq); 
     }
