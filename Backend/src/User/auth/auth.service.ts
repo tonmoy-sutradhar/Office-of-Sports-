@@ -64,12 +64,12 @@ export class AuthService {
      emailtransport(){
             const transport = nodemailer.createTransport(
               {
-                host: 'smtp.gmail.com' ,
-                port: 587,
+                host: process.env.EMAIL_HOST,
+                port: parseInt(process.env.EMAIL_PORT),
                 secure: false,
                 auth: {
-                    user: 'officeofsports.aiub.bd@gmail.com',
-                    pass: 'rizr ddcz skqb ufxu'
+                    user: process.env.EMAIL_USER,
+                    pass: process.env.EMAIL_PASSWORD,
                 },
               });
             return transport;
@@ -93,7 +93,7 @@ export class AuthService {
         
            const transporter = this.emailtransport();
            const options: nodemailer.SendMailOptions = {
-            from: 'officeofsports.aiub.bd@gmail.com',
+            from: process.env.EMAIL_USER,
             to: email,
             subject: 'Recover Your Password',
             html: `
@@ -205,7 +205,7 @@ export class AuthService {
 
             const transporter = this.emailtransport();
             const options: nodemailer.SendMailOptions = {
-             from: 'officeofsports.aiub.bd@gmail.com',
+             from: process.env.EMAIL_USER,
              to: rq.session.email,
              subject: 'Recover Your Password',
              html: `

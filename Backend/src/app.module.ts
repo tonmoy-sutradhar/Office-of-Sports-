@@ -12,17 +12,19 @@ import { SlotsModule } from './Slots/slots.module';
 import { SportsModule } from './sports/sports.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './User/user.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [
+  imports: [ ConfigModule.forRoot({
+    isGlobal: true,
+    envFilePath: '.env',
+  }), 
     TypeOrmModule.forRoot({
-      type: 'postgres',
+      type: process.env.DB_TYPE as any,
       host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-
-      password: 'emamul',
-
+      port: parseInt(process.env.DB_PORT),
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
       database: 'office_of_sports_online',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,

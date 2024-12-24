@@ -11,6 +11,7 @@ import { Repository } from 'typeorm';
 import { Coupon } from 'src/payment/Coupon_Entity/Coupon.entity';
 import { CouponDTO } from 'src/Payment/Coupon_DTO/Coupon.dto';
 import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AdminService {
@@ -28,7 +29,8 @@ export class AdminService {
           if(!user){
               throw new UnauthorizedException("User not Found");
           }
-          if(user.password != loginData.password){
+          const isPasswordValid = await bcrypt.compare(loginData.password, user.password);
+          if(!isPasswordValid){
               throw new UnauthorizedException("Invalid Password");
           }
           const payload = {
@@ -56,8 +58,8 @@ export class AdminService {
          }
 
   // Find admin by ID
-  async findById(id: number): Promise<Admin> {
-    const admin = await this.adminRepository.findOne({ where: { id } });
+  async findById(id: number) {
+    const {password, ...admin} = await this.adminRepository.findOne({ where: { id: id } });
     if (!admin) {
       throw new NotFoundException('Admin not found');
     }
@@ -73,16 +75,25 @@ export class AdminService {
   async updateAdmin(
     id: number,
     updateAdminDto: UpdateAdminDto,
-  ): Promise<Admin> {
+  ) {
     await this.adminRepository.update(id, updateAdminDto);
-    return this.findById(id);
+    return {message: 'Admin updated successfully'};
   }
 
   // Change password
-  async changePassword(id: number, newPassword: string): Promise<Admin> {
-    const admin = await this.findById(id);
-    admin.password = newPassword;
-    return this.adminRepository.save(admin);
+  async changePassword(id: number, newPassword: string): Promise<{ message: string }> {
+    const admin = await this.adminRepository.findOne({ where: { id : id } });
+    if (!admin) {
+      throw new NotFoundException('Admin not found');
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 8);
+    admin.password = hashedPassword;
+    await this.adminRepository.save(admin);
+
+    return {
+      message: 'Password changed successfully',
+    };
   }
 
   // Create a new coupon
