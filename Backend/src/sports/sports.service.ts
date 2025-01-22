@@ -1,4 +1,4 @@
-import { BadGatewayException, Injectable } from '@nestjs/common';
+import { BadGatewayException, Injectable , ConflictException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Sport } from './Sports_Entity/sports.entity';
@@ -13,17 +13,23 @@ export class SportsService {
 
   // Add a new sport
   async addSport(createSportDto: CreateSportDto): Promise<Sport> {
+    const existingSport = await this.sportRepository.findOne({
+      where: { name: createSportDto.name },
+    });
+  
+    if (existingSport) {
+      throw new ConflictException('Sport already exists.');
+    }
+  
+    // Create a new sport
     const sport = this.sportRepository.create({
       ...createSportDto,
       type: createSportDto.type.toLowerCase() as 'outdoor' | 'indoor',
     });
 
-    if (sport.name === createSportDto.name) {
-      throw new BadGatewayException('Sport already exists.');
-    }
-      return await this.sportRepository.save(sport);
+    return this.sportRepository.save(sport);
   }
-
+  
   // Fetch all sports
   async getAllSports(): Promise<Sport[]> {
     return this.sportRepository.find();
