@@ -166,12 +166,12 @@ export class AuthService {
         const otpSession = req.session.otp;
           
             if (!otpSession) {
-              return { success: false, message: 'OTP not sent or expired' };
+              throw new BadRequestException('OTP session not found. Please request a new OTP');
             }
           
             if (Date.now() > otpSession.expiresAt) {
               req.session.otp = null;
-              return { success: false, message: 'OTP expired' };
+              throw new BadRequestException('OTP expired. Please request a new OTP');
             }
           
             if (otpSession.otp === userOtp.otp) {
@@ -180,7 +180,7 @@ export class AuthService {
               return { success: true, message: 'OTP verified successfully. You have 5 minutes to reset your password',access_token};
             }
           
-            return { success: false, message: 'Invalid OTP' };
+            throw new BadRequestException('Invalid OTP. Please try again');
     }
 
     async resetPass(userdata:resetPassDTO,rq)
@@ -207,7 +207,7 @@ export class AuthService {
             const options: nodemailer.SendMailOptions = {
              from: process.env.EMAIL_USER,
              to: rq.session.email,
-             subject: 'Recover Your Password',
+             subject: 'Password Changed',
              html: `
                  <style>
                      body {

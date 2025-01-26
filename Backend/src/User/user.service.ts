@@ -28,9 +28,9 @@ export class UserService {
         if(!IsPresent){
          await this.userRepo.save(createdto);
         return {message:"Registratoin Successfull"};}
-        else{
-            return new BadRequestException("You already have an account....!!");
-        }
+       
+        throw new BadRequestException("You already have an account....!!");
+    
     }
 
     async userLogin(logindata:ValidateDTO): Promise<any>{
