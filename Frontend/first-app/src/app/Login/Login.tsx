@@ -8,11 +8,10 @@ import { loginSchema, LoginSchema } from "@/app/Validation/LoginValidation";
 import { PiMicrosoftOutlookLogoFill } from "react-icons/pi";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import { TbLockPassword } from "react-icons/tb";
-import { HiInformationCircle } from "react-icons/hi";
-import { Alert } from "flowbite-react";
 import Background from "../Components/background";
 import Logo from "../Components/logo";
-import axios from "axios";
+import api from "@/app/api/api";
+import Cookies from "js-cookie";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -39,7 +38,15 @@ export default function LoginPage() {
   // Login handler
   const login = async (data: LoginSchema) => {
     try {
-      const response = await axios.post("http://localhost:4000/auth/login", data);
+      const response = await api.post("/auth/login", data);
+      const token = response.data.Token; // Assuming server returns the token
+
+      // Store token in a secure cookie
+      Cookies.set("accessToken", token, {
+        expiresIn: '1h', // 1 day
+        secure: true, // Use HTTPS
+        sameSite: "Strict", // Protect from CSRF
+      });
       router.push("/Student");
     } catch (error: any) {
       setCustomError(error.response?.data?.message || "Login failed. Please try again.");
@@ -135,22 +142,8 @@ export default function LoginPage() {
                 {errors.password.message}
               </p>
             )}
-            {/* Remember me and Forgot password */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                {/* Remember me */}
-                <input
-                  type="checkbox"
-                  id="input-group-3"
-                  className="text-blue-500 rounded border-gray-300 dark:border-gray-600 dark:text-blue-500"
-                />
-                <label
-                  htmlFor="input-group-3"
-                  className="text-sm text-gray-900 dark:text-white ms-2"
-                >
-                  Remember me
-                </label>
-              </div>
+            {/* Forgot password */}
+            <div className="flex padding-left-400">
               {/* Forgot your password */}
               <a
                 onClick={navigateToForgetPassword}

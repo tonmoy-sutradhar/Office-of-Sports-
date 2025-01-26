@@ -1,16 +1,38 @@
 "use client"; 
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { FaRegUser } from "react-icons/fa";
 import { PiMicrosoftOutlookLogoFill } from "react-icons/pi";
 import { VscEye } from "react-icons/vsc";
 import { VscEyeClosed } from "react-icons/vsc";
 import { TbLockPassword } from "react-icons/tb";
+import { registrationSchema, RegistrationSchema } from "../Validation/RegistrationValidation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Background from "../Components/background";
 import Logo from "../Components/logo";
+import api from "@/app/api/api";
 
 export default function Registration() {
   const [showPassword, setShowPassword] = useState(false);
+  const [customError, setCustomError] = useState('');
 
+   const {
+      register,
+      handleSubmit,
+      formState: { errors },
+    } = useForm<RegistrationSchema>({
+      resolver: zodResolver(registrationSchema),
+    });
+
+    // Register handler
+   const registration = async (data: RegistrationSchema) => {
+    try {
+       await api.post("/auth/register", data);
+      alert("Registration successful. Please login to continue.");
+    } catch (error: any) {
+      setCustomError(error.response?.data?.message || "Registration failed. Please try again.");
+    }
+  };
   return (
     <div className="min-h-screen bg-primary-content from-primary-50 to-primary-100 flex flex-col items-center justify-center p-4">
       {/* Background Image */}
@@ -23,8 +45,9 @@ export default function Registration() {
           style={{ paddingTop: "80px" }}
         >
           {/* Form */}
-          <form action="#">
+          <form onSubmit={handleSubmit(registration)}>
             {/* Student ID */}
+            <div>
             <label
               htmlFor="student_id"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white translate-x-3">Student ID</label>
@@ -40,9 +63,17 @@ export default function Registration() {
                 id="student_id"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="XX-XXXXX-X"
+                {...register("university_id")}
               />
             </div>
+            {errors.university_id && (
+              <p className="text-red-500 text-xs -translate-y-4" style={{paddingLeft: "10px"}}>
+                {errors.university_id.message}
+              </p>
+            )}
+            </div>
             {/* Email */}
+            <div>
             <label
               htmlFor="Email"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white translate-x-3"
@@ -61,9 +92,16 @@ export default function Registration() {
                 id="email"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="XX-XXXXX-X@student.aiub.edu"
+                {...register("email")}
               />
             </div>
+            {errors.email && (
+              <p className="text-red-500 text-xs -translate-y-4" style={{paddingLeft: "10px"}}>
+                {errors.email.message}
+              </p>)}
+            </div>
             {/* Password */}
+            <div>
             <label
               htmlFor="Password"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white translate-x-3"
@@ -82,6 +120,7 @@ export default function Registration() {
                 id="password"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="Password"
+                {...register("password")}
               />
               {/* Toggle Visibility Button */}
               <button
@@ -100,6 +139,12 @@ export default function Registration() {
                 )}
               </button>
             </div>
+            {errors.password && (
+              <p className="text-red-500 text-xs -translate-y-4" style={{paddingLeft: "10px"}}>
+                {errors.password.message}
+              </p>
+            )}
+            </div>
   
             <br />
             <div className="flex items-center justify-center -translate-y-7">
@@ -110,7 +155,12 @@ export default function Registration() {
               Register
             </button>
            </div>
-           {/* Register */}  
+           {/* Custom error message */}
+           {customError && (
+              <p className="text-red-500 text-xs text-center translate-y-1">
+                {customError}
+              </p>
+            )}
           </form>
         </div>
       </div>
