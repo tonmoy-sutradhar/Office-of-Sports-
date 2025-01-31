@@ -14,7 +14,7 @@ export class SportsController {
   }
 
   // Get all sports
-  @Get()
+  @Get('/all')
   async getAllSports() {
     return this.sportsService.getAllSports();
   }
