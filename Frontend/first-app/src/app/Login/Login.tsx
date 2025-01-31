@@ -91,7 +91,7 @@ export default function LoginPage() {
               />
             </div>
             {errors.email && (
-                <p className="text-red-500 text-xs -translate-y-4" style={{paddingLeft: "10px"}}>
+                <p className="text-red-500 text-xs -translate-y-4 pl-[10px]">
                   {errors.email.message}
                 </p>
               )}

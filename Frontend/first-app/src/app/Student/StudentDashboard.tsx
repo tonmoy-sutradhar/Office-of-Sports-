@@ -3,6 +3,9 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import api from "../api/api";
 import Cookies from "js-cookie";
+import Header from "../Components/Header";
+import Image from "next/image";
+import logo from "@/asset/logo.png";
 
 export default function StudentDashboard() {
   const [customError, setCustomError] = useState("");
@@ -61,29 +64,16 @@ export default function StudentDashboard() {
     }
   };
 
-  return (
-    <div
-      className="hero min-h-screen"
-      style={{
-        backgroundImage: "url('https://img.daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.webp')",
-      }}
-    >
-      <div className="hero-overlay bg-opacity-60"></div>
-      <div className="hero-content text-neutral-content text-center">
-        <div className="max-w-md">
-          {/* Display Username or Error */}
-          <h1 className="mb-5 text-5xl font-bold">
-            {username ? `Hello there, ${username}` : "Hello there!"}
-          </h1>
-          {customError && <p className="text-red-500">{customError}</p>}
-          <p className="mb-5">
-            Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-            excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
-            a id nisi.
-          </p>
-          <button onClick={logout} className="btn btn-primary">Logout</button>
-        </div>
+    return (
+    <div className="min-h-screen bg-primary-content from-primary-50 to-primary-100 flex flex-col items-center p-4">
+      {/* Header */}
+      <Header username={username} logout={logout} />
+      {/* Main content */}
+      <div className="w-[1539px] h-[1342px] mt-[60px] ml-[20px] rounded-tl-[32px] rounded-tr-[32px] bg-[#000080] text-white flex items-center px-4 -translate-y-[50px]">
+        {/*logo */}
+        <Image src={logo} alt="AIUB Office of Sports" width={250} height={130} className="flex items-center justify-center transform scale-150 ml-[650px] pt-[183px] -translate-y-[800px] " />
       </div>
-    </div>
-  );
+
+  </div>
+    );
 }
