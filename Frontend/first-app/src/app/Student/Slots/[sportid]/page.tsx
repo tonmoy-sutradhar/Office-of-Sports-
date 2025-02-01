@@ -87,7 +87,7 @@ return (
         </nav>
         </header>
         {/* Main content container */}
-        <div className="w-[1539px] min-h-[1342px] mt-[60px] ml-[20px] rounded-tl-[32px] rounded-tr-[32px] rounded-bl-[32px] rounded-br-[32px] bg-[#000080] text-white flex flex-col items-center px-4 pt-4 -translate-y-[50px]">         
+        <div className="w-[1539px] h-half mt-[60px] ml-[20px] rounded-tl-[32px] rounded-tr-[32px] rounded-bl-[32px] rounded-br-[32px] bg-[#000080] text-white flex flex-col items-center px-4 pt-4 -translate-y-[50px]">         
           {/* Logo */}
           <div className="w-full flex justify-center translate-y-[-55px] ">
             <Image
@@ -101,11 +101,44 @@ return (
     
           {/* Hero Section */}
           <div className="-translate-y-[90px] translate-x-[5px]">
-            <HeroSection />
-          </div>
-
-              
+          <div className="bg-gradient-to-b text-white py-16 text-center">
+            {/* Heading */}
+            <h1 className="text-[35px] font-extrabold leading-[72px]">
+            <span className="font-bold">Book Your Slot Now</span>
+            </h1>
+           </div>
+           </div> 
         </div>
+        {/* Available header */}
+        <div className="w-[1539px] min-h-half mt-[60px] ml-[20px] rounded-tl-[32px] rounded-tr-[32px] rounded-bl-[32px] rounded-br-[32px] text-white flex flex-col items-center px-4 pt-4 -translate-y-[50px]">
+        <div className="container mx-auto px-4 py-5">
+        <h1 className="text-2xl font-bold text-black text-center mb-6 translate-x-[-650px]">Available Slots</h1>
+        {slots.map((slot) => (
+          <div key={slot.id} className=" w-full max-w-[1539px] h-[207px] pt-[32px] bg-slate-50 space-y-4 flex items-center border p-4 mb-4 rounded-3xl hover:shadow-lg">
+            <Image className="w-24 h-24 mr-4" src={gameImages[sportid.toString()]} alt={slot.id.toString()} />
+            <div className="flex-grow">
+            <div className="flex flex-col">
+                        {/* Start Time and End Time in one line */}
+                        <p className="text-gray-500 mb-2">
+                            Start Time: {slot.start_time} || End Time: {slot.end_time}
+                        </p>
+
+                        {/* Date and Members in one line */}
+                        <p className="text-gray-500 mb-2">
+                            Date: {slot.date} | Members: {slot.member}
+                        </p>
+                        </div>
+                        <button
+              className="bg-black hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-3xl">
+              BOOK SLOT
+            </button>
+            </div>
+           
+          </div>
+        ))}
+      </div>
+        </div>
+            {/* Outdoor games header */}
         {/* Footer */}
         <Footer />
       </div>
