@@ -207,7 +207,7 @@ export class AuthService {
             const options: nodemailer.SendMailOptions = {
              from: process.env.EMAIL_USER,
              to: rq.session.email,
-             subject: 'Password Changed',
+             subject: 'Security alert: Password Changed',
              html: `
                  <style>
                      body {

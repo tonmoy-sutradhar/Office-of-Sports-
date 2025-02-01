@@ -37,13 +37,13 @@ export class UserController {
         return await this.userService.changePass(data,decodedPayload.userId);
     }
 
-    @Post('sports/outdoor')
+    @Get('sports/outdoor')
     @UseGuards(userAuthGuard)
      async getSports(){
         return await this.userService.getOutdooSports();
     }
 
-    @Post('sports/indoor')
+    @Get('sports/indoor')
     @UseGuards(userAuthGuard)
     async getSportsIndo(){
         return await this.userService.getIndoor();

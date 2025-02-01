@@ -43,7 +43,7 @@ export default function LoginPage() {
 
       // Store token in a secure cookie
       Cookies.set("accessToken", token, {
-        expiresIn: '1h', // 1 day
+        expiresIn: '8h', // 1 day
         secure: true, // Use HTTPS
         sameSite: "Strict", // Protect from CSRF
       });
