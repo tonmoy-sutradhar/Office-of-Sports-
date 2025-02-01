@@ -16,10 +16,12 @@ import Tennis from "@/asset/tennis.jpg";
 import tableTennis from "@/asset/tableTennis.jpg";
 import Caram from "@/asset/ceram.jpeg";
 import Footer from "../Components/Footer";
+import Link from "next/link";
 
 
 export default function StudentDashboard() {
   interface Sport {
+    id: number;
     name: string;
     image: string;
   }
@@ -162,9 +164,11 @@ return (
                   className="rounded-lg w-full h-auto"
                 />
                 <h3 className="mt-4 text-lg font-semibold text-black">{game.name}</h3>
+                <Link href={`/Student/Slots/${game.id}`}>
                 <button className="mt-2 text-purple-700 border border-purple-500 rounded-full px-4 py-2">
                   View Slots
                 </button>
+                </Link>
               </div>
             ))}
           </div>
