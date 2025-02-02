@@ -15,6 +15,7 @@ import api from "@/app/api/api";
 export default function SetPassword() {
     const [shownPassword, setShownPassword] = useState(false);
     const [showcnPassword, setShowcnPassword] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [customError, setCustomError] = useState('');
     const [successMessage, setSuccessMessage] = useState("");
     const router = useRouter();
@@ -39,6 +40,7 @@ export default function SetPassword() {
                 },
             }
             );
+            setLoading(true);
             setSuccessMessage("Password set successfully. Please login to continue.");
             // Optional: Automatically hide the success message after 5 seconds
             setTimeout(() => {
@@ -50,7 +52,18 @@ export default function SetPassword() {
                 error.response?.data?.message || "Failed to set password. Please try again."
             );
         }
+        finally {
+            setLoading(false);
+        }
       };
+
+      if (loading) {
+        return (
+          <div className="min-h-screen flex items-center justify-center">
+            <div className="spinner spinner-ping">Loading..</div>
+          </div>
+        );
+      }
   return (
     <div className="min-h-screen bg-primary-content from-primary-50 to-primary-100 flex flex-col items-center justify-center p-4">
         {successMessage && (
