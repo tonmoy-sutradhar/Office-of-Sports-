@@ -44,10 +44,35 @@ export default function Slot() {
       const [slots, setSlots] = useState<Slot[]>([]);
       const [customError, setCustomError] = useState('');
       const router = useRouter();
+
+      const HomePageCall = () => {
+        router.push("/Student");
+      };
+
+      const bookSlot = async (slotId: number, sportId: number) => {
+        try {
+          const token = Cookies.get("accessToken"); // Get token from cookies
+          if(!token) {
+            router.push("/Login");
+            return;
+          }
+          const response = await api.post('bookings/create', {
+            slotId,
+            sportId
+          }, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          alert("Slot booked successfully.");
+        } catch (error: any) {
+          setCustomError(error.response?.data?.message || "Failed to book slot.");
+        }
+      };
     
       // Fetch data dynamically (replace with your API endpoint if applicable)
       useEffect(() => {
-        const fetchUserProfile = async () => {
+        const fetchSlotInfo = async () => {
           try {
             const token = Cookies.get("accessToken"); // Get token from cookies
             if(!token) {
@@ -60,12 +85,16 @@ export default function Slot() {
               },
             });
             setSlots(response.data);
+            setLoading(true);
           } catch (error: any) {
             setCustomError(error.response?.data?.message || "Failed to fetch user data.");
           }
+          finally {
+            setLoading(false);
+          }
         };
       
-        fetchUserProfile();
+        fetchSlotInfo();
       }, []);
     
 
@@ -82,7 +111,7 @@ return (
         <header className="w-[1539px] min-h-[49px] mt-[55px] ml-[20px] rounded-full bg-[#000080] text-white flex items-center px-4">
         {/*buttons for profile and logout*/}
         <nav className="flex items-center space-x-4 ml-auto">
-        <button className="text-lg bg-[#000080] text-white px-4 py-2 rounded-lg font-semibold cursor-pointer">Home</button>
+        <button onClick={HomePageCall} className="text-lg bg-[#000080] text-white px-4 py-2 rounded-lg font-semibold cursor-pointer">Home</button>
         <button className=" text-lg bg-[#000080] text-white px-4 py-2 rounded-lg font-semibold">Profile</button>
         </nav>
         </header>
@@ -128,9 +157,10 @@ return (
                             Date: {slot.date} | Members: {slot.member}
                         </p>
                         </div>
-                        <button
+              <button
+              onClick={() => bookSlot(slot.id, Number(sportid))}
               className="bg-black hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-3xl">
-              BOOK SLOT
+              Book Slot
             </button>
             </div>
            

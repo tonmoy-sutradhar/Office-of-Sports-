@@ -43,11 +43,9 @@ export class SlotsService {
     const maxPlayers = sport.maxPlayers;
   
     return await this.slotRepository
-    .createQueryBuilder('slot')
-    .where('slot.sport_id = :sportId', { sportId })
-    .andWhere('slot.member < :maxPlayers', { maxPlayers }) // Use the maxPlayers value
-    .orderBy('slot.member', 'DESC')
-    .getMany();
+      .createQueryBuilder('slot')
+      .where('slot.sport_id = :sportId', { sportId })
+      .getMany();
   
   }
   
