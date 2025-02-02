@@ -3,7 +3,7 @@ import Logo from "@/asset/aiub-logo.png";
 
 export default function Footer() {
   return (
-    <footer className="bg-blue-100 py-10 rounded-t-3xl rounded-b-3xl text-center w-[1539px] -translate-y-[45px] translate-x-[10px] ">
+    <footer className="bg-blue-100 py-10 rounded-t-3xl rounded-b-3xl text-center w-full max-w-[1539px] mx-auto -translate-y-[45px] translate-x-[5px] ">
       <div className="container mx-auto px-6">
         <div className="flex justify-center mb-4">
           <Image

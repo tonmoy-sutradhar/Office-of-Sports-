@@ -128,7 +128,7 @@ return (
         <Header username={username} logout={logout} />
         
         {/* Main content container */}
-        <div className="w-[1539px] min-h-[1342px] mt-[60px] ml-[20px] rounded-tl-[32px] rounded-tr-[32px] rounded-bl-[32px] rounded-br-[32px] bg-[#000080] text-white flex flex-col items-center px-4 pt-4 -translate-y-[50px]">         
+        <div className="max-w-[1539px] w-full min-h-[1342px] mt-12 ml-5 rounded-[32px] bg-[#000080] text-white flex flex-col items-center px-4 pt-4 lg:mt-[60px] lg:ml-[5px] lg:translate-y-[-50px]">         
           {/* Logo */}
           <div className="w-full flex justify-center translate-y-[-55px] ">
             <Image

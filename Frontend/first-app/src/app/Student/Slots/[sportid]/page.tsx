@@ -108,7 +108,7 @@ export default function Slot() {
 return (
       <div className="min-h-screen bg-primary-content from-primary-50 to-primary-100 flex flex-col items-center p-4">
         {/* Header */}
-        <header className="w-[1539px] min-h-[49px] mt-[55px] ml-[20px] rounded-full bg-[#000080] text-white flex items-center px-4">
+        <header className="max-w-full md:max-w-[1539px] w-full min-h-[49px] mt-4 md:mt-[55px] ml-1 md:ml-[5px] rounded-full bg-[#000080] text-white flex items-center px-4">
         {/*buttons for profile and logout*/}
         <nav className="flex items-center space-x-4 ml-auto">
         <button onClick={HomePageCall} className="text-lg bg-[#000080] text-white px-4 py-2 rounded-lg font-semibold cursor-pointer">Home</button>
@@ -116,7 +116,7 @@ return (
         </nav>
         </header>
         {/* Main content container */}
-        <div className="w-[1539px] h-half mt-[60px] ml-[20px] rounded-tl-[32px] rounded-tr-[32px] rounded-bl-[32px] rounded-br-[32px] bg-[#000080] text-white flex flex-col items-center px-4 pt-4 -translate-y-[50px]">         
+        <div className="max-w-[1539px] w-full max-h-half mt-12 ml-5 rounded-[32px] bg-[#000080] text-white flex flex-col items-center px-4 pt-4 lg:mt-[60px] lg:ml-[5px] lg:translate-y-[-50px]">         
           {/* Logo */}
           <div className="w-full flex justify-center translate-y-[-55px] ">
             <Image
@@ -139,7 +139,7 @@ return (
            </div> 
         </div>
         {/* Available header */}
-        <div className="w-[1539px] min-h-half mt-[60px] ml-[20px] rounded-tl-[32px] rounded-tr-[32px] rounded-bl-[32px] rounded-br-[32px] text-white flex flex-col items-center px-4 pt-4 -translate-y-[50px]">
+        <div className="max-w-[1539px] w-full min-h-half mt-[60px] ml-[20px] rounded-tl-[32px] rounded-tr-[32px] rounded-bl-[32px] rounded-br-[32px] text-white flex flex-col items-center px-4 pt-4 lg:translate-y-[-50px]">
         <div className="container mx-auto px-4 py-5">
         <h1 className="text-2xl font-bold text-black text-center mb-6 translate-x-[-650px]">Available Slots</h1>
         {slots.map((slot) => (

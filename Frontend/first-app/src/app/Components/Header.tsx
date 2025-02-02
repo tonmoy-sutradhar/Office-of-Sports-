@@ -19,7 +19,7 @@ export default function Header({ username, logout }: HeaderProps) {
   }, [username]);
 
 return (
-    <header className="w-[1539px] min-h-[49px] mt-[55px] ml-[20px] rounded-full bg-[#000080] text-white flex items-center px-4">
+    <header className="max-w-full md:max-w-[1539px] w-full min-h-[49px] mt-4 md:mt-[55px] ml-1 md:ml-[5px] rounded-full bg-[#000080] text-white flex items-center px-4">
       <h1 className="text-lg font-semibold">{username ? `Welcome, ${username}` : "Welcome"}</h1>
     {/*buttons for profile and logout*/}
     <nav className="flex items-center space-x-4 ml-auto">

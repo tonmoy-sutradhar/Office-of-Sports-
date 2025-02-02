@@ -58,12 +58,11 @@ export default function LoginPage() {
         {/* Background Image */}
         <Background />
 
-      <div className="w-full max-w-sm p-4 rounded-3xl transform scale-200 inset-10 z-50 -translate-y-40">
+      <div className="w-full max-w-sm p-4 rounded-3xl transform scale-200 inset-10 z-50 lg:translate-y-[-200px]">
         {/* Logo of AIUB */}
         <Logo />
         <div
-          className="bg-white shadow-lg rounded-2xl p-4 space-y-4"
-          style={{ paddingTop: "80px" }}
+          className="bg-white shadow-lg rounded-2xl p-4 space-y-4 pt-24"
         >
           {/* Form */}
           <form onSubmit={handleSubmit(login)}>
