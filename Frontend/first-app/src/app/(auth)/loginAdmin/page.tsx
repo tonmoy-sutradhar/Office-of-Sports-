@@ -89,11 +89,11 @@ export default function page() {
       <Background></Background>
 
       <div className="w-full max-w-sm p-4 rounded-3xl transform scale-200 inset-10 z-50 -translate-y-40">
-        <div className="-mt-[280px] relative ml-20">
+        <div className=" relative ml-20">
           <Logo></Logo>
         </div>
         <div
-          className="bg-white shadow-lg rounded-2xl p-4 space-y-4 -mt-[130px]"
+          className="bg-white shadow-lg rounded-2xl p-4 space-y-4 mt-[230px] translate-y-[-200px]"
           style={{ paddingTop: "80px" }}
         >
           {/* Form */}
