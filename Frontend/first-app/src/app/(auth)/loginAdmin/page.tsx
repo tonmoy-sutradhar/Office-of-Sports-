@@ -85,16 +85,13 @@ export default function page() {
 
   return (
     // min-h-screen
-    <div className=" bg-primary-content from-primary-50 to-primary-100 flex flex-col items-center justify-center p-4">
+    <div className=" min-h-screen bg-primary-content from-primary-50 to-primary-100 flex flex-col items-center justify-center p-4">
       <Background></Background>
 
-      <div className="w-full max-w-sm p-4 rounded-3xl transform scale-200 inset-10 z-50 -translate-y-40">
-        <div className=" relative ml-20">
-          <Logo></Logo>
-        </div>
+      <div className="w-full max-w-sm p-4 rounded-3xl transform scale-200 inset-10 z-50 lg:translate-y-[-200px]">
+          <Logo/>
         <div
-          className="bg-white shadow-lg rounded-2xl p-4 space-y-4 mt-[230px] translate-y-[-200px]"
-          style={{ paddingTop: "80px" }}
+          className="bg-white shadow-lg rounded-2xl p-4 space-y-4 pt-24"
         >
           {/* Form */}
           <form onSubmit={handleSubmit(login)}>

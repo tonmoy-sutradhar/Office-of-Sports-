@@ -112,7 +112,6 @@ return (
         {/*buttons for profile and logout*/}
         <nav className="flex items-center space-x-4 ml-auto">
         <button onClick={HomePageCall} className="text-lg bg-[#000080] text-white px-4 py-2 rounded-lg font-semibold cursor-pointer">Home</button>
-        <button className=" text-lg bg-[#000080] text-white px-4 py-2 rounded-lg font-semibold">Profile</button>
         </nav>
         </header>
         {/* Main content container */}
@@ -148,12 +147,12 @@ return (
             <div className="flex-grow">
             <div className="flex flex-col">
                         {/* Start Time and End Time in one line */}
-                        <p className="text-gray-500 mb-2">
-                            Start Time: {slot.start_time} || End Time: {slot.end_time}
+                        <p className="text-black font-semibold mb-2">
+                            Start Time: {slot.start_time} | End Time: {slot.end_time}
                         </p>
 
                         {/* Date and Members in one line */}
-                        <p className="text-gray-500 mb-2">
+                        <p className="text-black font-semibold mb-2">
                             Date: {slot.date} | Members: {slot.member}
                         </p>
                         </div>

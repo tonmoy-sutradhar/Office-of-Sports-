@@ -9,8 +9,7 @@ export default function Background() {
       <Image
         src={image}
         alt="AIUB Office of Sports"
-        layout="fill"
-        objectFit="cover"
+        style={{ position: 'absolute', width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
       />
     </div>
   );
