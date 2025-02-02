@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import Image from "next/image";
-import profile from "@/asstes/tonmoy.jpg";
+import profile from "@/asset/tonmoy.jpg";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import Link from "next/link";

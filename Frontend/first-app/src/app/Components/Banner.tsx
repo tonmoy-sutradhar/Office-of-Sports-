@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
-import banner from "@/asstes/bgImage.jpg";
-import logo from "@/asstes/logo.png";
+import banner from "@/asset/bgImage.jpg";
+import logo from "@/asset/logo.png";
 
 export default function Banner() {
   return (
