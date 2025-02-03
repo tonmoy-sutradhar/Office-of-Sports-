@@ -131,7 +131,12 @@ export class BookingsService {
     }
 
     // Decrement the member count for the slot
-    slot.member -= 1;
+    if (slot.member <= 0) {
+      slot.member = 0;
+    }
+    else{
+    slot.member -= 1;}
+    
 
     // If the slot was previously marked as fully booked, mark it as available
     if (slot.is_booked && slot.member < slot.sport.maxPlayers) {

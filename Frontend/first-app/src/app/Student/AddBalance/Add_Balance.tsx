@@ -14,8 +14,10 @@ import { couponSchema, CouponSchema } from "@/app/Validation/CouponVerify";
 
 export default function AddBalance() {
     const [customError, setCustomError] = useState('');
+    const [token, setToken] = useState("");
     const [loading, setLoading] = useState(false);
     const router = useRouter();
+
         const HomePageCall = () => {
           router.push("/Student");
         };
@@ -28,32 +30,31 @@ export default function AddBalance() {
        resolver: zodResolver(couponSchema),
      });
 
-     useEffect(() => {
-          try {
-            const token = Cookies.get("accessToken"); // Get token from cookies
-            if (!token) {
-              router.push("/Login");
-              return;
-            }
-            setLoading(true);
-          } catch (error: any) {
-            setCustomError(error.response?.data?.message || "Failed to fetch balance. Please try again.");
-          } finally {
-            setLoading(false);
-          }
-        }, []
-      );
- 
-     // Register handler
     const addBalance = async (data: CouponSchema) => {
-     try {
+      try {
+        const token = Cookies.get("accessToken"); // Get token from cookies
+        if (!token) {
+          router.push("/Login");
+          return;
+        }
+        await api.post("/payment/add-balance", data, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        alert("Balance added successfully.");
+        setLoading(true);
+        setToken(token);
+      } catch (error: any) {
+        setCustomError(error.response?.data?.message || "Failed to fetch balance. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-        await api.post("/payment/add-balance", data);
-       alert("Balance added successfully.");
-     } catch (error: any) {
-       setCustomError(error.response?.data?.message || "Failed to add balance. Please try again.");
-     }
-   };
+    useEffect(() => {
+      // Call addBalance function here if needed
+    }, []);
 
    if (loading) {
     return <span className="loading loading-bars loading-lg flex justify-center items-center h-screen translate-x-[800px]"></span>;
@@ -64,9 +65,13 @@ export default function AddBalance() {
 
   return (
     <div className="min-h-screen bg-primary-content from-primary-50 to-primary-100 flex flex-col items-center justify-center p-4">
-    
+      <header className="max-w-full md:max-w-[1539px] w-full min-h-[49px] mt-4 md:mt-[55px] ml-1 md:ml-[5px] rounded-full bg-[#121262] text-white flex items-center px-4">
+      <nav className="flex items-center space-x-4 ml-auto">
+        <button onClick={HomePageCall} className="text-lg bg-[#121262] text-white px-4 py-2 rounded-lg font-semibold cursor-pointer">Home</button>
+        </nav>
+      </header>
         {/* Main content container */}
-        <div className="max-w-[1539px] w-full max-h-half mt-12 ml-5 rounded-[32px] bg-[#7777f7] text-white flex flex-col items-center px-4 pt-4 lg:mt-[60px] lg:ml-[5px] lg:translate-y-[-50px]">         
+        <div className="max-w-[1539px] w-full max-h-half mt-12 ml-5 rounded-[32px] bg-[#111165] text-white flex flex-col items-center px-4 pt-4 lg:mt-[60px] lg:ml-[5px] lg:translate-y-[-50px]">         
           {/* Logo */}
           <div className="w-full flex justify-center translate-y-[-55px] ">
             <Image
@@ -100,7 +105,7 @@ export default function AddBalance() {
                             type="text"
                             id="coupon"
                             {...register("couponCode")}
-                            className="w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-primary-100 focus:border-primary-300 dark:bg-gray-800 dark:text-white dark:placeholder-gray-500 dark:border-gray-600"
+                            className="w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-primary-100 focus:border-primary-300 dark:bg-gray-800 dark:text-black text-black dark:placeholder-gray-500 dark:border-gray-600"
                             placeholder="Enter coupon code"
                         />
                         {errors.couponCode && <p className="text-red-500 text-xs mt-1">{errors.couponCode.message}</p>}

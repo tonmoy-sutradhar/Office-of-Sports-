@@ -83,14 +83,14 @@ export default function StudentInfo() {
 
   return (
     <div className="min-h-screen bg-primary-content from-primary-50 to-primary-100 flex flex-col items-center justify-center p-4">
-    <header className="max-w-full md:max-w-[1539px] w-full min-h-[49px] mt-4 md:mt-[55px] ml-1 md:ml-[5px] rounded-full bg-[#5a5ae9] text-white flex items-center px-4">
+    <header className="max-w-full md:max-w-[1539px] w-full min-h-[49px] mt-4 md:mt-[55px] ml-1 md:ml-[5px] rounded-full bg-[#121262] text-white flex items-center px-4">
         {/*buttons for profile and logout*/}
         <nav className="flex items-center space-x-4 ml-auto">
-        <button onClick={HomePageCall} className="text-lg bg-[#5a5ae9] text-white px-4 py-2 rounded-lg font-semibold cursor-pointer">Home</button>
+        <button onClick={HomePageCall} className="text-lg bg-[#121262] text-white px-4 py-2 rounded-lg font-semibold cursor-pointer">Home</button>
         </nav>
         </header>
         {/* Main content container */}
-        <div className="max-w-[1539px] w-full max-h-half mt-12 ml-5 rounded-[32px] bg-[#7777f7] text-white flex flex-col items-center px-4 pt-4 lg:mt-[60px] lg:ml-[5px] lg:translate-y-[-50px]">         
+        <div className="max-w-[1539px] w-full max-h-half mt-12 ml-5 rounded-[32px] bg-[#121262] text-white flex flex-col items-center px-4 pt-4 lg:mt-[60px] lg:ml-[5px] lg:translate-y-[-50px]">         
           {/* Logo */}
           <div className="w-full flex justify-center translate-y-[-55px] ">
             <Image
