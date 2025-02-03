@@ -26,6 +26,13 @@ export class SearchController {
     return this.searchService.searchStudent(query, adminId);
   }
 
+  // Get all students
+  @Get('students')
+  @UseGuards(adminAuthGuard)
+  async getAllStudents() {
+    return this.searchService.getAllStudents();
+  }
+
   // Ban or unban a student by university_id
   @Patch('student/ban/:identifier')
   @UseGuards(adminAuthGuard)

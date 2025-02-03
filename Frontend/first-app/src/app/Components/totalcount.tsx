@@ -30,7 +30,7 @@ const Totalcount = () => {
 
         // Fetch Total Sports
         const sportsResponse = await axios.get(
-          `${process.env.NEXT_PUBLIC_API}/sports`,
+          `${process.env.NEXT_PUBLIC_API}/sports/all`,
           {
             headers: { Authorization: `Bearer ${token}` },
             withCredentials: true,

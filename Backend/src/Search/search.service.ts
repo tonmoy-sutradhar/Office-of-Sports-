@@ -66,4 +66,11 @@ export class SearchService {
     student.isBanned = banStatus;
     return this.studentRepository.save(student);
   }
+
+  // Get all students
+  async getAllStudents(): Promise<Student_Regi[]> {
+    return this.studentRepository.find({
+      select: ['id', 'university_id', 'email', 'isBanned', 'balance'],
+    });
+  }
 }

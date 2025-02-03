@@ -36,8 +36,10 @@ export class AuthService {
         };
         const Token = await this.jwtService.signAsync(payload);
         res.cookie('access_token',Token,{httpOnly:true});
+        console.log(payload);
         return{
             message: "Login Sucessfull",Token
+
         };
     }
 
