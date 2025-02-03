@@ -36,7 +36,7 @@ export default function Navbar() {
       // Remove token and redirect
       Cookies.remove("accessToken");
       toast.success("Logout successful");
-      router.push("/");
+      router.push("/loginAdmin");
     } catch (error) {
       if (error instanceof Error) {
         toast.error(error.message);

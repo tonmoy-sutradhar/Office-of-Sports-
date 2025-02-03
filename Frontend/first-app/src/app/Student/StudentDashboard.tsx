@@ -17,6 +17,7 @@ import tableTennis from "@/asset/tableTennis.jpg";
 import Caram from "@/asset/ceram.jpeg";
 import Footer from "../Components/Footer";
 import Link from "next/link";
+import { set } from "zod";
 
 
 export default function StudentDashboard() {
@@ -38,11 +39,24 @@ export default function StudentDashboard() {
   };
   
   const [customError, setCustomError] = useState("");
+  const [balance, setBalance] = useState(0);
   const [username, setUsername] = useState("");
   const [loading, setLoading] = useState(false);
   const [indoorSports, setIndoorSports] = useState<Sport[]>([]);
   const [outdoorSports, setOutdoorSports] = useState<Sport[]>([]);
   const router = useRouter();
+
+  const goTobookingPage = () => {
+    router.push("/Student/Bookings");
+  };
+
+  const goToaddBalancePage = () => {
+    router.push("/Student/AddBalance");
+  };
+
+  const goToProfilePage = () => {
+    router.push("/Student/Profile");
+  };
 
   // Fetch user profile when the component mounts
   useEffect(() => {
@@ -59,8 +73,19 @@ export default function StudentDashboard() {
           },
         });
         setUsername(response.data.name);
+
+        {/*User Balance*/}
+         const userBalance = await api.get("/user/balance", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+           },
+        });
+         setBalance(userBalance.data.balance);
+        setLoading(true);
       } catch (error: any) {
         setCustomError(error.response?.data?.message || "Failed to fetch user data.");
+      }finally {
+        setLoading(false);
       }
     };
   
@@ -125,10 +150,10 @@ export default function StudentDashboard() {
 return (
       <div className="min-h-screen bg-primary-content from-primary-50 to-primary-100 flex flex-col items-center p-4">
         {/* Header */}
-        <Header username={username} logout={logout} />
+        <Header username={username} logout={logout} balance={balance} bookingPageCall={goTobookingPage} addBalancePageCall={goToaddBalancePage} profilePageCall={goToProfilePage}/>
         
         {/* Main content container */}
-        <div className="w-[1539px] min-h-[1342px] mt-[60px] ml-[20px] rounded-tl-[32px] rounded-tr-[32px] rounded-bl-[32px] rounded-br-[32px] bg-[#000080] text-white flex flex-col items-center px-4 pt-4 -translate-y-[50px]">         
+        <div className="max-w-[1539px] w-full min-h-[1342px] mt-12 ml-5 rounded-[32px] bg-[#000080] text-white flex flex-col items-center px-4 pt-4 lg:mt-[60px] lg:ml-[5px] lg:translate-y-[-50px]">         
           {/* Logo */}
           <div className="w-full flex justify-center translate-y-[-55px] ">
             <Image

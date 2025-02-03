@@ -1,12 +1,10 @@
 "use client";
-import { useState, useEffect, use } from "react";
-import { useRouter, useParams } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import api from "@/app/api/api";
 import Cookies from "js-cookie";
-import Header from "@/app/Components/Header";
 import Image, { StaticImageData } from "next/image";
 import logo from "@/asset/logo.png";
-import HeroSection from "@/app/Components/HeroSection";
 import Football from "@/asset/football.jpg";
 import Cricket from "@/asset/cricket.jpg";
 import Basketball from "@/asset/basketball.jpg";
@@ -16,32 +14,36 @@ import Tennis from "@/asset/tennis.jpg";
 import tableTennis from "@/asset/tableTennis.jpg";
 import Caram from "@/asset/ceram.jpeg";
 import Footer from "@/app/Components/Footer";
-import Link from "next/link";
+import { Feedback } from "@/app/Components/FeedBack";
 
 
-export default function Slot() {
-    interface Slot {
-        id: number;
+export default function ViewBookings() {
+
+    interface Bookings {
+        booking_id: number;
+        slot_id: number;
         sport_id: number;
-        start_time: string;
-        end_time: string;
-        member: number;
         date: string;
-        }
+        start_time: string;
+        end_time:string;
+        payment_status: string;
+        status: string;
+        member: number;
+        game_name: string;
+    }
     
       const gameImages: { [key: string]: StaticImageData } = {
-        '3': Football,
-        '5': Cricket,
-        '2': Basketball,
-        '4': Badminton,
-        '6': Volleyball,
-        '1': Tennis,
-        '7': tableTennis,
-        '11': Caram,
+        football: Football,
+        cricket: Cricket,
+        basketball: Basketball,
+        badminton: Badminton,
+        volleyball: Volleyball,
+        tennis: Tennis,
+        table_tennis: tableTennis,
+        caram: Caram,
       };
-      const { sportid = 'defaultSportId' } = useParams();
       const [loading, setLoading] = useState(false);
-      const [slots, setSlots] = useState<Slot[]>([]);
+      const [bookings, setBookings] = useState<Bookings[]>([]);
       const [customError, setCustomError] = useState('');
       const router = useRouter();
 
@@ -49,53 +51,77 @@ export default function Slot() {
         router.push("/Student");
       };
 
-      const bookSlot = async (slotId: number, sportId: number) => {
+      const cencelBooking = async (bookingId: number) => {
         try {
           const token = Cookies.get("accessToken"); // Get token from cookies
           if(!token) {
             router.push("/Login");
             return;
           }
-          const response = await api.post('bookings/create', {
-            slotId,
-            sportId
-          }, {
+          await api.delete(`/bookings/cancel/${bookingId}`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           });
-          alert("Slot booked successfully.");
-        } catch (error: any) {
-          setCustomError(error.response?.data?.message || "Failed to book slot.");
-        }
-      };
-    
-      // Fetch data dynamically (replace with your API endpoint if applicable)
-      useEffect(() => {
-        const fetchSlotInfo = async () => {
-          try {
-            const token = Cookies.get("accessToken"); // Get token from cookies
-            if(!token) {
-              router.push("/Login");
-              return;
-            }
-            const response = await api.get(`slots/available/${sportid}`, {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            });
-            setSlots(response.data);
+          alert("Booking cancelled successfully.");
             setLoading(true);
-          } catch (error: any) {
-            setCustomError(error.response?.data?.message || "Failed to fetch user data.");
-          }
-          finally {
-            setLoading(false);
-          }
+        } catch (error: any) {
+          setCustomError(error.response?.data?.message || "Failed to cancel booking. Please try again.");
+        }finally {
+          setLoading(false);
         };
-      
-        fetchSlotInfo();
-      }, []);
+      };
+
+        const completeBooking = async (bookingId: number, slotID: number, amount=50) => {
+            try {
+              const token = Cookies.get("accessToken"); // Get token from cookies
+              if(!token) {
+                router.push("/Login");
+                return;
+              }
+              await api.post('/payment/deduct-balance', {
+                bookingId,
+                slotID,
+                amount,
+              }, {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              });
+              alert("Booking completed successfully.");
+              setLoading(true);
+            } catch (error: any) {
+              setCustomError(error.response?.data?.message || "Failed to complete booking. Please try again.");
+            }
+            finally {
+              setLoading(false);    
+            };
+        };
+
+        useEffect(() => {
+            const fetchBookings = async () => {
+            try {
+                const token = Cookies.get("accessToken"); // Get token from cookies
+                if(!token) {
+                router.push("/Login");
+                return;
+                }
+                const response = await api.post("/user/sports/bookings",{}, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                withCredentials: true
+                });
+                setLoading(true);
+                setBookings(response.data);
+            } catch (error: any) {
+                setCustomError(error.response?.data?.message || "Failed to fetch bookings. Please try again.");
+            } finally {
+                setLoading(false);
+            }
+            };
+            fetchBookings();
+        }, []);
     
 
   if (loading) {
@@ -141,26 +167,35 @@ return (
         <div className="max-w-[1539px] w-full min-h-half mt-[60px] ml-[20px] rounded-tl-[32px] rounded-tr-[32px] rounded-bl-[32px] rounded-br-[32px] text-white flex flex-col items-center px-4 pt-4 lg:translate-y-[-50px]">
         <div className="container mx-auto px-4 py-5">
         <h1 className="text-2xl font-bold text-black text-center mb-6 translate-x-[-650px]">Available Slots</h1>
-        {slots.map((slot) => (
-          <div key={slot.id} className=" w-full max-w-[1539px] h-[207px] pt-[32px] bg-slate-50 space-y-4 flex items-center border p-4 mb-4 rounded-3xl hover:shadow-lg">
-            <Image className="w-24 h-24 mr-4" src={gameImages[sportid.toString()]} alt={slot.id.toString()} />
+        {bookings.map((booking) => (
+          <div key={booking.booking_id} className=" w-full max-w-[1539px] h-[207px] pt-[32px] bg-slate-50 space-y-4 flex items-center border p-4 mb-4 rounded-3xl hover:shadow-lg">
+            <Image className="w-24 h-24 mr-4" src={gameImages[booking.game_name.toLowerCase().replace(/\s+/g, "_")]} alt={booking.booking_id.toString()} />
             <div className="flex-grow">
+                <h1 className="text-2xl font-bold text-black">{booking.game_name}</h1>
             <div className="flex flex-col">
                         {/* Start Time and End Time in one line */}
                         <p className="text-black font-semibold mb-2">
-                            Start Time: {slot.start_time} | End Time: {slot.end_time}
+                            Start Time: {booking.start_time} | End Time: {booking.end_time}
                         </p>
 
                         {/* Date and Members in one line */}
                         <p className="text-black font-semibold mb-2">
-                            Date: {slot.date} | Members: {slot.member}
+                             Date: {booking.date.toString().split('T')[0]} | Members: {booking.member}
                         </p>
                         </div>
-              <button
-              onClick={() => bookSlot(slot.id, Number(sportid))}
-              className="bg-black hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-3xl">
-              Book Slot
-            </button>
+                        {booking.payment_status.toLowerCase() === "unpaid" ? (
+            <div>
+                <button className="bg-black hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-3xl mr-2 " onClick={() => completeBooking(booking.booking_id, booking.slot_id)}>
+                    Pay
+                </button>
+                <button className="bg-black hover:bg-red-700 text-white font-bold py-2 px-4 rounded-3xl" onClick={() => cencelBooking(booking.booking_id)}>
+                    Cancel
+                </button>
+            </div>
+        ) : (
+             <Feedback bookingId={booking.sport_id}/>
+         
+        )}
             </div>
            
           </div>
