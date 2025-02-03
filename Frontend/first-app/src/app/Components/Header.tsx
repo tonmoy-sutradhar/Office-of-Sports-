@@ -9,13 +9,18 @@ import { Dropdown } from 'flowbite-react';
 interface HeaderProps {
   username: string;
   logout: () => void;
+  bookingPageCall: () => void;
+  addBalancePageCall: () => void;
+  profilePageCall: () => void;
   balance: number;
+
 }
 
-export default function Header({ username, logout, balance }: HeaderProps) {
+export default function Header({ username, logout, balance, bookingPageCall , addBalancePageCall, profilePageCall }: HeaderProps) {
     const [user, setUser] = useState(username || "");
 
   useEffect(() => {
+
     if (!username) {
       const storedUsername = Cookies.get("username");
       if (storedUsername) {
@@ -30,10 +35,10 @@ return (
     {/*buttons for profile and logout*/}
     <nav className="flex items-center space-x-4 ml-auto lg:mr-[10px]">
       <Dropdown label="Menu">
-      <Dropdown.Item icon={CgProfile}>Profile</Dropdown.Item>
-      <Dropdown.Item icon={HiViewGrid}>Bookings</Dropdown.Item>
+      <Dropdown.Item icon={CgProfile} onClick={profilePageCall}>Profile</Dropdown.Item>
+      <Dropdown.Item icon={HiViewGrid} onClick={bookingPageCall}>Bookings</Dropdown.Item>
       <Dropdown.Item icon={HiCurrencyDollar}>Balance: {balance} </Dropdown.Item>
-      <Dropdown.Item icon={GiReceiveMoney}>Top up</Dropdown.Item>
+      <Dropdown.Item icon={GiReceiveMoney} onClick={addBalancePageCall}>Top up</Dropdown.Item>
       <Dropdown.Item icon={SiContactlesspayment}>Payment</Dropdown.Item>
       <Dropdown.Item icon={HiLogout} onClick={logout}>Sign out</Dropdown.Item>
     </Dropdown>

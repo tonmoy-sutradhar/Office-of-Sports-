@@ -117,6 +117,7 @@ export class UserService {
             s.id AS Slot_ID,
             s.start_time,
             s.end_time,
+            s.date,
             b.payment_status,
             b.status,
             s.member,

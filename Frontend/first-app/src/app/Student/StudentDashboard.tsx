@@ -45,6 +45,18 @@ export default function StudentDashboard() {
   const [outdoorSports, setOutdoorSports] = useState<Sport[]>([]);
   const router = useRouter();
 
+  const goTobookingPage = () => {
+    router.push("/Student/Bookings");
+  };
+
+  const goToaddBalancePage = () => {
+    router.push("/Student/AddBalance");
+  };
+
+  const goToProfilePage = () => {
+    router.push("/Student/Profile");
+  };
+
   // Fetch user profile when the component mounts
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -135,7 +147,7 @@ export default function StudentDashboard() {
 return (
       <div className="min-h-screen bg-primary-content from-primary-50 to-primary-100 flex flex-col items-center p-4">
         {/* Header */}
-        <Header username={username} logout={logout} balance={balance} />
+        <Header username={username} logout={logout} balance={balance} bookingPageCall={goTobookingPage} addBalancePageCall={goToaddBalancePage} profilePageCall={goToProfilePage}/>
         
         {/* Main content container */}
         <div className="max-w-[1539px] w-full min-h-[1342px] mt-12 ml-5 rounded-[32px] bg-[#000080] text-white flex flex-col items-center px-4 pt-4 lg:mt-[60px] lg:ml-[5px] lg:translate-y-[-50px]">         
