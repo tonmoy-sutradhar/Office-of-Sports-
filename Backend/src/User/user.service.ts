@@ -115,6 +115,7 @@ export class UserService {
             `SELECT 
             b.id AS Booking_ID,
             s.id AS Slot_ID,
+            sp.id AS Sport_ID,
             s.start_time,
             s.end_time,
             s.date,

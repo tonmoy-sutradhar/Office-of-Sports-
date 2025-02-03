@@ -17,6 +17,7 @@ import tableTennis from "@/asset/tableTennis.jpg";
 import Caram from "@/asset/ceram.jpeg";
 import Footer from "../Components/Footer";
 import Link from "next/link";
+import { set } from "zod";
 
 
 export default function StudentDashboard() {
@@ -80,9 +81,11 @@ export default function StudentDashboard() {
            },
         });
          setBalance(userBalance.data.balance);
-
+        setLoading(true);
       } catch (error: any) {
         setCustomError(error.response?.data?.message || "Failed to fetch user data.");
+      }finally {
+        setLoading(false);
       }
     };
   

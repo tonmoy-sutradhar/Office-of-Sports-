@@ -14,6 +14,7 @@ import Tennis from "@/asset/tennis.jpg";
 import tableTennis from "@/asset/tableTennis.jpg";
 import Caram from "@/asset/ceram.jpeg";
 import Footer from "@/app/Components/Footer";
+import { Feedback } from "@/app/Components/FeedBack";
 
 
 export default function ViewBookings() {
@@ -21,6 +22,7 @@ export default function ViewBookings() {
     interface Bookings {
         booking_id: number;
         slot_id: number;
+        sport_id: number;
         date: string;
         start_time: string;
         end_time:string;
@@ -191,9 +193,8 @@ return (
                 </button>
             </div>
         ) : (
-            <button className="bg-black hover:bg-green-700 text-white font-bold py-2 px-4 rounded-3xl">
-                Feedback
-            </button>
+             <Feedback bookingId={booking.sport_id}/>
+         
         )}
             </div>
            

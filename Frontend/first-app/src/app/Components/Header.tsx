@@ -39,7 +39,6 @@ return (
       <Dropdown.Item icon={HiViewGrid} onClick={bookingPageCall}>Bookings</Dropdown.Item>
       <Dropdown.Item icon={HiCurrencyDollar}>Balance: {balance} </Dropdown.Item>
       <Dropdown.Item icon={GiReceiveMoney} onClick={addBalancePageCall}>Top up</Dropdown.Item>
-      <Dropdown.Item icon={SiContactlesspayment}>Payment</Dropdown.Item>
       <Dropdown.Item icon={HiLogout} onClick={logout}>Sign out</Dropdown.Item>
     </Dropdown>
     </nav>
