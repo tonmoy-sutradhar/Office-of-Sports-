@@ -95,6 +95,10 @@ export default function StudentDashboard() {
   const logout = async () => {
     try {
       const token = Cookies.get("accessToken");
+      if (!token) {
+        router.push("/Login");
+        return;
+      }
       await api.post("/auth/logout", 
         {},
         {
