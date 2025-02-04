@@ -58,7 +58,7 @@ export class AdminController {
 
   // Change admin password
   @Patch('change-password')
-  @UseGuards(adminAuthGuard)
+  //@UseGuards(adminAuthGuard)
   @HttpCode(HttpStatus.OK)
   async changePassword(
     @Req() req: any,
@@ -69,14 +69,14 @@ export class AdminController {
 
   // Post a new coupon
   @Post('coupon')
-  @UseGuards(adminAuthGuard)
+  //@UseGuards(adminAuthGuard)
   async postCoupon(@Body() couponDto: CouponDTO) {
     return await this.adminService.createCoupon(couponDto);
   }
 
   // Get a coupon by code
   @Get('coupon/:code')
-  @UseGuards(adminAuthGuard)
+  //@UseGuards(adminAuthGuard)
   async getCoupon(@Param('code') code: string) {
     return await this.adminService.getCouponByCode(code);
   }

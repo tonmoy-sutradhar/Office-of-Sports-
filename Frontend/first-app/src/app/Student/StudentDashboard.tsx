@@ -194,7 +194,7 @@ return (
                 />
                 <h3 className="mt-4 text-lg font-semibold text-black">{game.name}</h3>
                 <Link href={`/Student/Slots/${game.id}`}>
-                <button className="mt-2 text-purple-700 border border-purple-500 rounded-full px-4 py-2">
+                <button className="mt-2 text-purple-700 hover:bg-purple-300 border border-purple-500 rounded-full px-4 py-2">
                   View Slots
                 </button>
                 </Link>
@@ -222,7 +222,7 @@ return (
                   />
                   <h3 className="mt-4 text-lg font-semibold text-black">{game.name}</h3>
                   <Link href={`/Student/Slots/${game.id}`}>
-                   <button className="mt-2 text-purple-700 border border-purple-500 rounded-full px-4 py-2">
+                   <button className="mt-2 text-purple-700 hover:bg-purple-300  border border-purple-500 rounded-full px-4 py-2">
                   View Slots
                 </button>
                 </Link>

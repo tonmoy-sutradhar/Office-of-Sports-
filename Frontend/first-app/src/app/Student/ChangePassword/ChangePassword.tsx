@@ -42,7 +42,7 @@ export default function SetPassword() {
             }
             );
             setLoading(true);
-            setSuccessMessage("Password set successfully. Please login to continue.");
+            setSuccessMessage("Password set successfully.");
             // Optional: Automatically hide the success message after 5 seconds
             setTimeout(() => {
                 setSuccessMessage("");

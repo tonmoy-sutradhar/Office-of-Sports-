@@ -59,12 +59,25 @@ export default function AddBalance() {
    if (loading) {
     return <span className="loading loading-bars loading-lg flex justify-center items-center h-screen translate-x-[800px]"></span>;
   }
-  if (customError) {
-    return <p>{customError}</p>;
-  }
 
   return (
     <div className="min-h-screen bg-primary-content from-primary-50 to-primary-100 flex flex-col items-center justify-center p-4">
+      {customError && (
+        <div role="alert" className="alert alert-error">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-6 w-6 shrink-0 stroke-current"
+          fill="none"
+          viewBox="0 0 24 24">
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span>{customError}</span>
+      </div>
+      )}
       <header className="max-w-full md:max-w-[1539px] w-full min-h-[49px] mt-4 md:mt-[55px] ml-1 md:ml-[5px] rounded-full bg-[#121262] text-white flex items-center px-4">
       <nav className="flex items-center space-x-4 ml-auto">
         <button onClick={HomePageCall} className="text-lg bg-[#121262] text-white px-4 py-2 rounded-lg font-semibold cursor-pointer">Home</button>

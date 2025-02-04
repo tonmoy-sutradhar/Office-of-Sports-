@@ -7,6 +7,8 @@ import { VscEyeClosed } from "react-icons/vsc";
 import { TbLockPassword } from "react-icons/tb";
 import { registrationSchema, RegistrationSchema } from "../Validation/RegistrationValidation";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Background from "../Components/background";
 import Logo from "../Components/logo";
@@ -15,6 +17,7 @@ import api from "@/app/api/api";
 export default function Registration() {
   const [showPassword, setShowPassword] = useState(false);
   const [customError, setCustomError] = useState('');
+  const router = useRouter();
 
    const {
       register,
@@ -28,15 +31,28 @@ export default function Registration() {
    const registration = async (data: RegistrationSchema) => {
     try {
        await api.post("/auth/register", data);
-      alert("Registration successful. Please login to continue.");
+      setTimeout(() => {
+        toast.success("Registration Successfull");
+        router.push("/Login"); // Redirect after 5 seconds
+      }, 5000);
     } catch (error: any) {
-      setCustomError(error.response?.data?.message || "Registration failed. Please try again.");
+      toast.error(error.response?.data?.message );
+
     }
   };
   return (
     <div className="min-h-screen bg-primary-content from-primary-50 to-primary-100 flex flex-col items-center justify-center p-4">
       {/* Background Image */}
       <Background />
+      {/* Back button to login */}
+      <div>
+      <button
+        onClick={() => router.push("/Login")}
+        className="absolute top-4 start-4 text-red-300 font-semibold text-sm"
+      >
+        Back
+      </button>
+      </div>
       <div className="w-full max-w-sm p-4 rounded-3xl transform scale-200 inset-10 z-50 -translate-y-40">
         {/* Logo of AIUB */}
         <Logo />
