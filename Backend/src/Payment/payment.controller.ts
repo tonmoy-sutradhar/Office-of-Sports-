@@ -5,8 +5,10 @@ import {
   BadRequestException,
   NotFoundException,
   Req,
-  UseGuards
+  UseGuards,
+  Res,
 } from '@nestjs/common';
+import { Response } from 'express';
 import { PaymentService } from './payment.service';
 import { JwtService } from '@nestjs/jwt';
 import { userAuthGuard } from 'src/User/auth/userAuth.guard';
@@ -75,6 +77,20 @@ export class PaymentController {
         throw new NotFoundException(error.message);
       }
       throw new BadRequestException(error.message);
+    }
+  }
+
+  @Post('/create-pay')
+   async createPaymentIntent(@Res() res) {
+    try {
+      const amount = 50;
+      if (!amount) {
+        throw new Error("Amount is required");
+      }
+      const paymentIntent = await this.paymentService.createPaymentIntent(amount);
+      res.status(200).json({ clientSecret: paymentIntent.client_secret });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
     }
   }
 

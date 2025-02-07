@@ -187,9 +187,9 @@ export class AuthService {
     async resetPass(userdata:resetPassDTO,rq)
     {
         const findUser = await this.userService.resetPassword(rq);
-        if(!findUser)
+        if(!findUser && !rq.session.email)
         {
-            return new NotFoundException("User not found");
+            throw new BadRequestException("User not found");
         }
         else{
          if (userdata.newPass !== userdata.confirmPass){
@@ -267,6 +267,9 @@ export class AuthService {
            try{
             await this.userService.saveResestPassword(rq.session.email,userdata.newPass);
             await transporter.sendMail(options);
+            //destroying the session
+            rq.session.email = null;
+            rq.session.otp = null;
             return {message:"Password reset Successfully"};
           }
           catch(error){

@@ -27,7 +27,6 @@ export default function ForgetPassword() {
     try {
       await api.post("/auth/forget-password", data);
       setSuccessMessage("Email sent successfully. Please check your inbox.")
-      // Optional: Automatically hide the success message after 5 seconds
       setTimeout(() => {
         setSuccessMessage("");
         router.push("/ForgetPassword/VerifyOTP"); // Redirect after 5 seconds

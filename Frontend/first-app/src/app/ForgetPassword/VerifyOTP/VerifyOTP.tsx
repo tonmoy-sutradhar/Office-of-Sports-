@@ -9,6 +9,7 @@ import Cookies from "js-cookie";
 import Background from "@/app/Components/background";
 import Logo from "@/app/Components/logo";
 import api from "@/app/api/api";
+import { toast } from "react-toastify";
 
 export default function VerifyOTP() {
   const [customError, setCustomError] = useState("");
@@ -37,7 +38,7 @@ export default function VerifyOTP() {
           router.push("/ForgetPassword/SetPassword"); // Redirect after 5 seconds
         }, 5000);
         } catch (error: any) {
-          setCustomError(error.response?.data?.message || "Failed to verify OTP. Please try again.");
+          toast.error(error.response?.data?.message);
         }
       };
 

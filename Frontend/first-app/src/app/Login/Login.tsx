@@ -27,7 +27,6 @@ export default function LoginPage() {
     router.push('/ForgetPassword');
   };
 
-  // Integrate `react-hook-form` with `zod` validation
   const {
     register,
     handleSubmit,

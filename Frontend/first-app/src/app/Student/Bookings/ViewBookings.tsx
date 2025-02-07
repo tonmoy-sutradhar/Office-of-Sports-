@@ -74,23 +74,14 @@ export default function ViewBookings() {
         };
       };
 
-        const completeBooking = async (bookingId: number, slotID: number, amount=50) => {
+        const completeBooking = async (bookingId: number, slotID: number, amount: number) => {
             try {
               const token = Cookies.get("accessToken"); // Get token from cookies
               if(!token) {
                 router.push("/Login");
                 return;
               }
-              await api.post('/payment/deduct-balance', {
-                bookingId,
-                slotID,
-                amount,
-              }, {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
-              });
-              toast.success("Payment completed successfully.");
+            router.push(`/Payment?bookingId=${bookingId}&slotID=${slotID}&amount=${amount}`);
               setLoading(true);
             } catch (error: any) {
               toast.error(error.response?.data?.message );
@@ -184,7 +175,7 @@ return (
                         </div>
                         {booking.payment_status.toLowerCase() === "unpaid" ? (
             <div>
-                <button className="bg-black hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-3xl mr-2 " onClick={() => completeBooking(booking.booking_id, booking.slot_id)}>
+                <button className="bg-black hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-3xl mr-2 " onClick={() => completeBooking(booking.booking_id, booking.slot_id, 50)}>
                     Pay
                 </button>
                 <button className="bg-black hover:bg-red-700 text-white font-bold py-2 px-4 rounded-3xl" onClick={() => cencelBooking(booking.booking_id)}>
