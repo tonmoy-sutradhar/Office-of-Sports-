@@ -1,5 +1,5 @@
 "use client"; 
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import { TbLockPassword } from "react-icons/tb";
 import { VscEye } from "react-icons/vsc";
 import { VscEyeClosed } from "react-icons/vsc";
@@ -27,6 +27,13 @@ export default function SetPassword() {
         resolver: zodResolver(setPasswordSchema),
     });
 
+    useEffect(() => {
+        const token = Cookies.get("accessToken_otp");
+        if (!token) {
+          router.push("/ForgetPassword");
+        }
+      }, []);
+
     const setPassword = async (data: SetPasswordSchema) => {
         try {
             const token = Cookies.get("accessToken_otp");
@@ -40,6 +47,8 @@ export default function SetPassword() {
                 },
             }
             );
+            //clear cookie
+            Cookies.remove("accessToken_otp");
             setLoading(true);
             setSuccessMessage("Password set successfully. Please login to continue.");
             // Optional: Automatically hide the success message after 5 seconds
@@ -89,6 +98,15 @@ export default function SetPassword() {
       )}
         {/* Background Image */}
         <Background />
+        {/*Back to ForgetPassword*/}
+        <div>
+      <button
+        onClick={() => router.push("/Login")}
+        className="absolute top-4 start-4 text-red-300 font-semibold text-sm"
+      >
+        Back to login
+      </button>
+      </div>
       <div className="w-full max-w-sm p-4 rounded-3xl transform scale-250 inset-10 z-50 -translate-y-40">
         {/* Logo of AIUB */}
         <Logo />

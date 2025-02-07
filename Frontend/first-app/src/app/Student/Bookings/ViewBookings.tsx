@@ -15,6 +15,8 @@ import tableTennis from "@/asset/tableTennis.jpg";
 import Caram from "@/asset/ceram.jpeg";
 import Footer from "@/app/Components/Footer";
 import { Feedback } from "@/app/Components/FeedBack";
+import { toast } from "react-toastify";
+import test from "node:test";
 
 
 export default function ViewBookings() {
@@ -63,35 +65,26 @@ export default function ViewBookings() {
               Authorization: `Bearer ${token}`,
             },
           });
-          alert("Booking cancelled successfully.");
+          toast.success("Booking cancelled successfully.");
             setLoading(true);
         } catch (error: any) {
-          setCustomError(error.response?.data?.message || "Failed to cancel booking. Please try again.");
+          toast.error(error.response?.data?.message );
         }finally {
           setLoading(false);
         };
       };
 
-        const completeBooking = async (bookingId: number, slotID: number, amount=50) => {
+        const completeBooking = async (bookingId: number, slotID: number, amount: number) => {
             try {
               const token = Cookies.get("accessToken"); // Get token from cookies
               if(!token) {
                 router.push("/Login");
                 return;
               }
-              await api.post('/payment/deduct-balance', {
-                bookingId,
-                slotID,
-                amount,
-              }, {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
-              });
-              alert("Booking completed successfully.");
+            router.push(`/Payment?bookingId=${bookingId}&slotID=${slotID}&amount=${amount}`);
               setLoading(true);
             } catch (error: any) {
-              setCustomError(error.response?.data?.message || "Failed to complete booking. Please try again.");
+              toast.error(error.response?.data?.message );
             }
             finally {
               setLoading(false);    
@@ -115,7 +108,7 @@ export default function ViewBookings() {
                 setLoading(true);
                 setBookings(response.data);
             } catch (error: any) {
-                setCustomError(error.response?.data?.message || "Failed to fetch bookings. Please try again.");
+               toast.error(error.response?.data?.message );
             } finally {
                 setLoading(false);
             }
@@ -126,9 +119,6 @@ export default function ViewBookings() {
 
   if (loading) {
     return <span className="loading loading-bars loading-lg flex justify-center items-center h-screen translate-x-[800px]"></span>;
-  }
-  if (customError) {
-    return <p>{customError}</p>;
   }
 
 return (
@@ -185,7 +175,7 @@ return (
                         </div>
                         {booking.payment_status.toLowerCase() === "unpaid" ? (
             <div>
-                <button className="bg-black hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-3xl mr-2 " onClick={() => completeBooking(booking.booking_id, booking.slot_id)}>
+                <button className="bg-black hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-3xl mr-2 " onClick={() => completeBooking(booking.booking_id, booking.slot_id, 50)}>
                     Pay
                 </button>
                 <button className="bg-black hover:bg-red-700 text-white font-bold py-2 px-4 rounded-3xl" onClick={() => cencelBooking(booking.booking_id)}>

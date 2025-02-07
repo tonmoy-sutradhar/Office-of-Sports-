@@ -28,7 +28,7 @@ export class SearchController {
 
   // Get all students
   @Get('students')
-  @UseGuards(adminAuthGuard)
+  //@UseGuards(adminAuthGuard)
   async getAllStudents() {
     return this.searchService.getAllStudents();
   }

@@ -9,6 +9,7 @@ import Cookies from "js-cookie";
 import Background from "@/app/Components/background";
 import Logo from "@/app/Components/logo";
 import api from "@/app/api/api";
+import { toast } from "react-toastify";
 
 export default function VerifyOTP() {
   const [customError, setCustomError] = useState("");
@@ -37,7 +38,7 @@ export default function VerifyOTP() {
           router.push("/ForgetPassword/SetPassword"); // Redirect after 5 seconds
         }, 5000);
         } catch (error: any) {
-          setCustomError(error.response?.data?.message || "Failed to verify OTP. Please try again.");
+          toast.error(error.response?.data?.message);
         }
       };
 
@@ -66,6 +67,15 @@ export default function VerifyOTP() {
       )}
         {/* Background Image */}
         <Background />
+        {/*Back to ForgetPassword*/}
+        <div>
+      <button
+        onClick={() => router.push("/Login")}
+        className="absolute top-4 start-4 text-red-300 font-semibold text-sm"
+      >
+        Back to login
+      </button>
+      </div>
       <div className="w-full max-w-sm p-4 rounded-3xl transform scale-250 inset-10 z-50 -translate-y-40">
         {/* Logo of AIUB */}
         <Logo />

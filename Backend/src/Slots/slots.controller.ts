@@ -51,14 +51,14 @@ export class SlotsController {
 
   // Get all slots
   @Get()
-  @UseGuards(adminAuthGuard)
+  //@UseGuards(adminAuthGuard)
   async getAllSlots(): Promise<Slot[]> {
     return this.slotsService.getAllSlots();
   }
 
   // Get a slot by ID
   @Get(':id')
-  @UseGuards(adminAuthGuard)
+  //@UseGuards(adminAuthGuard)
   async getSlotById(@Param('id') id: number): Promise<Slot> {
     return this.slotsService.getSlotById(Number(id));
   }

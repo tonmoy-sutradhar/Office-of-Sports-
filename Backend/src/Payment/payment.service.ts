@@ -10,9 +10,13 @@ import { Repository } from 'typeorm';
 import { Coupon } from './Coupon_Entity/Coupon.entity'; // Import Coupon entity
 import { Slot } from 'src/Slots/Slot_Entity/slot.entity';
 import { NotificationService } from 'src/notifications/notifications.service';
+import Stripe from 'stripe';
 
 @Injectable()
 export class PaymentService {
+  private stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+    apiVersion: '2025-01-27.acacia',
+  });
   constructor(
     @InjectRepository(Booking)
     private bookingRepository: Repository<Booking>,
@@ -27,6 +31,15 @@ export class PaymentService {
     private slotRepo: Repository<Slot>,
     private readonly notificationService:NotificationService,
   ) {}
+
+
+  async createPaymentIntent(amount: number): Promise<Stripe.PaymentIntent> {
+    return this.stripe.paymentIntents.create({
+      amount,
+      currency: 'usd',
+      automatic_payment_methods: { enabled: true },
+    });
+  }
 
   /**
    * Adds balance to a student's account using a coupon code.

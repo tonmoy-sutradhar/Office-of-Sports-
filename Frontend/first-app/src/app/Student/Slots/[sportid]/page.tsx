@@ -17,6 +17,7 @@ import tableTennis from "@/asset/tableTennis.jpg";
 import Caram from "@/asset/ceram.jpeg";
 import Footer from "@/app/Components/Footer";
 import Link from "next/link";
+import { toast } from "react-toastify";
 
 
 export default function Slot() {
@@ -64,9 +65,9 @@ export default function Slot() {
               Authorization: `Bearer ${token}`,
             },
           });
-          alert("Slot booked successfully.");
+          toast.success("Slot booked successfully.");
         } catch (error: any) {
-          setCustomError(error.response?.data?.message || "Failed to book slot.");
+          toast.error(error.response?.data?.message );
         }
       };
     
@@ -100,9 +101,6 @@ export default function Slot() {
 
   if (loading) {
     return <span className="loading loading-bars loading-lg flex justify-center items-center h-screen translate-x-[800px]"></span>;
-  }
-  if (customError) {
-    return <p>{customError}</p>;
   }
 
 return (

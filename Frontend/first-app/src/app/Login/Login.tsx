@@ -9,6 +9,7 @@ import { PiMicrosoftOutlookLogoFill } from "react-icons/pi";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import { TbLockPassword } from "react-icons/tb";
 import Background from "../Components/background";
+import { toast } from "react-toastify";
 import Logo from "../Components/logo";
 import api from "@/app/api/api";
 import Cookies from "js-cookie";
@@ -26,7 +27,6 @@ export default function LoginPage() {
     router.push('/ForgetPassword');
   };
 
-  // Integrate `react-hook-form` with `zod` validation
   const {
     register,
     handleSubmit,
@@ -47,9 +47,10 @@ export default function LoginPage() {
         secure: true, // Use HTTPS
         sameSite: "Strict", // Protect from CSRF
       });
+      toast.success("Login successful");
       router.push("/Student");
     } catch (error: any) {
-      setCustomError(error.response?.data?.message || "Login failed. Please try again.");
+      toast.error(error.response?.data?.message );
     }
   };
 

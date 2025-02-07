@@ -27,7 +27,6 @@ export default function ForgetPassword() {
     try {
       await api.post("/auth/forget-password", data);
       setSuccessMessage("Email sent successfully. Please check your inbox.")
-      // Optional: Automatically hide the success message after 5 seconds
       setTimeout(() => {
         setSuccessMessage("");
         router.push("/ForgetPassword/VerifyOTP"); // Redirect after 5 seconds
@@ -67,6 +66,15 @@ export default function ForgetPassword() {
 
       {/* Background Image */}
       <Background />
+      {/* Back button to login */}
+      <div>
+        <button
+          onClick={() => router.push("/Login")}
+          className="absolute top-4 start-4 text-red-300 font-semibold text-sm"
+        >
+          Back
+        </button>
+      </div>
       <div className="w-full max-w-sm p-4 rounded-3xl transform scale-200 inset-10 z-50 -translate-y-40">
         {/* Logo of AIUB */}
         <Logo />
