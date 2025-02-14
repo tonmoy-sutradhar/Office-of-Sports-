@@ -33,9 +33,9 @@ export class PaymentService {
   ) {}
 
 
-  async createPaymentIntent(amount: number): Promise<Stripe.PaymentIntent> {
+  async createPaymentIntent(): Promise<Stripe.PaymentIntent> {
     return this.stripe.paymentIntents.create({
-      amount,
+      amount:50,
       currency: 'usd',
       automatic_payment_methods: { enabled: true },
     });
