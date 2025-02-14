@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema, LoginSchema } from "@/app/Validation/LoginValidation";
+import { loginSchema, LoginSchema } from "@/app/Validation/LoginValidAdmin";
 import { PiMicrosoftOutlookLogoFill } from "react-icons/pi";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import { TbLockPassword } from "react-icons/tb";
