@@ -5,7 +5,13 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 
-const CheckoutPage = ({ bookingId, slotID, amount }: { bookingId: Number; slotID: Number; amount: Number }) => {
+interface check{
+  bookingId: number; 
+  slotID: number; 
+  amount: number
+}
+
+export default function CheckoutPage({ bookingId, slotID, amount }:check){
   const stripe = useStripe();
   const router = useRouter();
   const elements = useElements();
@@ -53,6 +59,7 @@ const CheckoutPage = ({ bookingId, slotID, amount }: { bookingId: Number; slotID
           }
       });
       toast.success("Payment successful!");
+      router.push("/Student/Bookings");
   } catch (error: any) {
       toast.error(error.response?.data?.message);
   }
@@ -65,6 +72,15 @@ const CheckoutPage = ({ bookingId, slotID, amount }: { bookingId: Number; slotID
 
   return (
     <div className="flex justify-center items-center h-screen bg-slate-300">
+      {/*back to Bookings*/}
+      <div>
+      <button
+        onClick={() => router.push("/Student/Bookings")}
+        className="absolute top-4 start-4 text-red-400 font-semibold text-sm"
+      >
+        Back
+      </button>
+      </div>
     <div className="bg-white p-4 rounded-md">
     <form onSubmit={handleSubmit} className="bg-white p-2 rounded-md">
       {clientSecret && <PaymentElement />}
@@ -80,5 +96,3 @@ const CheckoutPage = ({ bookingId, slotID, amount }: { bookingId: Number; slotID
     </div>
   );
 };
-
-export default CheckoutPage;

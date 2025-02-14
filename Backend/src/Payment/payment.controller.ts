@@ -24,7 +24,7 @@ export class PaymentController {
    * @param studentId - ID of the student.
    * @param couponCode - Mock coupon code for adding balance.
    */
-  @Post('add-balance')
+  @Post('/add-balance')
   @UseGuards(userAuthGuard)
   async addBalance(
     @Req()req,
@@ -49,14 +49,14 @@ export class PaymentController {
    * @param bookingId - ID of the booking.
    * @param amount - Amount to deduct.
    */
-  @Post('deduct-balance')
+  @Post('/deduct-balance')
   @UseGuards(userAuthGuard)
   async deductBalance(
     @Req()req,
     @Body('bookingId') bookingId: number,
     @Body('slotID') slotID:number,
-    @Body('amount') amount: number,
   ) {
+        const amount = 50;
          const token = req.cookies['access_token']; // Or extract it from the Authorization header
         const decodedPayload = await this.jwtService.verifyAsync(token);
     if (!decodedPayload.userId || !bookingId || amount <= 0 || !slotID) {
@@ -81,13 +81,9 @@ export class PaymentController {
   }
 
   @Post('/create-pay')
-   async createPaymentIntent(@Res() res) {
+   async createPaymentIntent(@Body('amount')amount,@Res() res) {
     try {
-      const amount = 50;
-      if (!amount) {
-        throw new Error("Amount is required");
-      }
-      const paymentIntent = await this.paymentService.createPaymentIntent(amount);
+      const paymentIntent = await this.paymentService.createPaymentIntent();
       res.status(200).json({ clientSecret: paymentIntent.client_secret });
     } catch (error) {
       res.status(500).json({ error: error.message });
