@@ -1,4 +1,4 @@
-This project is for my academic purpose. We build this project for Office of Sports AIUB. 
+This project is for my academic purpose. We build this project for "Office of Sports" of AIUB. 
 
 TO run this project on your PC below things are required.
 1. postgres SQL
