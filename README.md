@@ -18,7 +18,8 @@ TO run this project on your PC below things are required.
 4. install nodemailer using " npm install nodemailer"
 5. install bcrpt using "npm install bcrypt"
 6. install toster using "npm install react-hot-toast"
-7. install stripe payment method using "npm install @stripe/stripe-js" and "npm install stripe"
+7. intall ZOD using "npm install zod"
+8. install stripe payment method using "npm install @stripe/stripe-js" and "npm install stripe"
 
 After intalled all libaries, to run backend go to backend folder then use "npm run start:dev" and 
 to run frontend go to frontend folder then first-app folder then use " npm run dev"
