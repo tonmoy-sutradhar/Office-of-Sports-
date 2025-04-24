@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useStripe, useElements, PaymentElement } from "@stripe/react-stripe-js";
-import api from "../api/api";
+import api from "@/app/api/api";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";

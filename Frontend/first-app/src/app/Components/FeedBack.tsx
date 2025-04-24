@@ -1,6 +1,6 @@
 import { Button, Modal, TextInput, Label } from "flowbite-react";
 import { useState } from "react";
-import api from "../api/api";
+import api from "@/app/api/api";
 import Cookies from "js-cookie";
 
 interface FeedbackProps {

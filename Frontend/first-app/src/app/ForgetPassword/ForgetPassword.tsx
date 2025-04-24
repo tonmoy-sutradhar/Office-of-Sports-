@@ -4,10 +4,10 @@ import { useState } from "react";
 import { PiMicrosoftOutlookLogoFill } from "react-icons/pi";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { emailSchema, EmailSchema } from "../Validation/EmailValidation";
-import Background from "../Components/background";
-import Logo from "../Components/logo";
-import api from "../api/api";
+import { emailSchema, EmailSchema } from "@/app/Validation/EmailValidation";
+import Background from "@/app/Components/background";
+import Logo from "@/app/Components/logo";
+import api from "@/app/api/api";
 
 
 export default function ForgetPassword() {

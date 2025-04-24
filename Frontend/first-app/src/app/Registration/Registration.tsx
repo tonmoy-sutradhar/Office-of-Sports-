@@ -5,13 +5,13 @@ import { PiMicrosoftOutlookLogoFill } from "react-icons/pi";
 import { VscEye } from "react-icons/vsc";
 import { VscEyeClosed } from "react-icons/vsc";
 import { TbLockPassword } from "react-icons/tb";
-import { registrationSchema, RegistrationSchema } from "../Validation/RegistrationValidation";
+import { registrationSchema, RegistrationSchema } from "@/app/Validation/RegistrationValidation";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Background from "../Components/background";
-import Logo from "../Components/logo";
+import Background from "@/app/Components/background";
+import Logo from "@/app/Components/logo";
 import api from "@/app/api/api";
 
 export default function Registration() {

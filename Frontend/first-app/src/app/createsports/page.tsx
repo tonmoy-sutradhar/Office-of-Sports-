@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
-import Navbar from "../Components/Navbar";
-import Banner from "../Components/Banner";
+import Navbar from "@/app/Components/Navbar";
+import Banner from "@/app/Components/Banner";
 
 export default function Page() {
   const router = useRouter();

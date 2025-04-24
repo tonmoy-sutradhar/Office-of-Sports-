@@ -1,21 +1,21 @@
 "use client";
 import { useState, useEffect, use } from "react";
 import { useRouter } from "next/navigation";
-import api from "../api/api";
+import api from "@/app/api/api";
 import Cookies from "js-cookie";
-import Header from "../Components/Header";
+import Header from "@/app/Components/Header";
 import Image, { StaticImageData } from "next/image";
-import logo from "@/asset/logo.png";
-import HeroSection from "../Components/HeroSection";
-import Football from "@/asset/football.jpg";
-import Cricket from "@/asset/cricket.jpg";
-import Basketball from "@/asset/basketball.jpg";
-import Badminton from "@/asset/badminton.jpeg";
-import Volleyball from "@/asset/vollyball.jpg";
-import Tennis from "@/asset/tennis.jpg";
-import tableTennis from "@/asset/tableTennis.jpg";
-import Caram from "@/asset/ceram.jpeg";
-import Footer from "../Components/Footer";
+import logo from "@/app/asset/logo.png";
+import HeroSection from "@/app/Components/HeroSection";
+import Football from "@/app/asset/football.jpg";
+import Cricket from "@/app/asset/cricket.jpg";
+import Basketball from "@/app/asset/basketball.jpg";
+import Badminton from "@/app/asset/badminton.jpeg";
+import Volleyball from "@/app/asset/vollyball.jpg";
+import Tennis from "@/app/asset/tennis.jpg";
+import tableTennis from "@/app/asset/tableTennis.jpg";
+import Caram from "@/app/asset/ceram.jpeg";
+import Footer from "@/app/Components/Footer";
 import Link from "next/link";
 import { set } from "zod";
 
@@ -157,7 +157,7 @@ return (
         <Header username={username} logout={logout} balance={balance} bookingPageCall={goTobookingPage} addBalancePageCall={goToaddBalancePage} profilePageCall={goToProfilePage}/>
         
         {/* Main content container */}
-        <div className="max-w-[1539px] w-full min-h-[1342px] mt-12 ml-5 rounded-[32px] bg-[#000080] text-white flex flex-col items-center px-4 pt-4 lg:mt-[60px] lg:ml-[5px] lg:translate-y-[-50px]">         
+        <div className="sm:max-w-[1539px] sm:w-full sm:min-h-[1342px] mt-12 ml-5 rounded-[32px] bg-[#000080] text-white flex flex-col items-center px-4 pt-4 sm:mt-[60px] sm:ml-[5px] sm:translate-y-[-50px]">         
           {/* Logo */}
           <div className="w-full flex justify-center translate-y-[-55px] ">
             <Image
@@ -165,7 +165,7 @@ return (
               alt="AIUB Office of Sports"
               width={250}
               height={130}
-              className="scale-150"
+              className="sm:scale-150"
             />
           </div>
     

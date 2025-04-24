@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import Footer from "@/app/Components/Footer";
 import Image from "next/image";
-import logo from "@/asset/logo.png";
+import logo from "@/app/asset/logo.png";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { toast } from "react-toastify";
