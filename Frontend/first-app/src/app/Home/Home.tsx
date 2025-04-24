@@ -1,8 +1,8 @@
 "use client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import logo from "@/asset/logo.png";
-import Background from "../Components/HomeBack";
+import logo from "@/app/asset/logo.png";
+import Background from "@/app/Components/HomeBack";
 
 export default function Home() {
   const router = useRouter();

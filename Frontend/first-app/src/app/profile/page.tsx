@@ -3,12 +3,12 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import Image from "next/image";
-import profile from "@/asset/tonmoy.jpg";
+import profile from "@/app/asset/tonmoy.jpg";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import Link from "next/link";
-import Navbar from "../Components/Navbar";
-import Banner from "../Components/Banner";
+import Navbar from "@/app/Components/Navbar";
+import Banner from "@/app/Components/Banner";
 
 interface Admin {
   id: number;

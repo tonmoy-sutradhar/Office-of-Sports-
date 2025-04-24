@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
@@ -8,9 +7,9 @@ import { loginSchema, LoginSchema } from "@/app/Validation/LoginValidation";
 import { PiMicrosoftOutlookLogoFill } from "react-icons/pi";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import { TbLockPassword } from "react-icons/tb";
-import Background from "../Components/background";
+import Background from "@/app/Components/background";
 import { toast } from "react-toastify";
-import Logo from "../Components/logo";
+import Logo from "@/app/Components/logo";
 import api from "@/app/api/api";
 import Cookies from "js-cookie";
 

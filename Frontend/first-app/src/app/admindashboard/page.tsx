@@ -1,21 +1,21 @@
 import Image from "next/image";
-import banner from "@/asset/bgImage.jpg";
-import logo from "@/asset/logo.png";
+import banner from "@/app/asset/bgImage.jpg";
+import logo from "@/app/asset/logo.png";
 import Link from "next/link";
-import cricket from "@/asset/cricket.jpg";
-import football from "@/asset/football.jpg";
-import badminton from "@/asset/badminton.jpg";
-import basketball from "@/asset/basketball.jpg";
-import handball from "@/asset/handball.png";
-import pool from "@/asset/pool.jpg";
-import tabletenis from "@/asset/tabletenis.jpg";
-import chess from "@/asset/chess.jpg";
-import sports from "@/asset/sports.jpg";
-import feedback from "@/asset/student-feedback.jpg";
-import Navbar from "../Components/Navbar";
-import Banner from "../Components/Banner";
-import Totalcount from "../Components/totalcount";
-import StudentInfo from "../(student)/studentinfo/page";
+import cricket from "@/app/asset/cricket.jpg";
+import football from "@/app/asset/football.jpg";
+import badminton from "@/app/asset/badminton.jpg";
+import basketball from "@/app/asset/basketball.jpg";
+import handball from "@/app/asset/handball.png";
+import pool from "@/app/asset/pool.jpg";
+import tabletenis from "@/app/asset/tabletenis.jpg";
+import chess from "@/app/asset/chess.jpg";
+import sports from "@/app/asset/sports.jpg";
+import feedback from "@/app/asset/student-feedback.jpg";
+import Navbar from "@/app/Components/Navbar";
+import Banner from "@/app/Components/Banner";
+import Totalcount from "@/app/Components/totalcount";
+import StudentInfo from "@/app/(student)/studentinfo/page";
 
 // import { useRouter } from "next/navigation";
 

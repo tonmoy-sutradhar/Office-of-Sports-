@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import image from "../../asset/bgImage.jpg";
+import image from "@/app/asset/bgImage.jpg";
 
 export default function Background() {
   return (

@@ -30,10 +30,10 @@ export default function Header({ username, logout, balance, bookingPageCall , ad
   }, [username]);
 
 return (
-    <header className="max-w-full md:max-w-[1539px] w-full min-h-[49px] mt-4 md:mt-[55px] ml-1 md:ml-[5px] rounded-full bg-[#000080] text-white flex items-center px-4">
+    <header className="max-w-full sm:max-w-[1539px] sm:w-full sm:min-h-[49px]  sm:mt-[55px]  sm:ml-[5px] rounded-full bg-[#000080] text-white flex items-center px-4">
       <h1 className="text-lg font-semibold">{username ? `Welcome, ${username}` : "Welcome"}</h1>
     {/*buttons for profile and logout*/}
-    <nav className="flex items-center space-x-4 ml-auto lg:mr-[10px]">
+    <nav className="flex items-center space-x-4 ml-auto sm:mr-[18px]">
       <Dropdown label="Menu">
       <Dropdown.Item icon={CgProfile} onClick={profilePageCall}>Profile</Dropdown.Item>
       <Dropdown.Item icon={HiViewGrid} onClick={bookingPageCall}>Bookings</Dropdown.Item>

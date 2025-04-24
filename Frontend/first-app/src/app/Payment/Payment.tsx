@@ -1,10 +1,10 @@
 "use client";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
-import CheckoutPage from "../Components/Checkout";
+import CheckoutPage from "@/app/Components/Checkout";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import api from "../api/api";
+import api from "@/app/api/api";
 import Cookies from "js-cookie";
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY!);

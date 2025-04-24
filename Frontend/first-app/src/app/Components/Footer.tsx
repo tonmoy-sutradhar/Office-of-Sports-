@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Logo from "@/asset/aiub-logo.png";
+import Logo from "@/app/asset/aiub-logo.png";
 
 export default function Footer() {
   return (

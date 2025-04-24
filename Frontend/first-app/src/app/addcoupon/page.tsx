@@ -4,8 +4,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { toast } from "react-toastify";
-import Navbar from "../Components/Navbar";
-import Banner from "../Components/Banner";
+import Navbar from "@/app/Components/Navbar";
+import Banner from "@/app/Components/Banner";
 
 export default function AddCoupon() {
   const [formData, setFormData] = useState({
