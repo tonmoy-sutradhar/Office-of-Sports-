@@ -8,8 +8,8 @@ import { Admin } from './Admin_Entity/admin.entity';
 import { UpdateAdminDto, ValidAdminDTO } from './update-admin.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Coupon } from 'src/payment/Coupon_Entity/Coupon.entity';
-import { CouponDTO } from 'src/Payment/Coupon_DTO/Coupon.dto';
+import { Coupon } from '../payment/Coupon_Entity/Coupon.entity';
+import { CouponDTO } from '../Payment/Coupon_DTO/Coupon.dto';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 

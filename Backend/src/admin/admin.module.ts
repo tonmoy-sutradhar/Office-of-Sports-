@@ -3,7 +3,7 @@ import { AdminService } from './admin.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AdminController } from './admin.controller';
 import { Admin } from './Admin_Entity/admin.entity';
-import { Coupon } from 'src/payment/Coupon_Entity/Coupon.entity';
+import { Coupon } from '../payment/Coupon_Entity/Coupon.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './token';
 

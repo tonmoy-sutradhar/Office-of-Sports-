@@ -5,12 +5,12 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Slot } from 'src/Slots/Slot_Entity/slot.entity';
+import { Slot } from '../Slots/Slot_Entity/slot.entity';
 import { Booking } from './Booking_Entity/booking.entity';
-import { Sport } from 'src/sports/Sports_Entity/sports.entity';
+import { Sport } from '../sports/Sports_Entity/sports.entity';
 import { CreateBookingDto } from './dto/booking.dto';
-import { Student_Regi } from 'src/User/Student_Entity/student.entity';
-import { NotificationService } from 'src/notifications/notifications.service';
+import { Student_Regi } from '../User/Student_Entity/student.entity';
+import { NotificationService } from '../notifications/notifications.service';
 
 @Injectable()
 export class BookingsService {

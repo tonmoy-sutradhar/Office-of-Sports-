@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Slot } from './Slot_Entity/slot.entity';
 import { slotDTO } from './slotDTO/slotDTO.dto';
-import { Sport } from 'src/sports/Sports_Entity/sports.entity';
+import { Sport } from '../sports/Sports_Entity/sports.entity';
 
 @Injectable()
 export class SlotsService {

@@ -2,8 +2,8 @@ import { Controller, Get, Post, Body, Param, Query, Req } from '@nestjs/common';
 import { FeedbacksService } from './feedbacks.service';
 import { JwtService } from '@nestjs/jwt';
 import { UseGuards } from '@nestjs/common';
-import { userAuthGuard } from 'src/User/auth/userAuth.guard';
-import { adminAuthGuard } from 'src/admin/adminGuard.guard';
+import { userAuthGuard } from '../User/auth/userAuth.guard';
+import { adminAuthGuard } from '../admin/adminGuard.guard';
 
 @Controller('feedbacks')
 export class FeedbacksController {
