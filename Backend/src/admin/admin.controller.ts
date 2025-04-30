@@ -13,7 +13,7 @@ import {
 } from '@nestjs/common';
 import { AdminService } from './admin.service';
 import { UpdateAdminDto, ValidAdminDTO } from './update-admin.dto';
-import { CouponDTO } from '../Payment/Coupon_DTO/Coupon.dto';
+import { CouponDTO } from 'src/Payment/Coupon_DTO/Coupon.dto';
 import { adminAuthGuard } from './adminGuard.guard';
 
 
