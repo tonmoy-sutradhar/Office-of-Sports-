@@ -4,12 +4,12 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Booking } from 'src/bookings/Booking_Entity/booking.entity';
-import { Student_Regi } from 'src/User/Student_Entity/student.entity';
+import { Booking } from '../bookings/Booking_Entity/booking.entity';
+import { Student_Regi } from '../User/Student_Entity/student.entity';
 import { Repository } from 'typeorm';
 import { Coupon } from './Coupon_Entity/Coupon.entity'; // Import Coupon entity
-import { Slot } from 'src/Slots/Slot_Entity/slot.entity';
-import { NotificationService } from 'src/notifications/notifications.service';
+import { Slot } from '../Slots/Slot_Entity/slot.entity';
+import { NotificationService } from '../notifications/notifications.service';
 import Stripe from 'stripe';
 
 @Injectable()
