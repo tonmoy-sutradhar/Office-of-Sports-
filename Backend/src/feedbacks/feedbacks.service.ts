@@ -6,8 +6,8 @@ import {
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Feedback } from './Feedback_Entity/feedback.entity';
-import { Student_Regi } from 'src/User/Student_Entity/student.entity';
-import { Sport } from 'src/sports/Sports_Entity/sports.entity';
+import { Student_Regi } from '../User/Student_Entity/student.entity';
+import { Sport } from '../sports/Sports_Entity/sports.entity';
 
 @Injectable()
 export class FeedbacksService {

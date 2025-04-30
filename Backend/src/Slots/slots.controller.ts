@@ -10,9 +10,9 @@ import {
 } from '@nestjs/common';
 import { SlotsService } from './slots.service';
 import { Slot } from './Slot_Entity/slot.entity';
-import { adminAuthGuard } from 'src/admin/adminGuard.guard';
+import { adminAuthGuard } from '../admin/adminGuard.guard';
 import { slotDTO } from './slotDTO/slotDTO.dto';
-import { userAuthGuard } from 'src/User/auth/userAuth.guard';
+import { userAuthGuard } from '../User/auth/userAuth.guard';
 
 @Controller('slots')
 export class SlotsController {

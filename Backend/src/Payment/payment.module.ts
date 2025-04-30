@@ -2,12 +2,12 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PaymentService } from './payment.service';
 import { PaymentController } from './payment.controller';
-import { Booking } from 'src/bookings/Booking_Entity/booking.entity';
-import { Slot } from 'src/Slots/Slot_Entity/slot.entity'; // Import the Slot entity
-import { Student_Regi } from 'src/User/Student_Entity/student.entity';
+import { Booking } from '../bookings/Booking_Entity/booking.entity';
+import { Slot } from '../Slots/Slot_Entity/slot.entity'; // Import the Slot entity
+import { Student_Regi } from '../User/Student_Entity/student.entity';
 import { Coupon } from './Coupon_Entity/Coupon.entity'; // Import the Coupon entity
-import { NotificationService } from 'src/notifications/notifications.service';
-import { Sport } from 'src/sports/Sports_Entity/sports.entity';
+import { NotificationService } from '../notifications/notifications.service';
+import { Sport } from '../sports/Sports_Entity/sports.entity';
 
 @Module({
   imports: [

@@ -2,7 +2,7 @@ import { Controller, Post, Body, Param, Get, Delete,UseGuards, Req } from '@nest
 import { BookingsService } from './bookings.service';
 import { CreateBookingDto } from './dto/booking.dto';
 import { JwtService } from '@nestjs/jwt';
-import { userAuthGuard } from 'src/User/auth/userAuth.guard';
+import { userAuthGuard } from '../User/auth/userAuth.guard';
 
 @Controller('bookings')
 export class BookingsController {

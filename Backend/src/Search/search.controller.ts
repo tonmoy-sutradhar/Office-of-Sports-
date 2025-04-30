@@ -10,7 +10,7 @@ import {
   UseGuards
 } from '@nestjs/common';
 import { SearchService } from './search.service';
-import { adminAuthGuard } from 'src/admin/adminGuard.guard';
+import { adminAuthGuard } from '../admin/adminGuard.guard';
 
 @Controller('search')
 export class SearchController {

@@ -5,9 +5,9 @@ import { CreateStudentDTO, SearchSlotDto, ValidateDTO,changePassDTO,resetPassDTO
 import { Repository } from 'typeorm';
 import { Main_StudentDB } from './Student_Entity/Maindb.entity';
 import * as bcrypt from 'bcrypt';
-import { Sport } from 'src/sports/Sports_Entity/sports.entity';
-import { Booking } from 'src/bookings/Booking_Entity/booking.entity';
-import { Slot } from 'src/Slots/Slot_Entity/slot.entity';
+import { Sport } from '../sports/Sports_Entity/sports.entity';
+import { Booking } from '../bookings/Booking_Entity/booking.entity';
+import { Slot } from '../Slots/Slot_Entity/slot.entity';
 
 @Injectable()
 export class UserService {

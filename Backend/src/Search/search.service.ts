@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Student_Regi } from 'src/User/Student_Entity/student.entity';
+import { Student_Regi } from '../User/Student_Entity/student.entity';
 import { Search } from './Search_history Entity/search.entity';
-import { Admin } from 'src/admin/Admin_Entity/admin.entity';
+import { Admin } from '../admin/Admin_Entity/admin.entity';
 
 @Injectable()
 export class SearchService {

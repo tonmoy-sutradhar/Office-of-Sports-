@@ -1,7 +1,7 @@
 import { Controller, Post, Body, Get, Param, UseGuards } from '@nestjs/common';
 import { SportsService } from './sports.service';
 import { CreateSportDto } from './create-sport.dto';
-import { adminAuthGuard } from 'src/admin/adminGuard.guard';
+import { adminAuthGuard } from '../admin/adminGuard.guard';
 
 @Controller('sports')
 export class SportsController {
