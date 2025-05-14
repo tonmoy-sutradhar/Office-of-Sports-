@@ -9,7 +9,7 @@ import { Student_Regi } from '../User/Student_Entity/student.entity';
 import { Repository } from 'typeorm';
 import { Coupon } from './Coupon_Entity/Coupon.entity'; // Import Coupon entity
 import { Slot } from '../Slots/Slot_Entity/slot.entity';
-import { NotificationService } from '../notifications/notifications.service';
+import { NotificationService } from 'src/Notifications/notifications.service';
 import Stripe from 'stripe';
 
 @Injectable()
