@@ -6,7 +6,7 @@ import { BookingsController } from './bookings.controller'; // Import the Bookin
 import { Slot } from '../Slots/Slot_Entity/slot.entity';
 import { Sport } from '../sports/Sports_Entity/sports.entity';
 import { Student_Regi } from '../User/Student_Entity/student.entity';
-import { NotificationService } from '../notifications/notifications.service';
+import { NotificationService } from 'src/Notifications/notifications.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Booking, Slot, Sport, Student_Regi])],

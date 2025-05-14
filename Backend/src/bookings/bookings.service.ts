@@ -10,7 +10,7 @@ import { Booking } from './Booking_Entity/booking.entity';
 import { Sport } from '../sports/Sports_Entity/sports.entity';
 import { CreateBookingDto } from './dto/booking.dto';
 import { Student_Regi } from '../User/Student_Entity/student.entity';
-import { NotificationService } from '../notifications/notifications.service';
+import { NotificationService } from 'src/Notifications/notifications.service';
 
 @Injectable()
 export class BookingsService {
